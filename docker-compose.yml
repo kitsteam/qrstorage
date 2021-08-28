@@ -1,0 +1,94 @@
+version: "3.8"
+
+services:
+  app:
+    build:
+      context: .
+      target: development
+    entrypoint: .docker/entrypoint.sh
+    environment:
+      DATABASE_USER: ${POSTGRES_USER:-postgres}
+      DATABASE_USER_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
+      DATABASE_NAME: ${POSTGRES_DB:-qrstorage_dev}
+      DATABASE_PORT: 5432
+      DATABASE_HOST: postgres
+      DATABASE_SSL: "false"
+      QR_CODE_DEFAULT_LOCALE: "de"
+      GCP_CONFIG_PATH: "./.gcp-config.json"
+      # Customize the voice output, e.g. gender
+      # GCP_CONFIG_VOICE_GENDER: "FEMALE"
+      # Please create a new secret for production runs:
+      # - Use `mix phx.gen.secret` if you have elixir and phoenix installed
+      # - Use `openssl rand -base64 64 | head -c 64` on a normal unix system
+      # You can override this in `docker-compose.override.yml`
+      SECRET_KEY_BASE: "generate_your_own_secret_key_base_and_save_it"
+    ports:
+      - "4000:4000"
+    depends_on:
+      - postgres
+    # Mount the lib and test folder to increase development speed (do not use for prod setups!)
+    volumes:
+      # Ensure that the file `gcp-config.json` is available in the container
+      # You can override this in `docker-compose.override.yml`
+      - ./:/app
+
+  app_prod:
+    build:
+      context: .
+      target: production
+    environment:
+      DATABASE_USER: ${POSTGRES_USER:-postgres}
+      DATABASE_USER_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
+      DATABASE_NAME: ${POSTGRES_DB:-qrstorage_dev}
+      DATABASE_PORT: 5432
+      DATABASE_HOST: postgres
+      DATABASE_SSL: "false"
+      QR_CODE_DEFAULT_LOCALE: "de"
+      GCP_CONFIG_PATH: "./.gcp-config.json"
+      # Customize the voice output, e.g. gender
+      # GCP_CONFIG_VOICE_GENDER: "FEMALE"
+      # Please create a new secret for production runs:
+      # - Use `mix phx.gen.secret` if you have elixir and phoenix installed
+      # - Use `openssl rand -base64 64 | head -c 64` on a normal unix system
+      # You can override this in `docker-compose.override.yml`
+      SECRET_KEY_BASE: "generate_your_own_secret_key_base_and_save_it"
+      URL_HOST: localhost
+      URL_SCHEME: http
+      URL_PORT: "8000"
+    ports:
+      - "4100:8000"
+    depends_on:
+      - postgres
+    volumes:
+      # Ensure that the file `gcp-config.json` is available in the container/
+      # You can override this in `docker-compose.override.yml`
+      #
+      # How to get the fiel `docker-compose-kits.yml`?
+      # - Go to Coogle Cloud Platform dashboard
+      # - On the lefthand side, go to `APIs und Dienste` -> `Anmeldedaten`
+      # - In the upper section, click on `+ Anmeldedaten erstellen`
+      # - If not already existing, create a service account (Dienstkonto)
+      # - Afterwards, click on the newly created service account
+      # - In the details sectino of the service account, click on keys (Schlüssel)
+      # - In the key section of the service account click on `Schlüssel hinzufügen` -> `Neuen Schlüssel erstellen`
+      # - In the creatino dialog choose as key type `json` and finish creation of the .gcp-config.json
+      # - Please .gcp-config.json in the root of this project and let the following line inject this file into the docker container
+      - ./.gcp-config.json:/app/.gcp-config.json
+
+  postgres:
+    image: postgres:12-alpine
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
+      POSTGRES_DB: ${POSTGRES_DB:-qrstorage_dev}
+      PGDATA: /var/lib/postgresql/data/pgdata
+    restart: always
+    # Exposing the port is not needed unless you want to access this database instance from the host.
+    # Be careful when other postgres docker container are running on the same port
+    # ports:
+    #   - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/pgdata
+
+volumes:
+  postgres_data:

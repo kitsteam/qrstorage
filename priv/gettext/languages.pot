@@ -1,0 +1,17 @@
+msgid "none"
+msgstr ""
+
+msgid "de"
+msgstr ""
+
+msgid "en"
+msgstr ""
+
+msgid "es"
+msgstr ""
+
+msgid "tr"
+msgstr ""
+
+msgid "fr"
+msgstr ""

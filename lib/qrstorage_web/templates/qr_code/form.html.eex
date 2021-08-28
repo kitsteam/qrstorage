@@ -1,0 +1,36 @@
+<%= form_for @changeset, @action, fn f -> %>
+  <%= if @changeset.action do %>
+    <div class="alert alert-danger">
+      <p><%= gettext("Oops, something went wrong! Please check the errors below.") %></p>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= label f, :text %>
+    <%= textarea f, :text, class: 'form-control', required: true, maxlength: 500 %>
+    <%= error_tag f, :text %>
+  </div>
+
+  <br/>
+
+  <div class="form-group">
+      <%= label f, :language, gettext("audio language") %>
+      <%= select f, :language, translated_languages_for_select(), class: 'form-control' %>
+      <%= error_tag f, :language %>
+  </div>
+
+  <br />
+
+  <div class="form-group">
+    <%= label f, :delete_after, gettext("delete after") %>
+    <%= select f, :delete_after,
+                  Enum.map(2..12, fn m -> [key: "#{m} Monate", value: m] end),
+                  class: 'form-control'
+    %>
+    <%= error_tag f, :delete_after %>
+  </div>
+
+  <br />
+
+  <%= submit gettext("Save"), class: 'btn btn-primary' %>
+<% end %>
