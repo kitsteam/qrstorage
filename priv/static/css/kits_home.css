@@ -24,7 +24,7 @@
 .kits_footer_links {
     padding: 0;
     text-align: center;
-    margin: 0;
+    margin: 5px;
 }
 .kits_footer_links li {
     display: inline-block;
@@ -47,7 +47,6 @@
     display: inline-block;
     width: auto;
     height: 20px;
-    position: relative;
     top: 5px;
     margin-right: 3px;
     color: #999;
