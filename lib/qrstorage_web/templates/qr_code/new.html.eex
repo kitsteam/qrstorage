@@ -1,6 +1,4 @@
 
-»Mit diesem Tool generierst du QR-Codes, die Text enthalten oder auf
-multimediale Inhalte im Internet verweisen. Highlight: Vertone Möbel mit der
-integrierten Sprachausgabe!«
+Mit QRStorage generierst du QR-Codes, die auf Text oder multimediale Inhalte im Internet verweisen. Highlight: Vertone Möbel mit der integrierten Sprachausgabe!
 <br /><br />
 <%= render "form.html", Map.put(assigns, :action, Routes.qr_code_path(@conn, :create)) %>
