@@ -23,7 +23,7 @@
   <div class="form-group">
     <%= label f, :delete_after, gettext("delete after") %>
     <%= select f, :delete_after,
-                  Enum.map([1, 6, 12], fn m -> [key: "#{m} Monat(en)", value: m] end),
+                  Enum.map([2, 6, 12], fn m -> [key: "#{m} Monate", value: m] end),
                   class: 'form-control'
     %>
     <%= error_tag f, :delete_after %>
