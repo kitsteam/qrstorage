@@ -29,7 +29,7 @@ msgstr "Erstellen"
 #, elixir-format
 #: lib/qrstorage_web/templates/qr_code/show.html.eex:6
 msgid "Deletion Date"
-msgstr "Speicherdauer"
+msgstr "Löschdatum"
 
 #, elixir-format
 #: lib/qrstorage_web/templates/qr_code/show.html.eex:10
@@ -44,7 +44,7 @@ msgstr "Sprachausgabe"
 #, elixir-format
 #: lib/qrstorage_web/templates/qr_code/form.html.eex:24
 msgid "delete after"
-msgstr "Löschen nach"
+msgstr "Speicherdauer"
 
 #, elixir-format
 #: lib/qrstorage_web/controllers/qr_code_controller.ex:32
