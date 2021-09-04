@@ -15,7 +15,7 @@
     <main role="main" class="container">
       <div id="wrapper">
         <div id="inner">
-          <img src="<%= Routes.static_path(@conn, "/images/kits.svg") %>" alt="kits" style="width: 50%;">
+          <img src="<%= Routes.static_path(@conn, "/images/qr.svg") %>" alt="kits">
           <br/>
           <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>
           <p class="alert alert-danger" role="alert"><%= get_flash(@conn, :error) %></p>
@@ -26,7 +26,7 @@
 
       <div class="kits_footer">
         <a href="https://kits.blog/tools/" target="_blank" title="Zurück zur Tools-Seite">
-          <img src="<%= Routes.static_path(@conn, "/images/kits_footer.svg") %>" style="width:50%;" alt="kits">
+          <img src="<%= Routes.static_path(@conn, "/images/kits_footer.svg") %>" style="width:75%;" alt="kits">
         </a>
         <ul class="kits_footer_links">
             <li><a href="https://kits.blog/impressum/" target="_blank">Impressum</a></li>

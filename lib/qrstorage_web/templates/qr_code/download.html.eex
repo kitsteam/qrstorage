@@ -1,0 +1,3 @@
+<div id="canvas" data-url="<%= Routes.qr_code_url(@conn, :show, @qr_code) %>"></div>
+
+<%= link gettext("Download"), class: "btn btn-secondary", to: "#", id: "btn-qr-download" %>

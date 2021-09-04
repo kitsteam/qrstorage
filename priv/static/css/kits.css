@@ -27,6 +27,10 @@ input {
     color: #4a5d5c
 }
 
+.btn-kits {
+    background-color: #00a3d3;
+}
+
 #inner {
     background: 0 0;
     padding-top: 0;

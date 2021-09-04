@@ -30,7 +30,7 @@ defmodule QrstorageWeb.QrCodeController do
 
         conn
         |> put_flash(:info, gettext("Qr code created successfully."))
-        |> redirect(to: Routes.qr_code_path(conn, :show, qr_code))
+        |> redirect(to: Routes.qr_code_path(conn, :download, qr_code))
 
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "new.html", changeset: changeset)
@@ -40,5 +40,10 @@ defmodule QrstorageWeb.QrCodeController do
   def show(conn, %{"id" => id}) do
     qr_code = QrCodes.get_qr_code!(id)
     render(conn, "show.html", qr_code: qr_code)
+  end
+
+  def download(conn, %{"id" => id}) do
+    qr_code = QrCodes.get_qr_code!(id)
+    render(conn, "download.html", qr_code: qr_code)
   end
 end

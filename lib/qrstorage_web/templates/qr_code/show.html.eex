@@ -1,5 +1,3 @@
-<div id="canvas" data-url="<%= Routes.qr_code_url(@conn, :show, @qr_code) %>"></div>
-
   <strong>Text</strong><br />
   <%= @qr_code.text %><br />
   <br /><br />
@@ -17,5 +15,5 @@
               <code>audio</code> element.
       </audio>
       <br /><br />
-      <%= link gettext("Download"), to: Routes.qr_code_path(@conn, :audio_file, @qr_code.id),  download: true%>
+      <%= link gettext("Download"), to: Routes.qr_code_path(@conn, :audio_file, @qr_code.id),  download: true %>
   <% end %>

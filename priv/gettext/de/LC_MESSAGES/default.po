@@ -44,7 +44,7 @@ msgstr "Sprachausgabe"
 #, elixir-format
 #: lib/qrstorage_web/templates/qr_code/form.html.eex:24
 msgid "delete after"
-msgstr "Speicherdauer"
+msgstr "Speicherdauer in Monaten"
 
 #, elixir-format
 #: lib/qrstorage_web/controllers/qr_code_controller.ex:32

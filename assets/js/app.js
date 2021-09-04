@@ -41,4 +41,7 @@ if (canvas) {
   });
 
   qrCode.append(canvas);
+
+  document.getElementById("btn-qr-download").addEventListener('click', () => qrCode.download({ name: "qr", extension: "png" }));
+
 }

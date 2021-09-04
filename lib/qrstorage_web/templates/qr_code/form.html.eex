@@ -6,7 +6,7 @@
   <% end %>
 
   <div class="form-group">
-    <%= textarea f, :text, class: 'form-control', required: true, maxlength: 500, placeholder: gettext("Type your text here") %>
+    <%= textarea f, :text, class: 'form-control', required: true, maxlength: 2000, placeholder: gettext("Type your text here") %>
     <%= error_tag f, :text %>
   </div>
 
@@ -20,16 +20,20 @@
 
   <br />
 
+   <%= gettext("delete after") %>
+
   <div class="form-group">
-    <%= label f, :delete_after, gettext("delete after") %>
-    <%= select f, :delete_after,
-                  Enum.map([2, 6, 12], fn m -> [key: "#{m} Monate", value: m] end),
-                  class: 'form-control'
-    %>
-    <%= error_tag f, :delete_after %>
+    <%= radio_button f, :delete_after, 1, class: 'btn-check', autocomplete: "off" %>
+    <label class="btn btn-secondary btn-kits" for="qr_code_delete_after_1">1</label>
+
+    <%= radio_button f, :delete_after, 6, class: 'btn-check', autocomplete: "off" %>
+    <label class="btn btn-secondary btn-kits" for="qr_code_delete_after_6">6</label>
+
+    <%= radio_button f, :delete_after, 12, class: 'btn-check', autocomplete: "off" %>
+    <label class="btn btn-secondary btn-kits" for="qr_code_delete_after_12">12</label>
   </div>
 
-  <br />
+  <br />  <br />
 
   <%= submit gettext("Save"), class: 'btn btn-primary' %>
 <% end %>
