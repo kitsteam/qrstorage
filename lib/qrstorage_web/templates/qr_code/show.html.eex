@@ -1,5 +1,5 @@
   <strong>Text</strong><br />
-  <%= @qr_code.text %><br />
+  <%= raw convert_links(@qr_code.text) %><br />
   <br /><br />
   <strong><%= gettext("Deletion Date") %></strong><br />
   <%= Timex.format!(@qr_code.delete_after, "{relative}", :relative) %><br /><br />

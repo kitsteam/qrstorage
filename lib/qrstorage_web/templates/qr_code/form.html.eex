@@ -23,7 +23,7 @@
    <%= gettext("delete after") %>
 
   <div class="form-group">
-    <%= radio_button f, :delete_after, 1, class: 'btn-check', autocomplete: "off" %>
+    <%= radio_button f, :delete_after, 1, class: 'btn-check', autocomplete: "off", checked: true %>
     <label class="btn btn-secondary btn-kits" for="qr_code_delete_after_1">1</label>
 
     <%= radio_button f, :delete_after, 6, class: 'btn-check', autocomplete: "off" %>

@@ -49,7 +49,8 @@ defmodule Qrstorage.MixProject do
       {:httpoison, "~> 1.8"},
       {:google_api_text_to_speech, "~> 0.12"},
       {:goth, "~> 1.2.0"},
-      {:oban, "~> 2.8.0"}
+      {:oban, "~> 2.8.0"},
+      {:auto_linker, "~> 1.0"}
     ]
   end
 
