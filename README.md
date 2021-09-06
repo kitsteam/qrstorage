@@ -19,3 +19,5 @@ To start the container:
 - Start the phoenix server: `mix phx.server`
 - Go to http://localhost:4000/qrcodes
 - Start developing
+
+Note: kits icons and logos are not part of this licence (MIT).
