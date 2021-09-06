@@ -75,7 +75,7 @@ button[type=submit] {
     transition: .2s background
 }
 
-#button:hover, button[type=submit]:hover {
+#button:hover, button[type=submit]:hover, button[type=submit]:active, button[type=submit]:focus {
     cursor: pointer;
     background: #0082a8;
     color: #fff

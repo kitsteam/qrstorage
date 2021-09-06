@@ -54,7 +54,7 @@ msgstr "QR-Code erfolgreich erstellt."
 #, elixir-format
 #: lib/qrstorage_web/templates/qr_code/form.html.eex:18
 msgid "Audio Text to Speech via Google"
-msgstr "Für die Sprachausgabe kommunizieren wir mit Google. Du bleibst für Google unsichtbar. Personenbezoge oder andere sensible Daten solltest du nicht eingeben."
+msgstr "Für die Sprachausgabe kommunizieren wir mit Google. Du bleibst für Google unsichtbar. Personenbezogene oder andere sensible Daten solltest du nicht eingeben."
 
 #, elixir-format
 #: lib/qrstorage_web/templates/qr_code/form.html.eex:9

@@ -6,7 +6,7 @@
   <% end %>
 
   <div class="form-group">
-    <%= textarea f, :text, class: 'form-control', required: true, maxlength: 2000, placeholder: gettext("Type your text here") %>
+    <%= textarea f, :text, class: 'form-control', required: true, maxlength: 1500, placeholder: gettext("Type your text here") %>
     <%= error_tag f, :text %>
   </div>
 

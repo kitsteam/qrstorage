@@ -1,4 +1,4 @@
 
-Mit QRStorage generierst du QR-Codes, die auf Text oder multimediale Inhalte im Internet verweisen. Highlight: Vertone Möbel mit der integrierten Sprachausgabe!
+Verlinke mit QRStorage auf multimediale Inhalte oder biete deinen Lernenden differenzierte Texte. Unser Highlight: Nutze die integrierte Sprachausgabe und lass deinen Code sprechen!
 <br /><br />
 <%= render "form.html", Map.put(assigns, :action, Routes.qr_code_path(@conn, :create)) %>
