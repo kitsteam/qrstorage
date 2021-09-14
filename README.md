@@ -22,4 +22,4 @@ To start the container:
 
 ### Additonal licence
 
-The qrstorage [logo](https://thenounproject.com/icon/860830/) in this repo – created from [Hopkins](https://thenounproject.com/hopkins81) – is licenced under [CC BY 3.0 Unported](https://creativecommons.org/licenses/by/3.0/).
+The qrstorage [logo](https://thenounproject.com/icon/860830/) in this repo – created by [Hopkins](https://thenounproject.com/hopkins81) – is licenced under [CC BY 3.0 Unported](https://creativecommons.org/licenses/by/3.0/).
