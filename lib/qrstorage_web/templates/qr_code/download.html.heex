@@ -1,0 +1,8 @@
+<%= if @qr_code.content_type == :link do %>
+    <div id="canvas" data-color={@qr_code.color} data-url={@qr_code.text}></div>
+<% else %>
+    <div id="canvas" data-color={@qr_code.color} data-url={Routes.qr_code_url(@conn, :show, @qr_code)}></div>
+<% end %>
+<br/>
+<%= link gettext("Download"), class: "btn btn-secondary", to: "#", id: "btn-qr-download" %>
+<%= link gettext("Show"), class: "btn btn-primary", to: Routes.qr_code_path(@conn, :preview, @qr_code.id) %>

@@ -6,10 +6,10 @@ use Mix.Config
 # to provide built-in test partitioning in CI environment.
 # Run `mix help test` for more information.
 config :qrstorage, Qrstorage.Repo,
-  username: "postgres",
-  password: "postgres",
-  database: "qrstorage_test#{System.get_env("MIX_TEST_PARTITION")}",
-  hostname: "localhost",
+  username: System.get_env("DATABASE_USER"),
+  password: System.get_env("DATABASE_USER_PASSWORD"),
+  database: "#{System.get_env("DATABASE_NAME")}#{System.get_env("MIX_TEST_PARTITION")}",
+  hostname: System.get_env("DATABASE_HOST"),
   pool: Ecto.Adapters.SQL.Sandbox
 
 # We don't run a server during test. If one is required,
@@ -22,5 +22,8 @@ config :qrstorage, QrstorageWeb.Endpoint,
 
 # Print only warnings and errors during test
 config :logger, level: :warn
+
+config :goth,
+  disabled: true
 
 config :qrstorage, Oban, repo: Qrstorage.Repo, queues: false, plugins: false

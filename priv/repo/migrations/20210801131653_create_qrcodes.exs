@@ -9,6 +9,5 @@ defmodule Qrstorage.Repo.Migrations.CreateQrcodes do
 
       timestamps()
     end
-
   end
 end

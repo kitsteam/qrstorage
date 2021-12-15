@@ -19,13 +19,11 @@ config :qrstorage, QrstorageWeb.Endpoint,
     port: "4000"
   ],
   watchers: [
-    node: [
-      "node_modules/webpack/bin/webpack.js",
-      "--mode",
-      "development",
-      "--watch-stdin",
-      cd: Path.expand("../assets", __DIR__)
-    ]
+    # Start the esbuild watcher by calling Esbuild.install_and_run(:default, args)
+    esbuild: {Esbuild, :install_and_run, [:default, ~w(--sourcemap=inline --watch)]},
+    sass:
+      {DartSass, :install_and_run,
+       [:default, ~w(--embed-source-map --source-map-urls=absolute --watch)]}
   ]
 
 # ## SSL Support

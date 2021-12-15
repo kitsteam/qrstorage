@@ -1,4 +1,5 @@
 import Config
+require Logger
 
 config :qrstorage, QrstorageWeb.Endpoint,
   url: [
@@ -27,19 +28,24 @@ config :qrstorage, Qrstorage.Repo,
   ssl: System.get_env("DATABASE_SSL", "true") == "true"
 
 # Set possible translations
-default_locale = String.trim(System.get_env("QR_CODE_DEFAULT_LOCALE") || "en")
+default_locale =
+  case config_env() do
+    :test -> "en"
+    _ -> String.trim(System.get_env("QR_CODE_DEFAULT_LOCALE") || "de")
+  end
+
 config :gettext, :default_locale, default_locale
 config :timex, :default_locale, default_locale
 
-
-gcp_config =
-  System.get_env("GCP_CONFIG_PATH") ||
-    raise """
-    Environment variable GCP_CONFIG_PATH is missing.
-    For example: ./gcp-config.json
-    """
-
-config :goth, json: gcp_config |> File.read!()
+if gcp_config = System.get_env("GCP_CONFIG_PATH") do
+  Logger.info("Loading GCP Config file: #{gcp_config}")
+  config :goth, json: gcp_config |> File.read!()
+else
+  Logger.warn("""
+  Environment variable GCP_CONFIG_PATH is missing or empty.
+  For example: ./gcp-config.json
+  """)
+end
 
 # Here some environment specific configurations
 if config_env() == :test do

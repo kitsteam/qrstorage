@@ -10,7 +10,7 @@ body {
     line-height: 1.42857143;
     color: #333;
     display: flex;
-    align-items: center;
+    align-items: top;
     justify-content: center;
     background-size: cover
 }
@@ -27,8 +27,26 @@ input {
     color: #4a5d5c
 }
 
-.btn-kits {
+.btn-primary {
     background-color: #00a3d3;
+    border-color: #00a3d3;
+}
+
+.btn-primary:hover, .btn-primary:focus, .btn-primary:active {
+    background-color: #00456f;
+    border-color: #00456f;    
+}
+
+.btn-secondary {
+    background-color: white;
+    color: #00a3d3;
+    border-color: #00a3d3;
+}
+
+.btn-secondary:hover, .btn-secondary:focus, .btn-secondary:active, .btn-check:checked + .btn-secondary {
+    color: #00456f;
+    border-color: #00456f;
+    background-color: white;
 }
 
 #inner {
@@ -77,15 +95,8 @@ button[type=submit] {
 
 #button:hover, button[type=submit]:hover, button[type=submit]:active, button[type=submit]:focus {
     cursor: pointer;
-    background: #0082a8;
+    background: #00456f;
     color: #fff
-}
-
-#padname {
-    height: 38px;
-    width: calc(100% - 45px);
-    padding: 0 12px;
-    position: relative
 }
 
 svg#kits_logo {

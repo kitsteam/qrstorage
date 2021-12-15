@@ -92,3 +92,11 @@ msgstr ""
 
 msgid "must be equal to %{number}"
 msgstr ""
+
+# Custom field from qr code.ex:
+msgid "Link is invalid"
+msgstr ""
+
+# Custom field from qr code.ex:
+msgid "Audio type requires language"
+msgstr ""

@@ -1,0 +1,14 @@
+.color {
+    cursor: pointer !important;
+    border-radius: 5px;
+    margin: 3px;
+    border: 2px solid white;
+}
+
+.color:hover {
+    border: 2px solid black !important;
+}
+
+.color-selected {
+    border: 2px solid black !important;
+}

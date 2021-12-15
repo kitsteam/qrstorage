@@ -32,7 +32,7 @@ services:
       # Ensure that the file `gcp-config.json` is available in the container/
       # You can override this in `docker-compose.override.yml`
       #
-      # How to get the fiel `docker-compose-kits.yml`?
+      # How to get the file `docker-compose-kits.yml`?
       # - Go to Coogle Cloud Platform dashboard
       # - On the lefthand side, go to `APIs und Dienste` -> `Anmeldedaten`
       # - In the upper section, click on `+ Anmeldedaten erstellen`

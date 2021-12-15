@@ -12,51 +12,76 @@ msgstr ""
 "Plural-Forms: nplurals=2\n"
 
 #, elixir-format
-#: lib/qrstorage_web/templates/qr_code/show.html.eex:20
+#: lib/qrstorage_web/templates/qr_code/download.html.heex:7
+#: lib/qrstorage_web/templates/qr_code/preview.html.heex:22 lib/qrstorage_web/templates/qr_code/show.html.heex:22
 msgid "Download"
 msgstr ""
 
 #, elixir-format
-#: lib/qrstorage_web/templates/qr_code/form.html.eex:4
+#: lib/qrstorage_web/templates/qr_code/form.html.heex:4
 msgid "Oops, something went wrong! Please check the errors below."
 msgstr "Oops, da ist etwas schiefgelaufen. Bitte korrigiere die folgenden Fehler."
 
 #, elixir-format
-#: lib/qrstorage_web/templates/qr_code/form.html.eex:34
+#: lib/qrstorage_web/templates/qr_code/form.html.heex:69
 msgid "Save"
 msgstr "Erstellen"
 
 #, elixir-format
-#: lib/qrstorage_web/templates/qr_code/show.html.eex:6
+#: lib/qrstorage_web/templates/qr_code/preview.html.heex:9
+#: lib/qrstorage_web/templates/qr_code/show.html.heex:9
 msgid "Deletion Date"
 msgstr "Löschdatum"
 
 #, elixir-format
-#: lib/qrstorage_web/templates/qr_code/show.html.eex:10
+#: lib/qrstorage_web/templates/qr_code/preview.html.heex:12
+#: lib/qrstorage_web/templates/qr_code/show.html.heex:12
 msgid "Audio Language"
 msgstr "Sprachausgabe"
 
 #, elixir-format
-#: lib/qrstorage_web/templates/qr_code/form.html.eex:15
+#: lib/qrstorage_web/templates/qr_code/form.html.heex:38
 msgid "audio language"
 msgstr "Sprachausgabe"
 
 #, elixir-format
-#: lib/qrstorage_web/templates/qr_code/form.html.eex:24
+#: lib/qrstorage_web/templates/qr_code/form.html.heex:53
 msgid "delete after"
 msgstr "Speicherdauer in Monaten"
 
 #, elixir-format
-#: lib/qrstorage_web/controllers/qr_code_controller.ex:32
+#: lib/qrstorage_web/controllers/qr_code_controller.ex:40
 msgid "Qr code created successfully."
 msgstr "QR-Code erfolgreich erstellt."
 
 #, elixir-format
-#: lib/qrstorage_web/templates/qr_code/form.html.eex:18
+#: lib/qrstorage_web/templates/qr_code/form.html.heex:41
 msgid "Audio Text to Speech via Google"
 msgstr "Für die Sprachausgabe kommunizieren wir mit Google. Du bleibst für Google unsichtbar. Personenbezogene oder andere sensible Daten solltest du nicht eingeben."
 
 #, elixir-format
-#: lib/qrstorage_web/templates/qr_code/form.html.eex:9
+#: lib/qrstorage_web/templates/qr_code/form.html.heex:10
+#: lib/qrstorage_web/templates/qr_code/form.html.heex:12
 msgid "Type your text here"
-msgstr "Gib deinen Text oder Link hier ein!"
+msgstr "Gib deinen Text hier ein!"
+
+#, elixir-format
+#: lib/qrstorage_web/templates/qr_code/form.html.heex:46
+msgid "hide text"
+msgstr "Text in Ausgabe verstecken"
+
+#, elixir-format
+#: lib/qrstorage_web/templates/qr_code/download.html.heex:8
+msgid "Show"
+msgstr "Vorschau"
+
+#, elixir-format
+#: lib/qrstorage_web/templates/qr_code/preview.html.heex:25
+msgid "Back to code"
+msgstr "Zurück zum QR-Code"
+
+#, elixir-format, fuzzy
+#: lib/qrstorage_web/templates/qr_code/form.html.heex:8
+#: lib/qrstorage_web/templates/qr_code/form.html.heex:17
+msgid "Type your link here"
+msgstr "https://..."

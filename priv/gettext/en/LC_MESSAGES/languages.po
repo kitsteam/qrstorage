@@ -28,3 +28,21 @@ msgstr "Turkish"
 
 msgid "fr"
 msgstr "French"
+
+msgid "pl"
+msgstr "Polish"
+
+msgid "ar"
+msgstr "Arabic"
+
+msgid "ru"
+msgstr "Russian"
+
+msgid "it"
+msgstr "Italian"
+
+msgid "pt"
+msgstr "Portugese"
+
+msgid "nl"
+msgstr "Dutch"
