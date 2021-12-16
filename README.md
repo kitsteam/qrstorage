@@ -20,6 +20,14 @@ To start the container:
 - Go to http://localhost:4000/qrcodes
 - Start developing
 
+### Localisation
+
+Currently, there are two language files available, german ("de") and english ("en"). To set the default_locale, you can set QR_DEFAULT_LOCALE. The default is german.
+
+You can extract new strings to translate by running:
+
+ mix gettext.extract --merge
+
 ### Additonal licence
 
 The qrstorage [logo](https://thenounproject.com/icon/860830/) in this repo – created by [Hopkins](https://thenounproject.com/hopkins81) – is licenced under [CC BY 3.0 Unported](https://creativecommons.org/licenses/by/3.0/).

@@ -6,6 +6,10 @@ defmodule Qrstorage.TtsService do
     {:no_language}
   end
 
+  def text_to_audio(qr_code) when qr_code.content_type != :audio do
+    {:no_audio_type}
+  end
+
   def text_to_audio(qr_code) do
     request = %GoogleApi.TextToSpeech.V1.Model.SynthesizeSpeechRequest{
       audioConfig: %GoogleApi.TextToSpeech.V1.Model.AudioConfig{

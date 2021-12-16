@@ -2,27 +2,27 @@ defmodule QrstorageWeb.QrCodeControllerTest do
   use QrstorageWeb.ConnCase
 
   alias Qrstorage.QrCodes
+  alias Qrstorage.QrCodes.QrCode
+  alias Qrstorage.Repo
 
-  @create_attrs %{delete_after: ~D[2010-04-17], text: "some text"}
-  @update_attrs %{delete_after: ~D[2011-05-18], text: "some updated text"}
-  @invalid_attrs %{delete_after: nil, text: nil}
+  @create_attrs %{delete_after: "10", text: "some text", language: nil, content_type: "text"}
+  @invalid_attrs %{delete_after: "10", text: nil, language: nil, content_type: "text"}
+  @fixture_attrs %{
+    delete_after: ~D[2011-05-18],
+    text: "some text",
+    language: nil,
+    content_type: "text"
+  }
 
-  def fixture(:qr_code) do
-    {:ok, qr_code} = QrCodes.create_qr_code(@create_attrs)
+  def fixture(attrs) do
+    {:ok, qr_code} = QrCodes.create_qr_code(attrs)
     qr_code
-  end
-
-  describe "index" do
-    test "lists all qrcodes", %{conn: conn} do
-      conn = get(conn, Routes.qr_code_path(conn, :index))
-      assert html_response(conn, 200) =~ "Listing Qrcodes"
-    end
   end
 
   describe "new qr_code" do
     test "renders form", %{conn: conn} do
       conn = get(conn, Routes.qr_code_path(conn, :new))
-      assert html_response(conn, 200) =~ "New Qr code"
+      assert html_response(conn, 200) =~ "form action=\"/qrcodes\""
     end
   end
 
@@ -31,58 +31,135 @@ defmodule QrstorageWeb.QrCodeControllerTest do
       conn = post(conn, Routes.qr_code_path(conn, :create), qr_code: @create_attrs)
 
       assert %{id: id} = redirected_params(conn)
-      assert redirected_to(conn) == Routes.qr_code_path(conn, :show, id)
+      assert redirected_to(conn) == Routes.qr_code_path(conn, :download, id)
 
       conn = get(conn, Routes.qr_code_path(conn, :show, id))
-      assert html_response(conn, 200) =~ "Show Qr code"
+      assert html_response(conn, 200) =~ "Qr code created successfully"
     end
 
     test "renders errors when data is invalid", %{conn: conn} do
       conn = post(conn, Routes.qr_code_path(conn, :create), qr_code: @invalid_attrs)
-      assert html_response(conn, 200) =~ "New Qr code"
+      assert html_response(conn, 200) =~ "Oops, something went wrong"
+    end
+
+    test "uses 1 hour as the delete after date for links", %{conn: conn} do
+      link_attrs = %{@create_attrs | content_type: "link", text: "https://kits.blog"}
+
+      conn = post(conn, Routes.qr_code_path(conn, :create), qr_code: link_attrs)
+      assert %{id: id} = redirected_params(conn)
+
+      qr_code = QrCode |> Repo.get!(id)
+      assert qr_code.delete_after <= Timex.shift(Timex.now(), hours: 1)
     end
   end
 
-  describe "edit qr_code" do
-    setup [:create_qr_code]
+  describe "show qr_code" do
+    setup [:create_audio_qr_code, :create_link_qr_code]
 
-    test "renders form for editing chosen qr_code", %{conn: conn, qr_code: qr_code} do
-      conn = get(conn, Routes.qr_code_path(conn, :edit, qr_code))
-      assert html_response(conn, 200) =~ "Edit Qr code"
+    test "hides text for audio files by default", %{conn: conn, audio_qr_code: audio_qr_code} do
+      conn = get(conn, Routes.qr_code_path(conn, :show, audio_qr_code.id))
+      assert !(html_response(conn, 200) =~ audio_qr_code.text)
+    end
+
+    test "doesnt hide text for audio files with hide_text set to false", %{
+      conn: conn,
+      audio_qr_code: audio_qr_code
+    } do
+      audio_qr_code
+      |> QrCode.changeset(%{hide_text: false})
+      |> Repo.update!()
+
+      conn = get(conn, Routes.qr_code_path(conn, :show, audio_qr_code.id))
+      assert html_response(conn, 200) =~ audio_qr_code.text
+    end
+
+    test "that links redirect to the link", %{
+      conn: conn,
+      link_qr_code: link_qr_code
+    } do
+      conn = get(conn, Routes.qr_code_path(conn, :show, link_qr_code.id))
+      assert html_response(conn, 302) =~ link_qr_code.text
     end
   end
 
-  describe "update qr_code" do
-    setup [:create_qr_code]
+  describe "preview qr_code" do
+    setup [:create_text_qr_code, :create_audio_qr_code, :create_link_qr_code]
 
-    test "redirects when data is valid", %{conn: conn, qr_code: qr_code} do
-      conn = put(conn, Routes.qr_code_path(conn, :update, qr_code), qr_code: @update_attrs)
-      assert redirected_to(conn) == Routes.qr_code_path(conn, :show, qr_code)
-
-      conn = get(conn, Routes.qr_code_path(conn, :show, qr_code))
-      assert html_response(conn, 200) =~ "some updated text"
+    test "that audio qr codes show a preview", %{conn: conn, audio_qr_code: audio_qr_code} do
+      conn = get(conn, Routes.qr_code_path(conn, :preview, audio_qr_code.id))
+      assert html_response(conn, 200) =~ "/qrcodes/download/"
     end
 
-    test "renders errors when data is invalid", %{conn: conn, qr_code: qr_code} do
-      conn = put(conn, Routes.qr_code_path(conn, :update, qr_code), qr_code: @invalid_attrs)
-      assert html_response(conn, 200) =~ "Edit Qr code"
+    test "that text qr codes show a preview", %{conn: conn, text_qr_code: text_qr_code} do
+      conn = get(conn, Routes.qr_code_path(conn, :preview, text_qr_code.id))
+      assert html_response(conn, 200) =~ text_qr_code.text
     end
-  end
 
-  describe "delete qr_code" do
-    setup [:create_qr_code]
-
-    test "deletes chosen qr_code", %{conn: conn, qr_code: qr_code} do
-      conn = delete(conn, Routes.qr_code_path(conn, :delete, qr_code))
-      assert redirected_to(conn) == Routes.qr_code_path(conn, :index)
-      assert_error_sent 404, fn ->
-        get(conn, Routes.qr_code_path(conn, :show, qr_code))
-      end
+    test "that links redirect to the link", %{
+      conn: conn,
+      link_qr_code: link_qr_code
+    } do
+      conn = get(conn, Routes.qr_code_path(conn, :preview, link_qr_code.id))
+      assert html_response(conn, 302) =~ link_qr_code.text
     end
   end
 
-  defp create_qr_code(_) do
-    qr_code = fixture(:qr_code)
-    %{qr_code: qr_code}
+  describe "download qr_code" do
+    setup [:create_audio_qr_code, :create_link_qr_code, :create_text_qr_code]
+
+    test "that qr codes with type link contain the url directly", %{
+      conn: conn,
+      link_qr_code: link_qr_code
+    } do
+      conn = get(conn, Routes.qr_code_path(conn, :download, link_qr_code.id))
+      assert html_response(conn, 200) =~ "data-url=\"" <> link_qr_code.text
+    end
+
+    test "that qr codes with type audio contain the url to qrstorage", %{
+      conn: conn,
+      audio_qr_code: audio_qr_code
+    } do
+      conn = get(conn, Routes.qr_code_path(conn, :download, audio_qr_code.id))
+
+      assert html_response(conn, 200) =~
+               "data-url=\"" <> Routes.qr_code_url(conn, :show, audio_qr_code.id)
+    end
+
+    test "that qr codes with type text contain the url to qrstorage", %{
+      conn: conn,
+      text_qr_code: text_qr_code
+    } do
+      conn = get(conn, Routes.qr_code_path(conn, :download, text_qr_code.id))
+
+      assert html_response(conn, 200) =~
+               "data-url=\"" <> Routes.qr_code_url(conn, :show, text_qr_code.id)
+    end
+  end
+
+  defp create_audio_qr_code(_) do
+    attrs = %{@fixture_attrs | content_type: "audio", language: "de"}
+    audio_qr_code = fixture(attrs)
+
+    QrCode.store_audio_file(
+      audio_qr_code,
+      %{"audio_file" => "some binary text", "audio_file_type" => "audio/mp3"}
+    )
+    |> Repo.update!()
+
+    %{audio_qr_code: audio_qr_code}
+  end
+
+  defp create_link_qr_code(_) do
+    attrs = %{@fixture_attrs | content_type: "link", text: "https://kits.blog"}
+    qr_code = fixture(attrs)
+
+    %{link_qr_code: qr_code}
+  end
+
+  defp create_text_qr_code(_) do
+    attrs = %{@fixture_attrs | content_type: "text", text: "some text"}
+    qr_code = fixture(attrs)
+
+    %{text_qr_code: qr_code}
   end
 end

@@ -8,7 +8,6 @@ defmodule Qrstorage.QrCodes do
 
   alias Qrstorage.QrCodes.QrCode
 
-
   @doc """
   Gets a single qr_code.
 

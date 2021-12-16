@@ -1,5 +1,9 @@
-/* This file is for your main application css. */
-@import "~bootstrap/scss/bootstrap";
+/* Override bootstrap parameters, they have to be before the import: */
+$btn-focus-width:0; $btn-focus-box-shadow:none;
+
+/* Import files: */
+@import "../node_modules/bootstrap/scss/bootstrap";
+@import "./colorpicker.scss";
 
 /* Alerts and form errors */
 .alert {
@@ -33,4 +37,16 @@
   color: #a94442;
   display: block;
   margin: -1rem 0 2rem;
+}
+
+.text-left {
+  text-align: left;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.invalid-feedback {
+  margin: 0px;
 }

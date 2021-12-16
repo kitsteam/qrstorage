@@ -15,3 +15,21 @@ msgstr ""
 
 msgid "fr"
 msgstr ""
+
+msgid "pl"
+msgstr ""
+
+msgid "ar"
+msgstr ""
+
+msgid "ru"
+msgstr ""
+
+msgid "it"
+msgstr ""
+
+msgid "pt"
+msgstr ""
+
+msgid "nl"
+msgstr ""

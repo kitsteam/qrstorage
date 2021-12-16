@@ -11,6 +11,12 @@ RUN apk add \
   nodejs \
   npm
 
+# Install for dart-sass https://github.com/CargoSense/dart_sass/issues/13
+ARG GLIBC_VERSION=2.33-r0
+RUN wget -q -O /etc/apk/keys/sgerrand.rsa.pub https://alpine-pkgs.sgerrand.com/sgerrand.rsa.pub
+RUN wget https://github.com/sgerrand/alpine-pkg-glibc/releases/download/${GLIBC_VERSION}/glibc-${GLIBC_VERSION}.apk
+RUN apk add glibc-${GLIBC_VERSION}.apk
+
 RUN mix do local.hex --force, local.rebar --force
 
 WORKDIR $APP_PATH
@@ -37,28 +43,23 @@ FROM elixir_alpine AS production_build
 # Set build ENV
 ENV MIX_ENV=prod
 
+# Install for dart-sass https://github.com/CargoSense/dart_sass/issues/13
+ARG GLIBC_VERSION=2.33-r0
+RUN wget -q -O /etc/apk/keys/sgerrand.rsa.pub https://alpine-pkgs.sgerrand.com/sgerrand.rsa.pub
+RUN wget https://github.com/sgerrand/alpine-pkg-glibc/releases/download/${GLIBC_VERSION}/glibc-${GLIBC_VERSION}.apk
+RUN apk add glibc-${GLIBC_VERSION}.apk
+
 # Install mix dependencies
 COPY mix.exs mix.lock $APP_PATH/
 RUN mix do deps.get, deps.compile
 
-# Build assets
-COPY assets $APP_PATH/assets/
-RUN set -eux; \
-    npm \
-      --loglevel=error \
-      --no-audit \
-      --prefix assets \
-      --progress=false \
-      ci \
-    ; \
-    npm \
-      --prefix assets \
-      run \
-      deploy \
-    ;
-
 # Compile and build release
 COPY . .
+
+# Build assets
+# COPY assets/package.json assets/package-lock.json $APP_PATH/assets/
+RUN npm install --prefix assets
+RUN mix assets.deploy
 RUN mix do phx.digest, compile, release
 
 # Prepare release image

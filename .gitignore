@@ -29,14 +29,15 @@ npm-debug.log
 /assets/node_modules/
 
 # Since we are building assets from assets/,
-# we ignore priv/static. You may want to comment
-# this depending on your deployment strategy.
-/priv/static/**/*.*
+# we ignore css/jss generated in /priv/static, except static css files from kits
+/priv/static/assets/
+/priv/static/css/*.*
 !/priv/static/css/kits.css
 !/priv/static/css/kits_home.css
 
-
+# Ignore docker override files:
 docker-compose.override.yml
+docker-compose-kits.override.yml
 
 # Just to be sure - ignore gcp file in case anyone puts this in the same folder (DONT!)
 .gcp-config.json

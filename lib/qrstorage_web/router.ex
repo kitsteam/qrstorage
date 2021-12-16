@@ -19,6 +19,7 @@ defmodule QrstorageWeb.Router do
     get "/", QrCodeController, :new
     resources "/qrcodes", QrCodeController, only: [:new, :create, :show]
     get "/qrcodes/download/:id", QrCodeController, :download
+    get "/qrcodes/preview/:id", QrCodeController, :preview
     get "/audio_file/:id", QrCodeController, :audio_file
   end
 
