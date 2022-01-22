@@ -1,0 +1,18 @@
+#editor-container {
+    height: 275px;
+  }
+  
+.ql-align-right {
+    text-align: right;
+    list-style-position: inside;
+}
+
+.ql-align-center {
+    text-align: center;
+    list-style-position: inside;
+}
+
+// This overrides boostraps reboot.scss setting, so that all icons in the toolbare are top aligned:
+#editor-container > img, svg {
+    vertical-align: top;
+}

@@ -19,18 +19,9 @@ defmodule QrstorageWeb.QrCodeController do
   end
 
   def create(conn, %{"qr_code" => qr_code_params}) do
-    # delete links after one day. We only need them to display the qr code properly and for preview purposes.
-    delete_after =
-      if Map.get(qr_code_params, "content_type") == "link" do
-        Timex.shift(Timex.now(), hours: 1)
-      else
-        months = Map.get(qr_code_params, "delete_after") |> Integer.parse() |> elem(0)
-        Timex.shift(Timex.now(), months: months)
-      end
+    qr_code_params = qr_code_params |> convert_delete_after() |> convert_deltas()
 
-    new_params = Map.put(qr_code_params, "delete_after", delete_after)
-
-    case QrCodes.create_qr_code(new_params) do
+    case QrCodes.create_qr_code(qr_code_params) do
       {:ok, qr_code} ->
         if qr_code.content_type == :audio do
           Qrstorage.TtsService.text_to_audio(qr_code)
@@ -68,5 +59,31 @@ defmodule QrstorageWeb.QrCodeController do
   def download(conn, %{"id" => id}) do
     qr_code = QrCodes.get_qr_code!(id)
     render(conn, "download.html", qr_code: qr_code)
+  end
+
+  defp convert_delete_after(qr_code_params) do
+    # delete links after one day. We only need them to display the qr code properly and for preview purposes.
+    delete_after =
+      if Map.get(qr_code_params, "content_type") == "link" do
+        Timex.shift(Timex.now(), hours: 1)
+      else
+        months = Map.get(qr_code_params, "delete_after") |> Integer.parse() |> elem(0)
+        Timex.shift(Timex.now(), months: months)
+      end
+
+    qr_code_params = Map.put(qr_code_params, "delete_after", delete_after)
+    qr_code_params
+  end
+
+  defp convert_deltas(qr_code_params) do
+    # we need to convert the deltas to json:
+    deltas_json =
+      case JSON.decode(Map.get(qr_code_params, "deltas", "")) do
+        {:ok, deltas_json} -> deltas_json
+        {:error, _} -> %{}
+      end
+
+    qr_code_params = Map.put(qr_code_params, "deltas", deltas_json)
+    qr_code_params
   end
 end

@@ -1,0 +1,38 @@
+<%= form_for @changeset, @action, [id: "text"], fn f -> %>
+<!-- invisible fields -->
+<%= radio_button f, :content_type, "text", [class: "visually-hidden", autocomplete: "off", checked: true] %>
+<%= select f, :color, translated_colors_for_select(), class: "visually-hidden", name: "color" %> 
+<%= text_input f, :deltas, value: "", class: "visually-hidden", id: "deltas" %> 
+<%= text_input f, :text, class: "visually-hidden", id: "html" %> 
+
+  <%= if @changeset.action do %>
+    <div class="alert alert-danger">
+      <p><%= gettext("Oops, something went wrong! Please check the errors below.") %></p>
+    </div>
+  <% end %>
+    
+  <div class="form-group">
+    <div id="editor-container"></div>
+    <span id="character-count" data-max-characters="2000">2000</span> <span><%= gettext("Zeiche(n) übrig") %></span>
+    <div class="invalid-feedback">
+      <%= error_tag f, :text %>
+      <%= error_tag f, :deltas %>
+    </div>
+  </div>
+<br/>
+    <%= gettext("delete after") %>
+    <br/><br/>
+    <div class="btn-group" role="group">
+      <%= radio_button f, :delete_after, 1, class: "btn-check", autocomplete: "off", checked: true %>
+      <label class="btn btn-secondary" for="text_delete_after_1">1</label>
+
+      <%= radio_button f, :delete_after, 6, class: "btn-check", autocomplete: "off" %>
+      <label class="btn btn-secondary" for="text_delete_after_6">6</label>
+
+      <%= radio_button f, :delete_after, 12, class: "btn-check", autocomplete: "off" %>
+      <label class="btn btn-secondary" for="text_delete_after_12">12</label>
+    </div>
+    <br />  <br />  
+
+  <%= submit gettext("Save"), class: "btn btn-primary" %>
+<% end %>

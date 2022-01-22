@@ -14,23 +14,16 @@ const showGroups = (contentType) => {
     });
 }
 
-const showInputPlaceholder = (contentType) => {
-    const textArea = document.querySelector("textarea#text");
-    textArea.placeholder = contentType.getAttribute("data-placeholder");
-}
-
 if (contentType) {
     // show correct groups after page load:
     const currentContentType = document.querySelector('input[name="qr_code[content_type]"]:checked');
     showGroups(currentContentType);
-    showInputPlaceholder(currentContentType);
 
     // show different types of the form:
     // change form based on content type on click:
     document.querySelectorAll('.content-type').forEach((contentType) => {
         contentType.addEventListener('click', (event) => {  
             showGroups(contentType);
-            showInputPlaceholder(contentType);
         }); 
     });
 }

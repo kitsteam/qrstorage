@@ -11,7 +11,8 @@ defmodule Qrstorage.QrCodesTest do
       text: "some text",
       hide_text: false,
       content_type: "text",
-      language: nil
+      language: nil,
+      deltas: %{"id" => "test"}
     }
     @attrs_without_hide_text %{
       delete_after: ~D[2010-04-17],
@@ -72,6 +73,58 @@ defmodule Qrstorage.QrCodesTest do
       valid_link_attrs = %{@valid_attrs | content_type: "audio", language: "de"}
 
       assert {:ok, %QrCode{} = _qr_code} = QrCodes.create_qr_code(valid_link_attrs)
+    end
+
+    test "create_qr_code/1 with link longer than 2000 returns error changeset" do
+      too_long = String.duplicate("a", 2001)
+
+      invalid_link_attrs = %{
+        @valid_attrs
+        | content_type: "link",
+          text: "https://kits.blog/?#{too_long}"
+      }
+
+      assert {:error, %Ecto.Changeset{}} = QrCodes.create_qr_code(invalid_link_attrs)
+    end
+
+    test "create_qr_code/1 with audio longer than 2000 returns error changeset" do
+      too_long = String.duplicate("a", 2001)
+
+      invalid_audio_attrs = %{
+        @valid_attrs
+        | content_type: "audio",
+          language: "de",
+          text: too_long
+      }
+
+      assert {:error, %Ecto.Changeset{}} = QrCodes.create_qr_code(invalid_audio_attrs)
+    end
+
+    test "create_qr_code/1 with audio with length of 2000 returns ok" do
+      correct_length = String.duplicate("a", 2000)
+
+      valid_audio_attrs = %{
+        @valid_attrs
+        | content_type: "audio",
+          language: "de",
+          text: correct_length
+      }
+
+      assert {:ok, %QrCode{} = _qr_code} = QrCodes.create_qr_code(valid_audio_attrs)
+    end
+
+    test "create_qr_code/1 with text longer than 2000 returns error changeset" do
+      too_long = String.duplicate("a", 2001)
+      invalid_text_attrs = %{@valid_attrs | content_type: "text", text: too_long}
+
+      assert {:error, %Ecto.Changeset{}} = QrCodes.create_qr_code(invalid_text_attrs)
+    end
+
+    test "create_qr_code/1 with text equal 2000 characters excluding tags returns ok" do
+      correct_length = String.duplicate("<a>a</a>", 2000)
+      valid_text_attrs = %{@valid_attrs | content_type: "text", text: correct_length}
+
+      assert {:ok, %QrCode{} = _qr_code} = QrCodes.create_qr_code(valid_text_attrs)
     end
   end
 end
