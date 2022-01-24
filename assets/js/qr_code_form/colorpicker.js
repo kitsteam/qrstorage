@@ -3,9 +3,14 @@ const createColor = (color) => {
 }
 
 const selectColor = (colorElement) => {
+    console.log("test")
     // set input field to new color:
-    document.querySelector('#colors').value = colorElement.dataset.color;
-
+    document.querySelectorAll("select[name='qr_code[color]']").forEach((select) => {
+        console.log("test")
+        console.log(colorElement.dataset.color);
+        select.value = colorElement.dataset.color;
+    });
+    
     // remove previous selection:
     const selectedColor = document.querySelector('.color-selected');
     
@@ -22,12 +27,12 @@ const colorPicker = document.querySelector('#colorpicker');
 
 if (colorPicker) {
     // create colors:
-    const colors = document.querySelectorAll('#colors > option');
+    const colors = document.querySelector("select[name='qr_code[color]']").options;
 
-    colors.forEach((color) => {  
+    for (let color of colors) {
         colorPicker.innerHTML += createColor(color.value);
-        });
-
+    }
+    
     const defaultColor = document.querySelector('.color:first-child')  
     // select default color:
     selectColor(defaultColor);

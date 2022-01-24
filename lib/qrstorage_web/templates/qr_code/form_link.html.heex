@@ -1,0 +1,24 @@
+<%= form_for @changeset, @action, [id: "link"], fn f -> %>
+
+<!-- invisible fields -->
+<%= radio_button f, :content_type, "link", [class: "visually-hidden", autocomplete: "off", checked: true] %>
+<%= select f, :color, translated_colors_for_select(), class: "visually-hidden" %>    
+
+
+  <%= if @changeset.action do %>
+    <div class="alert alert-danger">
+      <p><%= gettext("Oops, something went wrong! Please check the errors below.") %></p>
+    </div>
+  <% end %>
+   
+  <div class="form-group">
+    <%= textarea f, :text, id: "link", class: "form-control", required: true, maxlength: 2000, placeholder: gettext("Type your link here") %>
+    <div class="invalid-feedback">
+      <%= error_tag f, :text %>
+    </div>
+  </div>
+
+    <br />  <br />  
+
+  <%= submit gettext("Save"), class: "btn btn-primary" %>
+<% end %>
