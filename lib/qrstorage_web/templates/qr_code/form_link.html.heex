@@ -2,7 +2,7 @@
 
 <!-- invisible fields -->
 <%= radio_button f, :content_type, "link", [class: "visually-hidden", autocomplete: "off", checked: true] %>
-<%= select f, :color, translated_colors_for_select(), class: "visually-hidden", name: "color" %>    
+<%= select f, :color, translated_colors_for_select(), class: "visually-hidden" %>    
 
 
   <%= if @changeset.action do %>

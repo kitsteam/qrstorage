@@ -2,7 +2,7 @@
 
 <!-- invisible fields -->
 <%= radio_button f, :content_type, "audio", [class: "visually-hidden", autocomplete: "off", checked: true] %>
-<%= select f, :color, translated_colors_for_select(), class: "visually-hidden", name: "color" %> 
+<%= select f, :color, translated_colors_for_select(), class: "visually-hidden" %> 
 
   <%= if @changeset.action do %>
     <div class="alert alert-danger">
@@ -16,7 +16,7 @@
         <%= error_tag f, :text %>
       </div>
     </div>
-
+  <br/>
     <div class="form-group">
       <%= label f, :language, gettext("audio language") %>
       <%= select f, :language, translated_languages_for_select(), class: "form-control" %>

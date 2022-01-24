@@ -1,7 +1,7 @@
 <%= form_for @changeset, @action, [id: "text"], fn f -> %>
 <!-- invisible fields -->
 <%= radio_button f, :content_type, "text", [class: "visually-hidden", autocomplete: "off", checked: true] %>
-<%= select f, :color, translated_colors_for_select(), class: "visually-hidden", name: "color" %> 
+<%= select f, :color, translated_colors_for_select(), class: "visually-hidden" %> 
 <%= text_input f, :deltas, value: "", class: "visually-hidden", id: "deltas" %> 
 <%= text_input f, :text, class: "visually-hidden", id: "html" %> 
 
