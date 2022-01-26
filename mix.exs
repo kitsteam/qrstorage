@@ -53,7 +53,6 @@ defmodule Qrstorage.MixProject do
       {:google_api_text_to_speech, "~> 0.12"},
       {:goth, "~> 1.2.0"},
       {:oban, "~> 2.8.0"},
-      {:ecto_fields, "~> 1.3.0"},
       {:html_sanitize_ex, "~> 1.4"},
       {:json, "~> 1.4"}
     ]
