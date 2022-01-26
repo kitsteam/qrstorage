@@ -75,7 +75,8 @@ defmodule Qrstorage.QrCodes.QrCode do
       # we only check the type link, other types don't have to be a valid url:
       case get_field(changeset, :content_type) do
         :link ->
-            if valid_url?(value), do: [], else: [{field, "Link is invalid"}]
+          if valid_url?(value), do: [], else: [{field, "Link is invalid"}]
+
         _ ->
           []
       end
