@@ -63,6 +63,12 @@ defmodule Qrstorage.QrCodesTest do
       assert {:ok, %QrCode{} = _qr_code} = QrCodes.create_qr_code(valid_link_attrs)
     end
 
+    test "create_qr_code/1 with link with uppercase letters is valid" do
+      valid_link_attrs = %{@valid_attrs | content_type: "link", text: "HTTPS://KITS.blog"}
+
+      assert {:ok, %QrCode{} = _qr_code} = QrCodes.create_qr_code(valid_link_attrs)
+    end
+
     test "create_qr_code/1 with audio but without language returns error changeset" do
       invalid_link_attrs = %{@valid_attrs | content_type: "audio", language: nil}
 
