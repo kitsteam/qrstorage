@@ -3,11 +3,8 @@ const createColor = (color) => {
 }
 
 const selectColor = (colorElement) => {
-    console.log("test")
     // set input field to new color:
     document.querySelectorAll("select[name='qr_code[color]']").forEach((select) => {
-        console.log("test")
-        console.log(colorElement.dataset.color);
         select.value = colorElement.dataset.color;
     });
     

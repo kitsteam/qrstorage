@@ -28,6 +28,11 @@ if (editorContainer) {
         },
         theme: 'snow'  // or 'bubble'
       });
+
+      // change the link placeholder, default is quilljs.com
+      var tooltip = quill.theme.tooltip;
+      var input = tooltip.root.querySelector("input[data-link]");
+      input.dataset.link = 'https://kits.blog';
     
     var form = document.querySelector('form#text');
     form.onsubmit = function() {
