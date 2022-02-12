@@ -31,4 +31,13 @@ defmodule QrstorageWeb.QrCodeView do
   def sanitize(text) do
     Scrubber.scrub(text, TextScrubber)
   end
+
+  def deltas_json_from_changeset(changeset) do
+    deltas = Map.get(changeset.changes, :deltas, "")
+
+    case JSON.encode(deltas) do
+      {:ok, json} -> json
+      _ -> ""
+    end
+  end
 end

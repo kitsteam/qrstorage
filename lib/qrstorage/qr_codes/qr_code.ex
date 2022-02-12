@@ -11,6 +11,8 @@ defmodule Qrstorage.QrCodes.QrCode do
   @colors ~w[black gold darkgreen darkslateblue midnightblue crimson]a
   @content_types ~w[link audio text]a
 
+  @text_length_limits %{link: 1500, audio: 2000, text: 2000}
+
   @primary_key {:id, :binary_id, autogenerate: true}
   @foreign_key_type :binary_id
   schema "qrcodes" do
@@ -57,15 +59,20 @@ defmodule Qrstorage.QrCodes.QrCode do
     @content_types
   end
 
+  def text_length_limits do
+    @text_length_limits
+  end
+
   def validate_text_length(changeset, field) do
     validate_change(changeset, field, fn field, value ->
-      max_count = 2000
-      count = text_length(value, get_field(changeset, :content_type))
+      content_type = get_field(changeset, :content_type)
+      count = text_length(value, content_type)
+      max_characters_count = @text_length_limits[content_type]
 
-      if count <= max_count do
+      if count <= max_characters_count do
         []
       else
-        [{field, "should be at most #{max_count} character(s)"}]
+        [{field, "Text is too long"}]
       end
     end)
   end

@@ -12,7 +12,8 @@
   <% end %>
    
   <div class="form-group">
-    <%= textarea f, :text, id: "link", class: "form-control", required: true, maxlength: 2000, placeholder: gettext("Type your link here") %>
+    <%= textarea f, :text, class: "form-control", required: true, maxlength: QrCode.text_length_limits[:link], placeholder: gettext("Type your link here") %>
+    <%= render("form_character_counter.html", max_length: QrCode.text_length_limits[:link]) %>
     <div class="invalid-feedback">
       <%= error_tag f, :text %>
     </div>
