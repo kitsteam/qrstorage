@@ -8,13 +8,13 @@ In this example, we will use an override file. Create a new file called docker c
 
 ```
 cp docker compose-kits.yml docker compose-kits.override.yml
-docker compose -f docker compose-kits.yml -f docker compose-kits.override.yml up
+docker compose -f docker-compose-kits.yml -f docker-compose-kits.override.yml up
 ```
 
 To make sure updates to your file are included, force a recreation:
 
 ```sh
-docker compose -f docker compose-kits.yml -f docker compose-kits.override.yml up --build --force-recreate
+docker compose -f docker-compose-kits.yml -f docker-compose-kits.override.yml up --build --force-recreate
 ```
 
 Notes:
