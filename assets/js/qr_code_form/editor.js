@@ -1,9 +1,10 @@
 import Quill from 'quill'
 
+
 Quill.register('modules/counter', function(quill, options) {
-    var container = document.querySelector(options.container);
-    quill.on('text-change', function() {
-      var text = quill.getText();
+    const container = document.querySelector(options.container);
+    quill.on('text-change', () => {
+      const text = quill.getText();
       const maxCharacters = container.getAttribute('data-max-characters');
       const charactersLeft = maxCharacters - text.trim().length
 
@@ -19,7 +20,7 @@ Quill.register('modules/counter', function(quill, options) {
 const editorContainer = document.querySelector("#editor-container")
 
 if (editorContainer) {
-    var quill = new Quill('#editor-container', {
+    const quill = new Quill('#editor-container', {
         modules: {
           toolbar: [
             ['bold', 'italic', 'underline', 'strike'],
@@ -35,29 +36,29 @@ if (editorContainer) {
       });
 
       // change the link placeholder, default is quilljs.com
-      var tooltip = quill.theme.tooltip;
-      var input = tooltip.root.querySelector("input[data-link]");
+      const tooltip = quill.theme.tooltip;
+      const input = tooltip.root.querySelector("input[data-link]");
       input.dataset.link = 'https://kits.blog';
     
       // if deltas are present, load them:
-      deltas_json = document.querySelector('#deltas').value
-      if (deltas_json) {
+      deltasJson = document.querySelector('#deltas').value
+      if (deltasJson) {
         try {
-          parsed_json = JSON.parse(deltas_json)
-          quill.setContents(JSON.parse(document.querySelector('#deltas').value))
+          parsedJson = JSON.parse(deltasJson)
+          quill.setContents(parsedJson)
         } catch (exception) {
           // no need to handle this - just leave the text editor blank
         }
       }
 
-    var form = document.querySelector('form#text');
-    form.onsubmit = function() {
+    const form = document.querySelector('form#text');
+    form.onsubmit = () => {
       // Populate hidden form on submit
-      var html_input = document.querySelector('input[id=html]');
-      html_input.value = quill.root.innerHTML;
+      const htmlInput = document.querySelector('input[id=html]');
+      htmlInput.value = quill.root.innerHTML;
 
-      var delta_input = document.querySelector('input[id=deltas]');
-      delta_input.value = JSON.stringify(quill.getContents());
+      const deltaInput = document.querySelector('input[id=deltas]');
+      deltaInput.value = JSON.stringify(quill.getContents());
       
       return true;
     };

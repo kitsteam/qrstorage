@@ -1,13 +1,13 @@
 const containerIds = ["#link", "#audio"];
 
-containerIds.forEach(function(containerId) {
+containerIds.forEach((containerId) => {
   const textContainer = document.querySelector(containerId + " textarea")
   const characterCounterContainer = document.querySelector(containerId + " .character-counter");
 
   if (textContainer) {
-    textContainer.addEventListener('input', function() {
+    textContainer.addEventListener('input', () => {
       // handle character counter:
-      var textLength = textContainer.textLength
+      const textLength = textContainer.textLength
       const maxCharacters = textContainer.getAttribute('maxlength');
       const charactersLeft = maxCharacters - textLength
 
