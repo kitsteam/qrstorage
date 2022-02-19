@@ -1,20 +1,26 @@
 import Quill from 'quill'
 
+
 Quill.register('modules/counter', function(quill, options) {
-    var container = document.querySelector(options.container);
-    quill.on('text-change', function() {
-      var text = quill.getText();
+    const container = document.querySelector(options.container);
+    quill.on('text-change', () => {
+      const text = quill.getText();
       const maxCharacters = container.getAttribute('data-max-characters');
-      const charactersLeft = maxCharacters - text.length
+      const charactersLeft = maxCharacters - text.trim().length;
 
       container.innerText = charactersLeft;
+
+      // limit to maxCharacters:
+      if (charactersLeft <= 0) {
+        quill.deleteText(maxCharacters, quill.getLength());
+      }
     });
   });
 
 const editorContainer = document.querySelector("#editor-container")
 
 if (editorContainer) {
-    var quill = new Quill('#editor-container', {
+    const quill = new Quill('#editor-container', {
         modules: {
           toolbar: [
             ['bold', 'italic', 'underline', 'strike'],
@@ -30,18 +36,31 @@ if (editorContainer) {
       });
 
       // change the link placeholder, default is quilljs.com
-      var tooltip = quill.theme.tooltip;
-      var input = tooltip.root.querySelector("input[data-link]");
+      const tooltip = quill.theme.tooltip;
+      const input = tooltip.root.querySelector("input[data-link]");
       input.dataset.link = 'https://kits.blog';
     
-    var form = document.querySelector('form#text');
-    form.onsubmit = function() {
-      // Populate hidden form on submit
-      var html_input = document.querySelector('input[id=html]');
-      html_input.value = quill.root.innerHTML;
+      // if deltas are present, load them:
+      deltasJson = document.querySelector('#deltas').value;
 
-      var delta_input = document.querySelector('input[id=deltas]');
-      delta_input.value = JSON.stringify(quill.getContents());
+      if (deltasJson) {
+        try {
+          parsedJson = JSON.parse(deltasJson);
+          quill.setContents(parsedJson);
+        } catch (exception) {
+          // no need to handle this - just leave the text editor blank
+          console.error("Deltas JSON could not be parsed.");
+        }
+      }
+
+    const form = document.querySelector('form#text');
+    form.onsubmit = () => {
+      // Populate hidden form on submit
+      const htmlInput = document.querySelector('input[id=html]');
+      htmlInput.value = quill.root.innerHTML;
+
+      const deltaInput = document.querySelector('input[id=deltas]');
+      deltaInput.value = JSON.stringify(quill.getContents());
       
       return true;
     };

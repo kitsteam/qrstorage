@@ -100,3 +100,7 @@ msgstr ""
 # Custom field from qr code.ex:
 msgid "Audio type requires language"
 msgstr ""
+
+# Custom field from qr code.ex:
+msgid "Text is too long"
+msgstr ""

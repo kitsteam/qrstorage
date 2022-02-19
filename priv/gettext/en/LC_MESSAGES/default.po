@@ -13,60 +13,60 @@ msgstr ""
 
 #, elixir-format
 #: lib/qrstorage_web/templates/qr_code/download.html.heex:7
-#: lib/qrstorage_web/templates/qr_code/preview.html.heex:22 lib/qrstorage_web/templates/qr_code/show.html.heex:22
+#: lib/qrstorage_web/templates/qr_code/show.html.heex:27
 msgid "Download"
 msgstr ""
 
 #, elixir-format
-#: lib/qrstorage_web/templates/qr_code/form.html.heex:4
+#: lib/qrstorage_web/templates/qr_code/form_audio.html.heex:9
+#: lib/qrstorage_web/templates/qr_code/form_link.html.heex:10 lib/qrstorage_web/templates/qr_code/form_text.html.heex:10
 msgid "Oops, something went wrong! Please check the errors below."
 msgstr ""
 
 #, elixir-format
-#: lib/qrstorage_web/templates/qr_code/form.html.heex:69
+#: lib/qrstorage_web/templates/qr_code/form_audio.html.heex:50
+#: lib/qrstorage_web/templates/qr_code/form_link.html.heex:24 lib/qrstorage_web/templates/qr_code/form_text.html.heex:37
 msgid "Save"
 msgstr ""
 
 #, elixir-format
-#: lib/qrstorage_web/templates/qr_code/preview.html.heex:9
-#: lib/qrstorage_web/templates/qr_code/show.html.heex:9
+#: lib/qrstorage_web/templates/qr_code/show.html.heex:14
 msgid "Deletion Date"
 msgstr "Deleted"
 
 #, elixir-format
-#: lib/qrstorage_web/templates/qr_code/preview.html.heex:12
-#: lib/qrstorage_web/templates/qr_code/show.html.heex:12
+#: lib/qrstorage_web/templates/qr_code/show.html.heex:17
 msgid "Audio Language"
 msgstr ""
 
 #, elixir-format
-#: lib/qrstorage_web/templates/qr_code/form.html.heex:38
+#: lib/qrstorage_web/templates/qr_code/form_audio.html.heex:22
 msgid "audio language"
 msgstr ""
 
 #, elixir-format
-#: lib/qrstorage_web/templates/qr_code/form.html.heex:53
+#: lib/qrstorage_web/templates/qr_code/form_audio.html.heex:35
+#: lib/qrstorage_web/templates/qr_code/form_text.html.heex:23
 msgid "delete after"
 msgstr ""
 
 #, elixir-format
-#: lib/qrstorage_web/controllers/qr_code_controller.ex:40
+#: lib/qrstorage_web/controllers/qr_code_controller.ex:31
 msgid "Qr code created successfully."
 msgstr ""
 
 #, elixir-format
-#: lib/qrstorage_web/templates/qr_code/form.html.heex:41
+#: lib/qrstorage_web/templates/qr_code/form_audio.html.heex:25
 msgid "Audio Text to Speech via Google"
 msgstr ""
 
 #, elixir-format
-#: lib/qrstorage_web/templates/qr_code/form.html.heex:10
-#: lib/qrstorage_web/templates/qr_code/form.html.heex:12
+#: lib/qrstorage_web/templates/qr_code/form_audio.html.heex:14
 msgid "Type your text here"
 msgstr ""
 
 #, elixir-format
-#: lib/qrstorage_web/templates/qr_code/form.html.heex:46
+#: lib/qrstorage_web/templates/qr_code/form_audio.html.heex:30
 msgid "hide text"
 msgstr ""
 
@@ -76,12 +76,21 @@ msgid "Show"
 msgstr ""
 
 #, elixir-format
-#: lib/qrstorage_web/templates/qr_code/preview.html.heex:25
+#: lib/qrstorage_web/templates/qr_code/preview.html.heex:2
 msgid "Back to code"
 msgstr ""
 
-#, elixir-format, fuzzy
-#: lib/qrstorage_web/templates/qr_code/form.html.heex:8
-#: lib/qrstorage_web/templates/qr_code/form.html.heex:17
+#, elixir-format
+#: lib/qrstorage_web/templates/qr_code/form_link.html.heex:15
 msgid "Type your link here"
+msgstr ""
+
+#, elixir-format
+#: lib/qrstorage_web/templates/qr_code/form_text.html.heex:16
+msgid "Zeiche(n) übrig"
+msgstr ""
+
+#, elixir-format
+#: lib/qrstorage_web/templates/qr_code/form_character_counter.html.heex:1
+msgid "character(s) left"
 msgstr ""

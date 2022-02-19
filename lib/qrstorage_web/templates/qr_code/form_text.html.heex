@@ -2,7 +2,8 @@
 <!-- invisible fields -->
 <%= radio_button f, :content_type, "text", [class: "visually-hidden", autocomplete: "off", checked: true] %>
 <%= select f, :color, translated_colors_for_select(), class: "visually-hidden" %> 
-<%= text_input f, :deltas, value: "", class: "visually-hidden", id: "deltas" %> 
+
+<%= text_input f, :deltas, value: deltas_json_from_changeset(@changeset), class: "visually-hidden", id: "deltas" %> 
 <%= text_input f, :text, class: "visually-hidden", id: "html" %> 
 
   <%= if @changeset.action do %>
@@ -13,7 +14,7 @@
     
   <div class="form-group">
     <div id="editor-container"></div>
-    <span id="character-count" data-max-characters="2000">2000</span> <span><%= gettext("Zeiche(n) übrig") %></span>
+    <span id="character-count" data-max-characters={QrCode.text_length_limits[:text]}><%= QrCode.text_length_limits[:text] %></span> <span><%= gettext("character(s) left") %></span>
     <div class="invalid-feedback">
       <%= error_tag f, :text %>
       <%= error_tag f, :deltas %>

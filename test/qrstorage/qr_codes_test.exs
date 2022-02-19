@@ -81,8 +81,8 @@ defmodule Qrstorage.QrCodesTest do
       assert {:ok, %QrCode{} = _qr_code} = QrCodes.create_qr_code(valid_link_attrs)
     end
 
-    test "create_qr_code/1 with link longer than 2000 returns error changeset" do
-      too_long = String.duplicate("a", 2001)
+    test "create_qr_code/1 with link longer than 1500 returns error changeset" do
+      too_long = String.duplicate("a", 1501)
 
       invalid_link_attrs = %{
         @valid_attrs

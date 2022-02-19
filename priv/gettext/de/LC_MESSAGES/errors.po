@@ -63,8 +63,8 @@ msgstr[1] ""
 
 msgid "should be at most %{count} character(s)"
 msgid_plural "should be at most %{count} character(s)"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "sollte maximal %{count} Zeichen lang sein"
+msgstr[1] "sollte maximal %{count} Zeichen lang sein"
 
 msgid "should have at most %{count} item(s)"
 msgid_plural "should have at most %{count} item(s)"
@@ -93,3 +93,7 @@ msgstr "Der Link hat ein ungültiges Format. Beispiel: https://kits.blog oder ht
 # Custom field from qr code.ex:
 msgid "Audio type requires language"
 msgstr "Für Audio QR Codes muss eine Sprache ausgewählt werden."
+
+# Custom field from qr code.ex:
+msgid "Text is too long"
+msgstr "Text ist zu lang."
