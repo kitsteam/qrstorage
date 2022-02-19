@@ -1,0 +1,31 @@
+Admin!
+
+<%= if (@qr_code.content_type == :audio && !@qr_code.hide_text)  do %>
+  <strong>Text</strong><br />
+  <div class="text-left">
+    <%= @qr_code.text %>
+  </div>
+<% end %>
+<%= if (@qr_code.content_type == :text) do %>
+  <div class="text-left">
+  <% # text should have been sanitized before storing it to db, but better be safe: %>
+    <%= raw(sanitize(@qr_code.text)) %>
+  </div>
+<% end %>
+<br />
+<strong><%= gettext("Deletion Date") %></strong><br />
+<%= Timex.format!(@qr_code.delete_after, "{relative}", :relative) %><br /><br />
+<%= if @qr_code.content_type == :audio do %>
+  <strong><%= gettext("Audio Language") %></strong><br/>
+  <%= Gettext.dgettext(QrstorageWeb.Gettext, "languages", Atom.to_string(@qr_code.language)) %>
+  <br/><br/>
+  <audio
+        controls
+        src={Routes.qr_code_path(@conn, :audio_file, @qr_code.id)}>
+            Your browser does not support the
+            <code>audio</code> element.
+    </audio>
+    <br/><br/>
+    <%= link gettext("Download"), to: Routes.qr_code_path(@conn, :audio_file, @qr_code.id),  download: true %>
+    <br/><br/>
+<% end %>

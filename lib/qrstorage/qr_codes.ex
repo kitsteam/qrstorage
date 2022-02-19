@@ -24,6 +24,14 @@ defmodule Qrstorage.QrCodes do
   """
   def get_qr_code!(id), do: Repo.get!(QrCode, id)
 
+
+  @doc """
+  Gets a single qr_code by admin_url_id
+
+  Raises `Ecto.NoResultsError` if the Qr code does not exist.
+  """
+  def get_qr_code_by_admin_url_id!(admin_url_id), do: Repo.get_by!(QrCode, admin_url_id: admin_url_id)
+
   @doc """
   Creates a qr_code.
 

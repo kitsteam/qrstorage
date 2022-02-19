@@ -25,6 +25,7 @@ defmodule Qrstorage.QrCodes.QrCode do
     field :hide_text, :boolean, default: true
     field :content_type, Ecto.Enum, values: @content_types
     field :deltas, :map
+    field :admin_url_id, :binary_id, read_after_writes: true
 
     timestamps()
   end

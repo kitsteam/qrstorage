@@ -61,6 +61,11 @@ defmodule QrstorageWeb.QrCodeController do
     render(conn, "download.html", qr_code: qr_code)
   end
 
+  def admin(conn, %{"admin_url_id" => admin_url_id}) do
+    qr_code = QrCodes.get_qr_code_by_admin_url_id!(admin_url_id)
+    render(conn, "admin.html", qr_code: qr_code)
+  end
+
   defp convert_delete_after(qr_code_params) do
     # delete links after one day. We only need them to display the qr code properly and for preview purposes.
     delete_after =

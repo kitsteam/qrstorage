@@ -132,5 +132,10 @@ defmodule Qrstorage.QrCodesTest do
 
       assert {:ok, %QrCode{} = _qr_code} = QrCodes.create_qr_code(valid_text_attrs)
     end
+
+    test "qrcodes have an admin url id after creation" do
+      assert {:ok, %QrCode{} = qr_code} = QrCodes.create_qr_code(@valid_attrs)
+      assert qr_code.admin_url_id != nil
+    end
   end
 end
