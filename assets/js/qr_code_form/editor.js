@@ -6,7 +6,7 @@ Quill.register('modules/counter', function(quill, options) {
     quill.on('text-change', () => {
       const text = quill.getText();
       const maxCharacters = container.getAttribute('data-max-characters');
-      const charactersLeft = maxCharacters - text.trim().length
+      const charactersLeft = maxCharacters - text.trim().length;
 
       container.innerText = charactersLeft;
 
@@ -41,13 +41,15 @@ if (editorContainer) {
       input.dataset.link = 'https://kits.blog';
     
       // if deltas are present, load them:
-      deltasJson = document.querySelector('#deltas').value
+      deltasJson = document.querySelector('#deltas').value;
+
       if (deltasJson) {
         try {
-          parsedJson = JSON.parse(deltasJson)
-          quill.setContents(parsedJson)
+          parsedJson = JSON.parse(deltasJson);
+          quill.setContents(parsedJson);
         } catch (exception) {
           // no need to handle this - just leave the text editor blank
+          console.error("Deltas JSON could not be parsed.");
         }
       }
 
