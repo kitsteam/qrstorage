@@ -41,12 +41,12 @@ $btn-focus-width:0; $btn-focus-box-shadow:none;
   margin: -1rem 0 2rem;
 }
 
-.text-left {
+.text-box {
+  border: 1px solid #00a3d3;
+  border-radius: 5px;
   text-align: left;
-}
-
-.text-center {
-  text-align: center;
+  padding: 10px;
+  min-height: 100px;
 }
 
 .invalid-feedback {
