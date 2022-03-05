@@ -17,6 +17,7 @@ defmodule QrstorageWeb.Router do
     get "/qrcodes/download/:id", QrCodeController, :download
     get "/qrcodes/preview/:id", QrCodeController, :preview
     get "/qrcodes/admin/:admin_url_id", QrCodeController, :admin
+    delete "/qrcodes/delete/:admin_url_id", QrCodeController, :delete
     get "/audio_file/:id", QrCodeController, :audio_file
   end
 

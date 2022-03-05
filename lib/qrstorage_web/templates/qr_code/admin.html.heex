@@ -1,1 +1,2 @@
 ::TOOD:: Admin View
+<%= link("delete", to: Routes.qr_code_path(@conn, :delete, @qr_code.admin_url_id), data: [confirm: gettext("Delete this QR code?")]) %>

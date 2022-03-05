@@ -22,6 +22,9 @@ services:
       # - Use `openssl rand -base64 64 | head -c 64` on a normal unix system
       # You can override this in `docker-compose.override.yml`
       SECRET_KEY_BASE: "generate_your_own_secret_key_base_and_save_it"
+      URL_HOST: localhost
+      URL_SCHEME: http
+      URL_PORT: "4000"
     ports:
       - "4000:4000"
     depends_on:

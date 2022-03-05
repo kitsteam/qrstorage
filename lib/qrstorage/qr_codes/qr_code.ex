@@ -13,6 +13,8 @@ defmodule Qrstorage.QrCodes.QrCode do
 
   @text_length_limits %{link: 1500, audio: 2000, text: 2000}
 
+  @max_delete_after_year 9999
+
   @primary_key {:id, :binary_id, autogenerate: true}
   @foreign_key_type :binary_id
   schema "qrcodes" do
@@ -62,6 +64,10 @@ defmodule Qrstorage.QrCodes.QrCode do
 
   def text_length_limits do
     @text_length_limits
+  end
+
+  def max_delete_after_year do
+    @max_delete_after_year
   end
 
   def validate_text_length(changeset, field) do

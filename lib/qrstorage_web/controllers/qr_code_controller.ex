@@ -73,7 +73,15 @@ defmodule QrstorageWeb.QrCodeController do
         Timex.shift(Timex.now(), hours: 1)
       else
         months = Map.get(qr_code_params, "delete_after") |> Integer.parse() |> elem(0)
-        Timex.shift(Timex.now(), months: months)
+        IO.puts(months)
+        if months == 0 do
+          # Unfortunately, postgrex doesnt support postgres infinity type,
+          # so we have to fall back to date far away in the future:
+          # https://elixirforum.com/t/support-infinity-values-for-date-type/20713/17
+          Timex.end_of_year(QrCode.max_delete_after_year())
+        else
+          Timex.shift(Timex.now(), months: months)
+        end
       end
 
     qr_code_params = Map.put(qr_code_params, "delete_after", delete_after)
