@@ -1,11 +1,11 @@
 <%= if (@qr_code.content_type == :audio && !@qr_code.hide_text)  do %>
   <strong>Text</strong><br />
-  <div class="text-left">
+  <div class="text-box">
     <%= @qr_code.text %>
   </div>
 <% end %>
 <%= if (@qr_code.content_type == :text) do %>
-  <div class="text-left">
+  <div class="text-box">
   <% # text should have been sanitized before storing it to db, but better be safe: %>
     <%= raw(sanitize(@qr_code.text)) %>
   </div>
