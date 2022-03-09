@@ -14,6 +14,6 @@ defmodule Qrstorage.Repo.Migrations.AddAdminUuid do
       remove :admin_url_id
     end
 
-   execute("DROP EXTENSION IF EXISTS \"pgcrypto\";")
+    execute("DROP EXTENSION IF EXISTS \"pgcrypto\";")
   end
 end

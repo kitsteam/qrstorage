@@ -10,6 +10,10 @@
     <%= raw(sanitize(@qr_code.text)) %>
   </div>
 <% end %>
+<%= if (@qr_code.content_type == :link) do %>
+  <strong>Link</strong><br/>
+  <p><%= @qr_code.text %></p>
+<% end %>
 <br />
 <strong><%= gettext("Deletion Date") %></strong><br />
 <%= show_delete_after_text(@qr_code.delete_after) %>
@@ -28,8 +32,3 @@
     <%= link gettext("Download"), to: Routes.qr_code_path(@conn, :audio_file, @qr_code.id),  download: true %>
     <br/><br/>
 <% end %>
-<strong><%= gettext("Admin Link") %></strong><br/>
-<p><%= gettext("Using the admin link you can delete the QR Code later on manually") %></p>
-<div class="alert alert-dark" role="alert">
-  <%= link Routes.qr_code_url(@conn, :admin, @qr_code.admin_url_id), to: Routes.qr_code_url(@conn, :admin, @qr_code.admin_url_id)  %>
-</div>

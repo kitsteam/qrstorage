@@ -42,7 +42,7 @@ defmodule QrstorageWeb.QrCodeView do
   end
 
   def show_delete_after_text(delete_after) do
-    if (delete_after.year == QrCode.max_delete_after_year()) do
+    if delete_after.year == QrCode.max_delete_after_year() do
       gettext("This qr code will be stored indefinitely.")
     else
       Timex.format!(delete_after, "{relative}", :relative)

@@ -1,2 +1,7 @@
-::TOOD:: Admin View
-<%= link("delete", to: Routes.qr_code_path(@conn, :delete, @qr_code.admin_url_id), data: [confirm: gettext("Delete this QR code?")]) %>
+
+<%= render("show.html", qr_code: @qr_code, conn: @conn) %>
+<strong><%= gettext("Delete QR code") %></strong><br/>
+<%= gettext("Do you really want to delete this QR code? This action cannot be undone:") %>
+<br/>
+<br/>
+<%= link(gettext("Delete"),  class: "btn btn-danger", to: Routes.qr_code_path(@conn, :delete, @qr_code.admin_url_id), data: [confirm: gettext("Do you really want to delete this QR code?")], method: :delete) %>
