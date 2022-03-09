@@ -6,7 +6,7 @@ defmodule Qrstorage.QrCodes.QrCode do
   alias HtmlSanitizeEx.Scrubber
   alias Qrstorage.Scrubber.TextScrubber
 
-  @languages ~w[de en fr es tr pl ar ru it pt nl]a
+  @languages ~w[de en fr es tr pl ar ru it pt nl uk]a
 
   @colors ~w[black gold darkgreen darkslateblue midnightblue crimson]a
   @content_types ~w[link audio text]a

@@ -46,3 +46,6 @@ msgstr "Portugese"
 
 msgid "nl"
 msgstr "Dutch"
+
+msgid "uk"
+msgstr "Ukrainian"
