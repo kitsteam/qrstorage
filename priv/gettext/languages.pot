@@ -33,3 +33,6 @@ msgstr ""
 
 msgid "nl"
 msgstr ""
+
+msgid "uk"
+msgstr ""
