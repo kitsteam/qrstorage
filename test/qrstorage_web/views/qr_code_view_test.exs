@@ -20,9 +20,9 @@ defmodule QrstorageWeb.QrCodeViewTest do
     assert text =~ "indefinitely"
   end
 
-  test "shows deletion date for qr codes that should be deleted automatically" do
-    delete_after = Timex.now()
+  test "shows relative deletion date for qr codes that should be deleted automatically" do
+    delete_after = Timex.shift(Timex.now(), months: 5)
     text = show_delete_after_text(delete_after)
-    assert {:ok, text} == Timex.format(delete_after, "{relative}", :relative)
+    assert text =~ "in 5 months"
   end
 end
