@@ -10,7 +10,9 @@ The current [entrypoint](./.docker/entrypoint.sh) will not start the phoenix ser
 
 To start the container:
 - Create a file called docker-compose.override.yml and fill in at least the `GCP_CONFIG_PATH` and a `SECRET_KEY_BASE` for app. E.g.:
-```version: "3.8"
+
+```
+version: "3.8"
 
 services:
   app:
@@ -36,6 +38,17 @@ Currently, there are two language files available, german ("de") and english ("e
 You can extract new strings to translate by running:
 
  mix gettext.extract --merge
+
+### Content Security Policy
+
+You can use a content security policy to restrict which resources are being loaded. The app is completely self contained, so you can use quite strict policies. For nginx, this would look like this:
+
+```
+add_header Content-Security-Policy "default-src 'self' img-src 'self' data:; style-src 'self' 'unsafe-inline'" always;
+```
+
+There are couple of inline styles that will be removed in the future, so that ```unsafe-inline``` can be removed as well.
+
 
 ### Additonal licence
 
