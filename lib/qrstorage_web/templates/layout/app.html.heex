@@ -8,6 +8,9 @@
     <link phx-track-static rel="stylesheet" href={Routes.static_path(@conn, "/assets/app.css")}/>
     <link rel="stylesheet" href={Routes.static_path(@conn, "/css/kits.css")}/>
     <link rel="stylesheet" href={Routes.static_path(@conn, "/css/kits_home.css")}/>
+    <link rel="apple-touch-icon" href={Routes.static_path(@conn, "/images/apple-touch-icon.png")}>
+    <link rel="icon" sizes="192x192" href={Routes.static_path(@conn, "/images/android-icon-192x192.png")}>
+    <link rel="icon" sizes="96x96" href={Routes.static_path(@conn, "/images/favicon-96x96.png")}>
     <script defer phx-track-static type="text/javascript" src={Routes.static_path(@conn, "/assets/app.js")}></script>
   </head>
 
@@ -18,10 +21,16 @@
           <div class="row">
             <div class="col-10 offset-1">
               <div class="row mb-4">
-                <div class="col">
-                  <%= link to: "/" do %>
-                    <img src={Routes.static_path(@conn, "/images/qr.svg")} alt="kits" style="width: 100%;">
+                <div class="col-3">
+                    
+
+                  <%= link to: "/"do %>
+                    <img src={Routes.static_path(@conn, "/images/logo.svg")} alt="kits" style="width: 100%;"> 
+                    
                   <% end %>
+                </div>
+                <div class="col-9" id="logo">
+                  <h1>QRStorage</h1>
                 </div>
               </div>
               <div class="row">
