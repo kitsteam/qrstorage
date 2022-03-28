@@ -12,30 +12,30 @@ msgstr ""
 "Plural-Forms: nplurals=2\n"
 
 #, elixir-format
-#: lib/qrstorage_web/templates/qr_code/download.html.heex:7
-#: lib/qrstorage_web/templates/qr_code/show.html.heex:27
+#: lib/qrstorage_web/templates/qr_code/download.html.heex:17
+#: lib/qrstorage_web/templates/qr_code/show.html.heex:32
 msgid "Download"
 msgstr ""
 
 #, elixir-format
 #: lib/qrstorage_web/templates/qr_code/form_audio.html.heex:9
-#: lib/qrstorage_web/templates/qr_code/form_link.html.heex:10 lib/qrstorage_web/templates/qr_code/form_text.html.heex:10
+#: lib/qrstorage_web/templates/qr_code/form_link.html.heex:10 lib/qrstorage_web/templates/qr_code/form_text.html.heex:11
 msgid "Oops, something went wrong! Please check the errors below."
 msgstr ""
 
 #, elixir-format
-#: lib/qrstorage_web/templates/qr_code/form_audio.html.heex:50
-#: lib/qrstorage_web/templates/qr_code/form_link.html.heex:24 lib/qrstorage_web/templates/qr_code/form_text.html.heex:37
+#: lib/qrstorage_web/templates/qr_code/form_audio.html.heex:53
+#: lib/qrstorage_web/templates/qr_code/form_link.html.heex:24 lib/qrstorage_web/templates/qr_code/form_text.html.heex:41
 msgid "Save"
 msgstr ""
 
 #, elixir-format
-#: lib/qrstorage_web/templates/qr_code/show.html.heex:14
+#: lib/qrstorage_web/templates/qr_code/show.html.heex:18
 msgid "Deletion Date"
 msgstr "Deleted"
 
 #, elixir-format
-#: lib/qrstorage_web/templates/qr_code/show.html.heex:17
+#: lib/qrstorage_web/templates/qr_code/show.html.heex:22
 msgid "Audio Language"
 msgstr ""
 
@@ -46,12 +46,12 @@ msgstr ""
 
 #, elixir-format
 #: lib/qrstorage_web/templates/qr_code/form_audio.html.heex:35
-#: lib/qrstorage_web/templates/qr_code/form_text.html.heex:23
+#: lib/qrstorage_web/templates/qr_code/form_text.html.heex:24
 msgid "delete after"
 msgstr ""
 
 #, elixir-format
-#: lib/qrstorage_web/controllers/qr_code_controller.ex:31
+#: lib/qrstorage_web/controllers/qr_code_controller.ex:32
 msgid "Qr code created successfully."
 msgstr ""
 
@@ -71,7 +71,7 @@ msgid "hide text"
 msgstr ""
 
 #, elixir-format
-#: lib/qrstorage_web/templates/qr_code/download.html.heex:8
+#: lib/qrstorage_web/templates/qr_code/download.html.heex:18
 msgid "Show"
 msgstr ""
 
@@ -86,11 +86,52 @@ msgid "Type your link here"
 msgstr ""
 
 #, elixir-format
-#: lib/qrstorage_web/templates/qr_code/form_text.html.heex:16
-msgid "Zeiche(n) übrig"
+#: lib/qrstorage_web/templates/qr_code/form_character_counter.html.heex:1
+#: lib/qrstorage_web/templates/qr_code/form_text.html.heex:17
+msgid "character(s) left"
 msgstr ""
 
 #, elixir-format
-#: lib/qrstorage_web/templates/qr_code/form_character_counter.html.heex:1
-msgid "character(s) left"
+#: lib/qrstorage_web/templates/qr_code/download.html.heex:8
+msgid "Admin Link"
+msgstr ""
+
+#, elixir-format
+#: lib/qrstorage_web/templates/qr_code/admin.html.heex:7
+msgid "Delete"
+msgstr ""
+
+#, elixir-format
+#: lib/qrstorage_web/templates/qr_code/admin.html.heex:3
+msgid "Delete QR code"
+msgstr ""
+
+#, elixir-format
+#: lib/qrstorage_web/templates/qr_code/admin.html.heex:7
+msgid "Do you really want to delete this QR code?"
+msgstr ""
+
+#, elixir-format
+#: lib/qrstorage_web/templates/qr_code/admin.html.heex:4
+msgid "Do you really want to delete this QR code? This action cannot be undone:"
+msgstr ""
+
+#, elixir-format
+#: lib/qrstorage_web/controllers/qr_code_controller.ex:75
+msgid "Successfully deleted QR code."
+msgstr ""
+
+#, elixir-format
+#: lib/qrstorage_web/templates/qr_code/show.html.heex:2
+msgid "Text"
+msgstr ""
+
+#, elixir-format
+#: lib/qrstorage_web/views/qr_code_view.ex:46
+msgid "This qr code will be stored indefinitely."
+msgstr ""
+
+#, elixir-format
+#: lib/qrstorage_web/templates/qr_code/download.html.heex:9
+msgid "Using this admin link you can delete the QR Code later on manually. Save this carefully, it is not possible to retrieve it later:"
 msgstr ""

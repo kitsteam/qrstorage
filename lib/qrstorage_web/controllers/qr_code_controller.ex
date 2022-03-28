@@ -28,6 +28,7 @@ defmodule QrstorageWeb.QrCodeController do
         end
 
         conn
+        |> put_flash(:admin_url_id, qr_code.admin_url_id)
         |> put_flash(:info, gettext("Qr code created successfully."))
         |> redirect(to: Routes.qr_code_path(conn, :download, qr_code))
 
@@ -61,6 +62,20 @@ defmodule QrstorageWeb.QrCodeController do
     render(conn, "download.html", qr_code: qr_code)
   end
 
+  def admin(conn, %{"admin_url_id" => admin_url_id}) do
+    qr_code = QrCodes.get_qr_code_by_admin_url_id!(admin_url_id)
+    render(conn, "admin.html", qr_code: qr_code)
+  end
+
+  def delete(conn, %{"admin_url_id" => admin_url_id}) do
+    QrCodes.get_qr_code_by_admin_url_id!(admin_url_id)
+    |> QrCodes.delete_qr_code()
+
+    conn
+    |> put_flash(:info, gettext("Successfully deleted QR code."))
+    |> redirect(to: "/")
+  end
+
   defp convert_delete_after(qr_code_params) do
     # delete links after one day. We only need them to display the qr code properly and for preview purposes.
     delete_after =
@@ -68,7 +83,15 @@ defmodule QrstorageWeb.QrCodeController do
         Timex.shift(Timex.now(), hours: 1)
       else
         months = Map.get(qr_code_params, "delete_after") |> Integer.parse() |> elem(0)
-        Timex.shift(Timex.now(), months: months)
+
+        if months == 0 do
+          # Unfortunately, postgrex doesnt support postgres infinity type,
+          # so we have to fall back to date far away in the future:
+          # https://elixirforum.com/t/support-infinity-values-for-date-type/20713/17
+          Timex.end_of_year(QrCode.max_delete_after_year())
+        else
+          Timex.shift(Timex.now(), months: months)
+        end
       end
 
     qr_code_params = Map.put(qr_code_params, "delete_after", delete_after)

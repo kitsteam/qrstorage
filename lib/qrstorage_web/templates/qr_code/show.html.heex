@@ -1,5 +1,5 @@
 <%= if (@qr_code.content_type == :audio && !@qr_code.hide_text)  do %>
-  <strong>Text</strong><br />
+  <strong><%= gettext("Text") %></strong><br />
   <div class="text-box">
     <%= @qr_code.text %>
   </div>
@@ -10,9 +10,14 @@
     <%= raw(sanitize(@qr_code.text)) %>
   </div>
 <% end %>
+<%= if (@qr_code.content_type == :link) do %>
+  <strong>Link</strong><br/>
+  <p><%= @qr_code.text %></p>
+<% end %>
 <br />
 <strong><%= gettext("Deletion Date") %></strong><br />
-<%= Timex.format!(@qr_code.delete_after, "{relative}", :relative) %><br /><br />
+<%= show_delete_after_text(@qr_code.delete_after) %>
+<br /><br />
 <%= if @qr_code.content_type == :audio do %>
   <strong><%= gettext("Audio Language") %></strong><br/>
   <%= Gettext.dgettext(QrstorageWeb.Gettext, "languages", Atom.to_string(@qr_code.language)) %>

@@ -57,6 +57,15 @@ defmodule QrstorageWeb.QrCodeControllerTest do
       qr_code = QrCode |> Repo.get!(id)
       assert qr_code.delete_after <= Timex.shift(Timex.now(), hours: 1)
     end
+
+    test "uses QrCode max year as deletion date for infinity", %{conn: conn} do
+      link_attrs = %{@create_attrs | delete_after: "0"}
+      conn = post(conn, Routes.qr_code_path(conn, :create), qr_code: link_attrs)
+      assert %{id: id} = redirected_params(conn)
+
+      qr_code = QrCode |> Repo.get!(id)
+      assert qr_code.delete_after.year == QrCode.max_delete_after_year()
+    end
   end
 
   describe "show qr_code" do
@@ -139,6 +148,45 @@ defmodule QrstorageWeb.QrCodeControllerTest do
 
       assert html_response(conn, 200) =~
                "data-url=\"" <> Routes.qr_code_url(conn, :show, text_qr_code.id)
+    end
+  end
+
+  describe "delete qr_code" do
+    setup [:create_text_qr_code]
+
+    test "that delete qr_code deletes a qr_code by admin_url_id", %{
+      conn: conn,
+      text_qr_code: text_qr_code
+    } do
+      assert Repo.get(QrCode, text_qr_code.id) != nil
+
+      delete(conn, Routes.qr_code_path(conn, :delete, text_qr_code.admin_url_id))
+
+      assert Repo.get(QrCode, text_qr_code.id) == nil
+    end
+
+    test "that delete qr_code does not deletes a qr_code by its id", %{
+      conn: conn,
+      text_qr_code: text_qr_code
+    } do
+      assert Repo.get(QrCode, text_qr_code.id) != nil
+
+      assert_raise Ecto.NoResultsError, fn ->
+        delete(conn, Routes.qr_code_path(conn, :delete, text_qr_code.id))
+      end
+
+      assert Repo.get(QrCode, text_qr_code.id) != nil
+    end
+  end
+
+  describe "admin" do
+    setup [:create_text_qr_code]
+
+    test "that the admin page contains a delete button", %{conn: conn, text_qr_code: text_qr_code} do
+      conn = get(conn, Routes.qr_code_path(conn, :admin, text_qr_code.admin_url_id))
+
+      assert html_response(conn, 200) =~
+               "data-method=\"delete\" data-to=\"/qrcodes/delete/#{text_qr_code.admin_url_id}"
     end
   end
 

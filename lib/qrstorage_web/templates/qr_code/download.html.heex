@@ -2,7 +2,17 @@
     <div id="canvas" data-color={@qr_code.color} data-url={@qr_code.text}></div>
 <% else %>
     <div id="canvas" data-color={@qr_code.color} data-url={Routes.qr_code_url(@conn, :show, @qr_code)}></div>
+    <%= if get_flash(@conn, :admin_url_id) do %>
+    <br/>
+    <div class="text-box">
+        <strong><%= gettext("Admin Link") %></strong><br/>
+        <p><%= gettext("Using this admin link you can delete the QR Code later on manually. Save this carefully, it is not possible to retrieve it later:") %></p>
+        <%= link Routes.qr_code_url(@conn, :admin, get_flash(@conn, :admin_url_id)), to: Routes.qr_code_url(@conn, :admin, get_flash(@conn, :admin_url_id))  %>
+    </div>
+    <br/>
+    <% end %>
 <% end %>
+
 <br/>
 <%= link gettext("Download"), class: "btn btn-secondary", to: "#", id: "btn-qr-download" %>
 <%= link gettext("Show"), class: "btn btn-primary", to: Routes.qr_code_path(@conn, :preview, @qr_code.id) %>

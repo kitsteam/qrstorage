@@ -25,6 +25,14 @@ defmodule Qrstorage.QrCodes do
   def get_qr_code!(id), do: Repo.get!(QrCode, id)
 
   @doc """
+  Gets a single qr_code by admin_url_id
+
+  Raises `Ecto.NoResultsError` if the Qr code does not exist.
+  """
+  def get_qr_code_by_admin_url_id!(admin_url_id),
+    do: Repo.get_by!(QrCode, admin_url_id: admin_url_id)
+
+  @doc """
   Creates a qr_code.
 
   ## Examples
@@ -64,5 +72,9 @@ defmodule Qrstorage.QrCodes do
   def delete_old_qr_codes() do
     now = Timex.now()
     Repo.delete_all(from q in QrCode, where: ^now > q.delete_after)
+  end
+
+  def delete_qr_code(%QrCode{} = qr_code) do
+    Repo.delete(qr_code)
   end
 end

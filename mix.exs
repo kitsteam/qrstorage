@@ -52,7 +52,7 @@ defmodule Qrstorage.MixProject do
       {:httpoison, "~> 1.8"},
       {:google_api_text_to_speech, "~> 0.12"},
       {:goth, "~> 1.2.0"},
-      {:oban, "~> 2.8.0"},
+      {:oban, "~> 2.11.0"},
       {:html_sanitize_ex, "~> 1.4"},
       {:json, "~> 1.4"}
     ]
