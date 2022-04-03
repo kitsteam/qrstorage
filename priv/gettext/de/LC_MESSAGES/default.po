@@ -134,4 +134,4 @@ msgstr "Dieser QR Code wird nicht automatisch gelöscht."
 #, elixir-format
 #: lib/qrstorage_web/templates/qr_code/download.html.heex:9
 msgid "Using this admin link you can delete the QR Code later on manually. Save this carefully, it is not possible to retrieve it later:"
-msgstr "Mit diesem Admin Link kannst Du den QR Code zukünftig manuell löschen. Speicher den Link ab. Es ist nicht möglich den Link später wiederherzustellen."
+msgstr "Mit diesem Admin-Link kannst Du den QR-Code zukünftig manuell löschen. Speicher den Link ab. Es ist nicht möglich, den Link später wiederherzustellen."
