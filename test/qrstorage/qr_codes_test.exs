@@ -12,12 +12,14 @@ defmodule Qrstorage.QrCodesTest do
       hide_text: false,
       content_type: "text",
       language: nil,
-      deltas: %{"id" => "test"}
+      deltas: %{"id" => "test"},
+      dots_type: "dots"
     }
     @attrs_without_hide_text %{
       delete_after: ~D[2010-04-17],
       text: "some text",
-      content_type: "text"
+      content_type: "text",
+      dots_type: "dots"
     }
     @invalid_attrs %{delete_after: nil, text: nil}
 

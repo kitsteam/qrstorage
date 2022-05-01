@@ -10,14 +10,16 @@ defmodule QrstorageWeb.QrCodeControllerTest do
     text: "some text",
     deltas: "{\"ops\":[{\"insert\":\"Assad\\n\"}]}",
     language: nil,
-    content_type: "text"
+    content_type: "text",
+    dots_type: "dots"
   }
   @invalid_attrs %{delete_after: "10", text: nil, language: nil, content_type: "text"}
   @fixture_attrs %{
     delete_after: ~D[2011-05-18],
     text: "some text",
     language: nil,
-    content_type: "text"
+    content_type: "text",
+    dots_type: "dots"
   }
 
   def fixture(attrs) do

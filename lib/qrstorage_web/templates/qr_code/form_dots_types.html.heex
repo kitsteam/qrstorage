@@ -1,0 +1,6 @@
+
+  <div class="form-group">
+    <%= label @f, :dots_type, gettext("dots types") %>
+    <%= select @f, :dots_type, translated_dots_types_for_select(), class: "form-control" %>
+    <%= error_tag @f, :dots_type %>
+  </div>

@@ -13,7 +13,8 @@ defmodule QrstorageRemoveCodesWorkerTest do
       hide_text: false,
       content_type: "text",
       language: nil,
-      deltas: %{"id" => "test"}
+      deltas: %{"id" => "test"},
+      dots_type: "dots"
     }
 
     def qr_code_fixture(attrs \\ %{}) do

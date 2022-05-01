@@ -11,6 +11,8 @@ defmodule Qrstorage.QrCodes.QrCode do
   @colors ~w[black gold darkgreen darkslateblue midnightblue crimson]a
   @content_types ~w[link audio text]a
 
+  @dots_types ~w[dots square]a
+
   @text_length_limits %{link: 1500, audio: 2000, text: 2000}
 
   @max_delete_after_year 9999
@@ -28,6 +30,7 @@ defmodule Qrstorage.QrCodes.QrCode do
     field :content_type, Ecto.Enum, values: @content_types
     field :deltas, :map
     field :admin_url_id, :binary_id, read_after_writes: true
+    field :dots_type, Ecto.Enum, values: @dots_types
 
     timestamps()
   end
@@ -35,14 +38,14 @@ defmodule Qrstorage.QrCodes.QrCode do
   @doc false
   def changeset(qr_code, attrs) do
     qr_code
-    |> cast(attrs, [:text, :delete_after, :color, :language, :hide_text, :content_type, :deltas])
+    |> cast(attrs, [:text, :delete_after, :color, :language, :hide_text, :content_type, :deltas, :dots_type])
     |> sanitize_text
     |> validate_text_length(:text)
     |> validate_inclusion(:color, @colors)
     |> validate_inclusion(:content_type, @content_types)
     |> validate_audio_type(:content_type)
     |> validate_link(:text)
-    |> validate_required([:text, :delete_after, :content_type])
+    |> validate_required([:text, :delete_after, :content_type, :dots_type])
   end
 
   def store_audio_file(qr_code, attrs) do
@@ -68,6 +71,10 @@ defmodule Qrstorage.QrCodes.QrCode do
 
   def max_delete_after_year do
     @max_delete_after_year
+  end
+
+  def dots_types do
+    @dots_types
   end
 
   def stored_indefinitely?(qr_code) do
