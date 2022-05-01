@@ -26,4 +26,4 @@ config :logger, level: :warn
 config :goth,
   disabled: true
 
-config :qrstorage, Oban, repo: Qrstorage.Repo, queues: false, plugins: false
+config :qrstorage, Oban, repo: Qrstorage.Repo, testing: :inline
