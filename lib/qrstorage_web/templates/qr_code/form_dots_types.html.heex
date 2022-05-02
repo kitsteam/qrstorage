@@ -1,6 +1,10 @@
-
-  <div class="form-group">
-    <%= label @f, :dots_type, gettext("dots types") %>
-    <%= select @f, :dots_type, translated_dots_types_for_select(), class: "form-control" %>
-    <%= error_tag @f, :dots_type %>
+<div class="form-group">
+  <%= label @f, :dots_type, gettext("dots types") %>
+  <br/>
+  <div class="btn-group" role="group">
+    <%= for dots_type <- translated_dots_types_for_select() do %>
+      <%= radio_button @f, :dots_type, dots_type[:value], class: "btn-check", autocomplete: "off", checked: dots_type_checked?(dots_type[:value], @changeset) %>
+      <label class="btn btn-secondary" for={@f.id <> "_dots_type_" <> Atom.to_string(dots_type[:value])}><%= dots_type[:key] %></label>
+    <% end %>
   </div>
+</div>

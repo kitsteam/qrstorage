@@ -4,25 +4,55 @@ defmodule QrstorageWeb.QrCodeViewTest do
   import QrstorageWeb.QrCodeView
   alias Qrstorage.QrCodes.QrCode
 
-  test "renders deltas as json string" do
-    changeset = %{changes: %{deltas: %{ops: "test"}}}
-    assert deltas_json_from_changeset(changeset) == "{\"ops\":\"test\"}"
+  describe "deltas_json_from_changeset/1" do
+    test "renders deltas as json string" do
+      changeset = %{changes: %{deltas: %{ops: "test"}}}
+      assert deltas_json_from_changeset(changeset) == "{\"ops\":\"test\"}"
+    end
+
+    test "returns empty json string without deltas" do
+      changeset = %{changes: %{}}
+      assert deltas_json_from_changeset(changeset) == "\"\""
+    end
   end
 
-  test "returns empty json string without deltas" do
-    changeset = %{changes: %{}}
-    assert deltas_json_from_changeset(changeset) == "\"\""
+  describe "show_delete_after_text/1" do
+    test "shows indefinitely for qr codes that should not be automatically deleted" do
+      delete_after = Timex.end_of_year(QrCode.max_delete_after_year())
+      text = show_delete_after_text(delete_after)
+      assert text =~ "indefinitely"
+    end
+
+    test "shows relative deletion date for qr codes that should be deleted automatically" do
+      delete_after = Timex.shift(Timex.now(), months: 5)
+      text = show_delete_after_text(delete_after)
+      assert text =~ "in 5 months"
+    end
   end
 
-  test "shows indefinitely for qr codes that should not be automatically deleted" do
-    delete_after = Timex.end_of_year(QrCode.max_delete_after_year())
-    text = show_delete_after_text(delete_after)
-    assert text =~ "indefinitely"
-  end
+  describe "dots_type_checked?/2" do
+    test "returns true when changeset is empty and the dots_type is the default dots_type" do
+      changeset = %{changes: %{}}
+      dots_type = QrCode.default_dots_type()
+      assert dots_type_checked?(dots_type, changeset)
+    end
 
-  test "shows relative deletion date for qr codes that should be deleted automatically" do
-    delete_after = Timex.shift(Timex.now(), months: 5)
-    text = show_delete_after_text(delete_after)
-    assert text =~ "in 5 months"
+    test "returns false when changeset is empty and the dots_type is not the default dots_type" do
+      changeset = %{changes: %{}}
+      dots_type = List.last(QrCode.dots_types())
+      assert !dots_type_checked?(dots_type, changeset)
+    end
+
+    test "returns true when the changeset contains a dots_type and equals the passed dots_type" do
+      dots_type = "dots"
+      changeset = %{changes: %{dots_type: dots_type}}
+      assert dots_type_checked?(dots_type, changeset)
+    end
+
+    test "returns false when the changeset contains a dots_type and does not equal the passed dots_type" do
+      dots_type = "dots"
+      changeset = %{changes: %{dots_type: "square"}}
+      assert dots_type_checked?(dots_type, changeset)
+    end
   end
 end

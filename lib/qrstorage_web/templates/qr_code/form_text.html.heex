@@ -22,10 +22,12 @@
   </div>
 <br/>
 
-<%= render "form_dots_types.html", f: f %>
+<%= render "form_dots_types.html", f: f, changeset: @changeset %>
+
+<br/>
 
     <%= gettext("delete after") %>
-    <br/><br/>
+    <br/>
     <div class="btn-group" role="group">
       <%= radio_button f, :delete_after, 1, class: "btn-check", autocomplete: "off", checked: true %>
       <label class="btn btn-secondary" for="text_delete_after_1">1</label>

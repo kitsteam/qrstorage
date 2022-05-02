@@ -18,7 +18,10 @@ defmodule QrstorageWeb.LanguageHelpers do
 
   def translated_dots_types_for_select() do
     Enum.map(QrCode.dots_types(), fn value ->
-      [key: Gettext.dgettext(QrstorageWeb.Gettext, "dots_types", Atom.to_string(value)), value: value]
+      [
+        key: Gettext.dgettext(QrstorageWeb.Gettext, "dots_types", Atom.to_string(value)),
+        value: value
+      ]
     end)
   end
 end

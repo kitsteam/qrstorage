@@ -48,4 +48,13 @@ defmodule QrstorageWeb.QrCodeView do
       Timex.format!(delete_after, "{relative}", :relative)
     end
   end
+
+  def dots_type_checked?(dots_type, changeset) do
+    if changeset.changes == %{} || get_in(changeset.changes, [:dots_type]) == nil do
+      # return true for default/first dots_type when changeset is empty or dots_type is nil
+      dots_type == QrCode.default_dots_type()
+    else
+      changeset.changes.dots_type == dots_type
+    end
+  end
 end

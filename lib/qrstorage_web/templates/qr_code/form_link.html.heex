@@ -21,7 +21,8 @@
 
   <br/>
   
-  <%= render "form_dots_types.html", f: f %>
+  <%= render "form_dots_types.html", f: f, changeset: @changeset %>
+  
   <br />
 
   <%= submit gettext("Save"), class: "btn btn-primary" %>

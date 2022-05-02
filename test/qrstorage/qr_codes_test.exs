@@ -167,5 +167,15 @@ defmodule Qrstorage.QrCodesTest do
       assert Repo.get(QrCode, overdue_qr_code.id) == nil
       assert Repo.get(QrCode, active_qr_code.id) != nil
     end
+
+    test "create_qr_code/1 with invalid dots_type returns error changeset" do
+      invalid_link_attrs = %{@valid_attrs | dots_type: "invalid"}
+      assert {:error, %Ecto.Changeset{}} = QrCodes.create_qr_code(invalid_link_attrs)
+    end
+
+    test "create_qr_code/1 without dots_type returns error changeset" do
+      invalid_link_attrs = %{@valid_attrs | dots_type: ""}
+      assert {:error, %Ecto.Changeset{}} = QrCodes.create_qr_code(invalid_link_attrs)
+    end
   end
 end

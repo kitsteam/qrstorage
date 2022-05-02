@@ -38,11 +38,21 @@ defmodule Qrstorage.QrCodes.QrCode do
   @doc false
   def changeset(qr_code, attrs) do
     qr_code
-    |> cast(attrs, [:text, :delete_after, :color, :language, :hide_text, :content_type, :deltas, :dots_type])
+    |> cast(attrs, [
+      :text,
+      :delete_after,
+      :color,
+      :language,
+      :hide_text,
+      :content_type,
+      :deltas,
+      :dots_type
+    ])
     |> sanitize_text
     |> validate_text_length(:text)
     |> validate_inclusion(:color, @colors)
     |> validate_inclusion(:content_type, @content_types)
+    |> validate_inclusion(:dots_type, @dots_types)
     |> validate_audio_type(:content_type)
     |> validate_link(:text)
     |> validate_required([:text, :delete_after, :content_type, :dots_type])
@@ -79,6 +89,10 @@ defmodule Qrstorage.QrCodes.QrCode do
 
   def stored_indefinitely?(qr_code) do
     qr_code.delete_after.year == max_delete_after_year()
+  end
+
+  def default_dots_type do
+    List.first(@dots_types)
   end
 
   def validate_text_length(changeset, field) do

@@ -12,7 +12,7 @@ msgstr ""
 "Plural-Forms: nplurals=2\n"
 
 msgid "square"
-msgstr "Rechtecke"
+msgstr "Quadrate"
 
 msgid "dots"
 msgstr "Punkte"
