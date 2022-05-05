@@ -66,6 +66,20 @@ defmodule QrstorageWeb.QrCodeControllerTest do
       qr_code = QrCode |> Repo.get!(id)
       assert qr_code.delete_after.year == QrCode.max_delete_after_year()
     end
+
+    test "adds the admin_url_id to the flash message for QR codes that are stored indefinitely",
+         %{conn: conn} do
+      link_attrs = %{@create_attrs | delete_after: "0"}
+      conn = post(conn, Routes.qr_code_path(conn, :create), qr_code: link_attrs)
+      assert get_flash(conn, :admin_url_id) != nil
+    end
+
+    test "does not add the admin_url_id to the flash message for QR codes that are not stored indefinitely",
+         %{conn: conn} do
+      link_attrs = %{@create_attrs | delete_after: "1"}
+      conn = post(conn, Routes.qr_code_path(conn, :create), qr_code: link_attrs)
+      assert get_flash(conn, :admin_url_id) == nil
+    end
   end
 
   describe "show qr_code" do
