@@ -27,8 +27,12 @@ defmodule QrstorageWeb.QrCodeController do
           Qrstorage.TtsService.text_to_audio(qr_code)
         end
 
+        conn =
+          if QrCode.stored_indefinitely?(qr_code),
+            do: conn |> put_flash(:admin_url_id, qr_code.admin_url_id),
+            else: conn
+
         conn
-        |> put_flash(:admin_url_id, qr_code.admin_url_id)
         |> put_flash(:info, gettext("Qr code created successfully."))
         |> redirect(to: Routes.qr_code_path(conn, :download, qr_code))
 

@@ -70,6 +70,10 @@ defmodule Qrstorage.QrCodes.QrCode do
     @max_delete_after_year
   end
 
+  def stored_indefinitely?(qr_code) do
+    qr_code.delete_after.year == max_delete_after_year()
+  end
+
   def validate_text_length(changeset, field) do
     validate_change(changeset, field, fn field, value ->
       content_type = get_field(changeset, :content_type)
