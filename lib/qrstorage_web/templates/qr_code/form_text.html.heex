@@ -20,28 +20,21 @@
       <%= error_tag f, :deltas %>
     </div>
   </div>
-<br/>
 
-<%= render "form_dots_types.html", f: f, changeset: @changeset %>
+  <%= render("settings/_settings_button.html", id: "collapse-settings-text") %>
 
-<br/>
+  <div class="collapse mb-3" id="collapse-settings-text">
+    <div class="card card-body">
+        <%= render "settings/_settings_delete_after.html", f: f %>
+        <%= render "settings/_settings_dots_types.html", f: f, changeset: @changeset %>
+        <%= render "settings/_settings_colorpicker.html", f: f %>
+      </div>
+  </div>  
 
-    <%= gettext("delete after") %>
-    <br/>
-    <div class="btn-group" role="group">
-      <%= radio_button f, :delete_after, 1, class: "btn-check", autocomplete: "off", checked: true %>
-      <label class="btn btn-secondary" for="text_delete_after_1">1</label>
+<div class="row">
+  <div class="col">
+    <%= submit gettext("Save"), class: "btn btn-primary" %>
+  </div>
+</div>
 
-      <%= radio_button f, :delete_after, 6, class: "btn-check", autocomplete: "off" %>
-      <label class="btn btn-secondary" for="text_delete_after_6">6</label>
-
-      <%= radio_button f, :delete_after, 12, class: "btn-check", autocomplete: "off" %>
-      <label class="btn btn-secondary" for="text_delete_after_12">12</label>
-
-      <%= radio_button f, :delete_after, 0, class: "btn-check", autocomplete: "off" %>
-      <label class="btn btn-secondary" for="text_delete_after_0">&infin;</label>
-    </div>
-    <br />  <br />  
-
-  <%= submit gettext("Save"), class: "btn btn-primary" %>
 <% end %>

@@ -52,7 +52,7 @@ defmodule QrstorageWeb.QrCodeViewTest do
     test "returns false when the changeset contains a dots_type and does not equal the passed dots_type" do
       dots_type = "dots"
       changeset = %{changes: %{dots_type: "square"}}
-      assert dots_type_checked?(dots_type, changeset)
+      assert !dots_type_checked?(dots_type, changeset)
     end
   end
 end

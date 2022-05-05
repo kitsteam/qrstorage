@@ -1,6 +1,5 @@
-<div class="form-group">
-  <%= label @f, :dots_type, gettext("dots types") %>
-  <br/>
+<div class="form-group m-2">
+  <h6><%= label @f, :dots_type, gettext("dots types") %></h6>
   <div class="btn-group" role="group">
     <%= for dots_type <- translated_dots_types_for_select() do %>
       <%= radio_button @f, :dots_type, dots_type[:value], class: "btn-check", autocomplete: "off", checked: dots_type_checked?(dots_type[:value], @changeset) %>

@@ -19,11 +19,19 @@
     </div>
   </div>
 
-  <br/>
-  
-  <%= render "form_dots_types.html", f: f, changeset: @changeset %>
-  
-  <br />
+  <%= render("settings/_settings_button.html", id: "collapse-settings-link") %>
 
-  <%= submit gettext("Save"), class: "btn btn-primary" %>
+  <div class="collapse mb-3" id="collapse-settings-link">
+    <div class="card card-body">
+      <%= render "settings/_settings_dots_types.html", f: f, changeset: @changeset %>
+      <%= render "settings/_settings_colorpicker.html", f: f %>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col">
+      <%= submit gettext("Save"), class: "btn btn-primary" %>
+    </div>
+  </div>
+  
 <% end %>

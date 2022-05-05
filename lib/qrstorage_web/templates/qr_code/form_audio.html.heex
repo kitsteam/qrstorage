@@ -25,32 +25,20 @@
       <small id="emailHelp" class="form-text text-muted"><%= gettext("Audio Text to Speech via Google") %></small>
     </div>
 
-      <br/>
-      <div class="form-group">
-        <%= label f, :hide_text, gettext("hide text") %>
-        <%= checkbox f, :hide_text, value: true, class: 'form-control' %>
-      </div>
-      <br />
+  <%= render("settings/_settings_button.html", id: "collapse-settings-audio") %>
 
-      <%= render "form_dots_types.html", f: f, changeset: @changeset %>
-  <br/>
-    <%= gettext("delete after") %>
-    <br/>
-    <div class="btn-group" role="group">
-      <%= radio_button f, :delete_after, 1, class: "btn-check", autocomplete: "off", checked: true %>
-      <label class="btn btn-secondary" for="audio_delete_after_1">1</label>
-
-      <%= radio_button f, :delete_after, 6, class: "btn-check", autocomplete: "off" %>
-      <label class="btn btn-secondary" for="audio_delete_after_6">6</label>
-
-      <%= radio_button f, :delete_after, 12, class: "btn-check", autocomplete: "off" %>
-      <label class="btn btn-secondary" for="audio_delete_after_12">12</label>
-
-      <%= radio_button f, :delete_after, 0, class: "btn-check", autocomplete: "off" %>
-      <label class="btn btn-secondary" for="audio_delete_after_0">&infin;</label>
+  <div class="collapse mb-3" id="collapse-settings-audio">
+    <div class="card card-body">
+      <%= render "settings/_settings_hide_text.html", f: f %>
+      <%= render "settings/_settings_delete_after.html", f: f %>
+      <%= render "settings/_settings_dots_types.html", f: f, changeset: @changeset %>
+      <%= render "settings/_settings_colorpicker.html", f: f %>
     </div>
+  </div>
 
-    <br />  <br />  
-
-  <%= submit gettext("Save"), class: "btn btn-primary" %>
+  <div class="row">
+    <div class="col">
+      <%= submit gettext("Save"), class: "btn btn-primary" %>
+    </div>
+  </div>
 <% end %>

@@ -31,7 +31,8 @@ defmodule QrstorageWeb do
     quote do
       use Phoenix.View,
         root: "lib/qrstorage_web/templates",
-        namespace: QrstorageWeb
+        namespace: QrstorageWeb,
+        pattern: "**/*"
 
       # Import convenience functions from controllers
       import Phoenix.Controller,
