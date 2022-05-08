@@ -1,4 +1,4 @@
-<div class="btn-group" id="content-type-selector" role="group">
+<div class="btn-group m-2" id="content-type-selector" role="group">
   <%= radio_button :qr_code, :content_type, "link", [class: "btn-check content-type", autocomplete: "off", checked: content_group_checked(@changeset, "link")] %>
   <label class="btn btn-secondary" for="qr_code_content_type_link">Link</label>
   <%= radio_button :qr_code, :content_type, "audio", [class: "btn-check content-type", autocomplete: "off", checked: content_group_checked(@changeset, "audio")] %>
@@ -6,13 +6,7 @@
   <%= radio_button :qr_code, :content_type, "text", [class: "btn-check content-type", autocomplete: "off", checked: content_group_checked(@changeset, "text")] %>
   <label class="btn btn-secondary" for="qr_code_content_type_text">Text</label>
 </div>
-<br/><br/>
-<div class="form-group">
-  <div class="container">
-    <div id="colorpicker" class="row align-items-center"> </div>
-  </div>
-</div>
-<br/>
+
 <div class="content-type-group visually-hidden link">
   <%= render("form_link.html", changeset: changeset_for_content_type(@changeset, "link"), action: @action, conn: @conn) %>
 </div>

@@ -1,5 +1,8 @@
 /* Override bootstrap parameters, they have to be before the import: */
 $btn-focus-width:0; $btn-focus-box-shadow:none;
+$form-check-input-checked-bg-color: #00a3d3;
+$component-active-bg: #00a3d3;
+
 
 /* Import files: */
 @import "../node_modules/bootstrap/scss/bootstrap";
@@ -10,20 +13,6 @@ $btn-focus-width:0; $btn-focus-box-shadow:none;
 #logo {
   display: flex;
   padding-left: 0px;
-}
-
-#logo h1 {
-  font-size: 2.5em;
-  text-decoration: none;
-  font-weight: normal;
-  align-self: flex-end;
-  margin-bottom: 0px;
-}
-
-@media (min-width: 576px) { 
-  #logo h1 {
-    font-size: 3em;
-  }
 }
 
 /* Alerts and form errors */

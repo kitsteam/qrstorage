@@ -57,7 +57,8 @@ config :qrstorage, QrstorageWeb.Endpoint,
       ~r"priv/static/.*(js|css|png|jpeg|jpg|gif|svg)$",
       ~r"priv/gettext/.*(po)$",
       ~r"lib/qrstorage_web/(live|views)/.*(ex)$",
-      ~r"lib/qrstorage_web/templates/.*(eex)$"
+      ~r"lib/qrstorage_web/templates/.*(eex)$",
+      ~r"lib/qrstorage_web/templates/*/.*(eex)$"
     ]
   ]
 
