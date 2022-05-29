@@ -1,9 +1,12 @@
-<div class="form-group m-2">
-  <h6><%= label @f, :dots_type, gettext("dots types") %></h6>
-  <div class="btn-group" role="group">
-    <%= for dots_type <- translated_dots_types_for_select() do %>
-      <%= radio_button @f, :dots_type, dots_type[:value], class: "btn-check", autocomplete: "off", checked: dots_type_checked?(dots_type[:value], @changeset) %>
-      <label class="btn btn-secondary" for={@f.id <> "_dots_type_" <> Atom.to_string(dots_type[:value])}><%= dots_type[:key] %></label>
-    <% end %>
-  </div>
+<div class="row m-2">
+    <div class="col">
+        <h6><%= label @f, :dots_type, gettext("classic design") %></h6>
+        <div class="row">
+            <div class="col-auto mx-auto">
+                <div class="form-check form-switch">
+                    <%= checkbox @f, :dots_type, checked_value: :square, unchecked_value: :dots, class: "form-control form-check-input" %>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
