@@ -45,5 +45,12 @@ if (canvas) {
   const height = 300;
   const qrCode = createQrCode(canvas, color, url, dots_type, width, height);
 
-  document.getElementById("btn-qr-download").addEventListener('click', () => qrCode.download({ name: "qr", extension: "png" }));
+  document.querySelectorAll("#qr-download-dropdown-menu .dropdown-item").forEach((dropdownItem) => {
+    dropdownItem.addEventListener('click', (e) => { 
+        qrCode.download({ name: "qr", extension: dropdownItem.dataset.fileType });
+        e.preventDefault();
+        e.stopPropagation();
+        return false;
+    });
+  });
 }
