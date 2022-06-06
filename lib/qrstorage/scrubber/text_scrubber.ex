@@ -8,6 +8,7 @@ defmodule Qrstorage.Scrubber.TextScrubber do
   @allowed_classes ["ql-align-right", "ql-align-center"]
 
   # tags:
+  Meta.allow_tag_with_these_attributes("img", ["src"])
   Meta.allow_tag_with_these_attributes("p", [])
   Meta.allow_tag_with_this_attribute_values("p", "class", @allowed_classes)
 

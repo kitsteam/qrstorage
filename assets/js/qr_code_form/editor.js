@@ -25,6 +25,7 @@ if (editorContainer) {
           toolbar: [
             ['bold', 'italic', 'underline', 'strike'],
             ['link'],
+            ['image'],
             [ {'align': ['', 'center', 'right'] }, { 'list': 'ordered'}, { 'list': 'bullet' }],
             [{ 'color': [] }, { 'background': [] }]
           ],
@@ -56,10 +57,10 @@ if (editorContainer) {
     const form = document.querySelector('form#text');
     form.onsubmit = () => {
       // Populate hidden form on submit
-      const htmlInput = document.querySelector('input[id=html]');
+      const htmlInput = document.querySelector('textarea[id=html]');
       htmlInput.value = quill.root.innerHTML;
 
-      const deltaInput = document.querySelector('input[id=deltas]');
+      const deltaInput = document.querySelector('textarea[id=deltas]');
       deltaInput.value = JSON.stringify(quill.getContents());
       
       return true;
