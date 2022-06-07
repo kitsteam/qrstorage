@@ -1,91 +1,135 @@
+# Find eligible builder and runner images on Docker Hub. We use Ubuntu/Debian instead of
+# Alpine to avoid DNS resolution issues in production.
+#
+# https://hub.docker.com/r/hexpm/elixir/tags?page=1&name=ubuntu
+# https://hub.docker.com/_/ubuntu?tab=tags
+#
+#
+# This file is based on these images:
+#
+#   - https://hub.docker.com/r/hexpm/elixir/tags - for the build image
+#   - https://hub.docker.com/_/debian?tab=tags&page=1&name=bullseye-20210902-slim - for the release image
+#   - https://pkgs.org/ - resource for finding needed packages
+#   - Ex: hexpm/elixir:1.12.2-erlang-24.0.6-debian-bullseye-20210902-slim
+#
+ARG ELIXIR_VERSION=1.12.2
+ARG OTP_VERSION=24.0.6
+ARG DEBIAN_VERSION=bullseye-20210902-slim
 
-ARG ALPINE_VERSION=3.14
+ARG BUILDER_IMAGE="hexpm/elixir:${ELIXIR_VERSION}-erlang-${OTP_VERSION}-debian-${DEBIAN_VERSION}"
+ARG RUNNER_IMAGE="debian:${DEBIAN_VERSION}"
 
-FROM elixir:1.12.2-alpine as elixir_alpine
+FROM ${BUILDER_IMAGE} as development
 
-ENV APP_PATH=/app
+ENV NODE_URL=https://deb.nodesource.com/setup_16.x
 
-RUN apk add \
-  --update-cache \
-  postgresql-client \
-  nodejs \
-  npm
+# Install curl as a prerequisite for nodejs:
+RUN apt-get -y update && apt-get install -y curl
 
-# Install for dart-sass https://github.com/CargoSense/dart_sass/issues/13
-ARG GLIBC_VERSION=2.33-r0
-RUN wget -q -O /etc/apk/keys/sgerrand.rsa.pub https://alpine-pkgs.sgerrand.com/sgerrand.rsa.pub
-RUN wget https://github.com/sgerrand/alpine-pkg-glibc/releases/download/${GLIBC_VERSION}/glibc-${GLIBC_VERSION}.apk
-RUN apk add glibc-${GLIBC_VERSION}.apk
+# install build dependencies
+RUN curl -fsSL $NODE_URL | bash - && \
+    apt-get install -y nodejs \
+    build-essential \
+    inotify-tools \ 
+    git && \
+    apt-get clean && \ 
+    rm -f /var/lib/apt/lists/*_*
 
-RUN mix do local.hex --force, local.rebar --force
+# prepare build dir
+WORKDIR /app
 
-WORKDIR $APP_PATH
- 
-# The stage can be used for development
-# Following the instructions described in the README.md
-FROM elixir_alpine as development
-
-RUN apk add \
-  # The package `inotify-tools` is needed for instant live-reload of the the phoenix server
-  inotify-tools
+# install hex + rebar
+RUN mix local.hex --force && \
+    mix local.rebar --force
 
 # Install mix dependencies
-COPY mix.exs mix.lock $APP_PATH/
+COPY mix.exs mix.lock ./
 RUN mix do deps.get
 
-COPY assets/package.json assets/package-lock.json $APP_PATH/assets/
+# Install npm packages:
+COPY assets/package.json assets/package-lock.json ./assets/
 RUN npm install --prefix assets
 
-# Building a release version
-# https://hexdocs.pm/phoenix/releases.html
-FROM elixir_alpine AS production_build
+FROM ${BUILDER_IMAGE} as builder
+ENV NODE_URL=https://deb.nodesource.com/setup_16.x
 
-# Set build ENV
-ENV MIX_ENV=prod
+# Install curl as a prerequisite for nodejs:
+RUN apt-get -y update && apt-get install -y curl
 
-# Install for dart-sass https://github.com/CargoSense/dart_sass/issues/13
-ARG GLIBC_VERSION=2.33-r0
-RUN wget -q -O /etc/apk/keys/sgerrand.rsa.pub https://alpine-pkgs.sgerrand.com/sgerrand.rsa.pub
-RUN wget https://github.com/sgerrand/alpine-pkg-glibc/releases/download/${GLIBC_VERSION}/glibc-${GLIBC_VERSION}.apk
-RUN apk add glibc-${GLIBC_VERSION}.apk
+# install build dependencies
+RUN curl -fsSL $NODE_URL | bash - && \
+    apt-get install -y nodejs \
+    build-essential \
+    git && \
+    apt-get clean && \ 
+    rm -f /var/lib/apt/lists/*_*
 
-# Install mix dependencies
-COPY mix.exs mix.lock $APP_PATH/
-RUN mix do deps.get, deps.compile
+# prepare build dir
+WORKDIR /app
 
-# Compile and build release
-COPY . .
+# install hex + rebar
+RUN mix local.hex --force && \
+    mix local.rebar --force
 
-# Build assets
-# COPY assets/package.json assets/package-lock.json $APP_PATH/assets/
+# set build ENV
+ENV MIX_ENV="prod"
+
+# install mix dependencies
+COPY mix.exs mix.lock ./
+RUN mix deps.get --only $MIX_ENV
+RUN mkdir config
+
+# copy compile-time config files before we compile dependencies
+# to ensure any relevant config change will trigger the dependencies
+# to be re-compiled.
+COPY config/config.exs config/${MIX_ENV}.exs config/
+RUN mix deps.compile
+
+COPY priv priv
+
+COPY lib lib
+
+COPY assets assets
+
+# Install npm packages:
+COPY assets/package.json assets/package-lock.json ./assets/
 RUN npm install --prefix assets
+
+# compile assets
 RUN mix assets.deploy
-RUN mix do phx.digest, compile, release
 
-# Prepare release image
-FROM alpine:${ALPINE_VERSION} AS production
+# Compile the release
+RUN mix compile
 
-ENV APP_PATH=/app
+# Changes to config/runtime.exs don't require recompiling the code
+COPY config/runtime.exs config/
 
-RUN apk add --no-cache \
-      libgcc \
-      libstdc++ \
-      ncurses-libs \
-      openssl \
-      postgresql-client \
-    ;
+COPY rel rel
+RUN mix release
 
-WORKDIR $APP_PATH
+# start a new build stage so that the final image will only contain
+# the compiled release and other runtime necessities
+FROM ${RUNNER_IMAGE} as production
 
-RUN chown nobody:nobody $APP_PATH/
+RUN apt-get update -y && apt-get install -y libstdc++6 openssl libncurses5 locales \
+  && apt-get clean && rm -f /var/lib/apt/lists/*_*
 
-USER nobody:nobody
+# Set the locale
+RUN sed -i '/en_US.UTF-8/s/^# //g' /etc/locale.gen && locale-gen
 
-COPY .docker/entrypoint.release.sh $APP_PATH/.docker/entrypoint.release.sh
-COPY --from=production_build --chown=nobody:nobody $APP_PATH/_build/prod/rel/qrstorage ./
+ENV LANG en_US.UTF-8
+ENV LANGUAGE en_US:en
+ENV LC_ALL en_US.UTF-8
 
-ENV HOME=$APP_PATH
+WORKDIR "/app"
+RUN chown nobody /app
 
-ENTRYPOINT ["sh", ".docker/entrypoint.release.sh"]
+# set runner ENV
+ENV MIX_ENV="prod"
 
-EXPOSE 8000
+# Only copy the final release from the build stage
+COPY --from=builder --chown=nobody:root /app/_build/${MIX_ENV}/rel/qrstorage ./
+
+USER nobody
+
+CMD ["/app/bin/server"]

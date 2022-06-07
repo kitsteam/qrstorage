@@ -33,28 +33,27 @@ defmodule Qrstorage.MixProject do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
-      {:phoenix, "~> 1.6.0"},
-      {:phoenix_ecto, "~> 4.1"},
-      {:ecto_sql, "~> 3.4"},
-      {:postgrex, ">= 0.0.0"},
-      {:phoenix_html, "~> 3.0"},
-      {:phoenix_live_reload, "~> 1.2", only: :dev},
-      {:phoenix_live_dashboard, "~> 0.5"},
-      {:esbuild, "~> 0.2", runtime: Mix.env() == :dev},
-      # newer versions of dart_sass use bash, which isn't available in alpine
-      {:dart_sass, "0.1.0", runtime: Mix.env() == :dev},
-      {:telemetry_metrics, "~> 0.6"},
-      {:telemetry_poller, "~> 0.5"},
-      {:gettext, "~> 0.11"},
-      {:timex, "~> 3.7"},
-      {:jason, "~> 1.0"},
-      {:plug_cowboy, "~> 2.0"},
-      {:httpoison, "~> 1.8"},
-      {:google_api_text_to_speech, "~> 0.12"},
-      {:goth, "~> 1.2.0"},
-      {:oban, "~> 2.12.0"},
-      {:html_sanitize_ex, "~> 1.4"},
-      {:json, "~> 1.4"}
+      {:phoenix, "1.6.10"},
+      {:phoenix_ecto, "4.4.0"},
+      {:ecto_sql, "3.8.3"},
+      {:postgrex, "0.16.3"},
+      {:phoenix_html, "3.2.0"},
+      {:phoenix_live_reload, "1.3.3", only: :dev},
+      {:phoenix_live_dashboard, "0.6.5"},
+      {:esbuild, "0.5.0", runtime: Mix.env() == :dev},
+      {:dart_sass, "0.5.0", runtime: Mix.env() == :dev},
+      {:telemetry_metrics, "0.6.1"},
+      {:telemetry_poller, "1.0.0"},
+      {:gettext, "0.19.1"},
+      {:timex, "3.7.8"},
+      {:jason, "1.3.0"},
+      {:plug_cowboy, "2.5.2"},
+      {:httpoison, "1.8.1"},
+      {:google_api_text_to_speech, "0.15.0"},
+      {:goth, "1.2.0"},
+      {:oban, "2.12.1"},
+      {:html_sanitize_ex, "1.4.2"},
+      {:json, "1.4.1"}
     ]
   end
 
