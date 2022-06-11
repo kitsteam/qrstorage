@@ -1,3 +1,6 @@
+# See https://hexdocs.pm/phoenix/Mix.Tasks.Phx.Gen.Release.html for more information about this dockerfile.
+# It was generated using mix phx.gen.release
+
 # Find eligible builder and runner images on Docker Hub. We use Ubuntu/Debian instead of
 # Alpine to avoid DNS resolution issues in production.
 #
@@ -19,7 +22,8 @@ ARG DEBIAN_VERSION=bullseye-20210902-slim
 ARG BUILDER_IMAGE="hexpm/elixir:${ELIXIR_VERSION}-erlang-${OTP_VERSION}-debian-${DEBIAN_VERSION}"
 ARG RUNNER_IMAGE="debian:${DEBIAN_VERSION}"
 
-FROM ${BUILDER_IMAGE} as development
+# This is our base image for development as well as building the production image:
+FROM ${BUILDER_IMAGE} as base
 
 ENV NODE_URL=https://deb.nodesource.com/setup_16.x
 
@@ -31,6 +35,7 @@ RUN curl -fsSL $NODE_URL | bash - && \
     apt-get install -y nodejs \
     build-essential \
     inotify-tools \ 
+    postgresql-client \
     git && \
     apt-get clean && \ 
     rm -f /var/lib/apt/lists/*_*
@@ -41,6 +46,9 @@ WORKDIR /app
 # install hex + rebar
 RUN mix local.hex --force && \
     mix local.rebar --force
+
+# This is the image we use during development:
+FROM base as development
 
 # Install mix dependencies
 COPY mix.exs mix.lock ./
@@ -50,29 +58,12 @@ RUN mix do deps.get
 COPY assets/package.json assets/package-lock.json ./assets/
 RUN npm install --prefix assets
 
-FROM ${BUILDER_IMAGE} as builder
-ENV NODE_URL=https://deb.nodesource.com/setup_16.x
-
-# Install curl as a prerequisite for nodejs:
-RUN apt-get -y update && apt-get install -y curl
-
-# install build dependencies
-RUN curl -fsSL $NODE_URL | bash - && \
-    apt-get install -y nodejs \
-    build-essential \
-    git && \
-    apt-get clean && \ 
-    rm -f /var/lib/apt/lists/*_*
-
-# prepare build dir
-WORKDIR /app
-
-# install hex + rebar
-RUN mix local.hex --force && \
-    mix local.rebar --force
+# This is the image we use to build the production image:
+FROM base as production_builder
 
 # set build ENV
 ENV MIX_ENV="prod"
+ENV NODE_ENV="production"
 
 # install mix dependencies
 COPY mix.exs mix.lock ./
@@ -111,7 +102,7 @@ RUN mix release
 # the compiled release and other runtime necessities
 FROM ${RUNNER_IMAGE} as production
 
-RUN apt-get update -y && apt-get install -y libstdc++6 openssl libncurses5 locales \
+RUN apt-get update -y && apt-get install -y postgresql-client libstdc++6 openssl libncurses5 locales \
   && apt-get clean && rm -f /var/lib/apt/lists/*_*
 
 # Set the locale
@@ -128,7 +119,7 @@ RUN chown nobody /app
 ENV MIX_ENV="prod"
 
 # Only copy the final release from the build stage
-COPY --from=builder --chown=nobody:root /app/_build/${MIX_ENV}/rel/qrstorage ./
+COPY --from=production_builder --chown=nobody:root /app/_build/${MIX_ENV}/rel/qrstorage ./
 
 USER nobody
 

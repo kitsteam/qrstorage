@@ -17,6 +17,9 @@ config :qrstorage, QrstorageWeb.Endpoint,
   ],
   secret_key_base: System.get_env("SECRET_KEY_BASE")
 
+# from mix phx.gen.release
+maybe_ipv6 = if System.get_env("ECTO_IPV6"), do: [:inet6], else: []
+
 config :qrstorage, Qrstorage.Repo,
   url: System.get_env("DATABASE_URL"),
   username: System.get_env("DATABASE_USER"),
@@ -25,7 +28,8 @@ config :qrstorage, Qrstorage.Repo,
   hostname: System.get_env("DATABASE_HOST"),
   port: String.to_integer(System.get_env("DATABASE_PORT", "5432")),
   pool_size: String.to_integer(System.get_env("POOL_SIZE", "15")),
-  ssl: System.get_env("DATABASE_SSL", "true") == "true"
+  ssl: System.get_env("DATABASE_SSL", "true") == "true",
+  socket_options: maybe_ipv6
 
 # Set possible translations
 default_locale =
@@ -63,4 +67,9 @@ if config_env() == :prod || config_env() == :dev do
        ]}
     ],
     queues: [default: 5]
+end
+
+# from mix phx.gen.release
+if System.get_env("PHX_SERVER") do
+  config :qrstorage, QrstorageWeb.Endpoint, server: true
 end
