@@ -30,8 +30,7 @@ if (editorContainer) {
         modules: {
           toolbar: [
             ['bold', 'italic', 'underline', 'strike'],
-            ['link'],
-            ['image'],
+            ['link', 'image'],
             [ {'align': ['', 'center', 'right'] }, { 'list': 'ordered'}, { 'list': 'bullet' }],
             [{ 'color': [] }, { 'background': [] }]
           ],
