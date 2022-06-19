@@ -2,7 +2,7 @@ defmodule QrstorageWeb.QrCodeView do
   use QrstorageWeb, :view
   alias Qrstorage.QrCodes.QrCode
 
-  alias HtmlSanitizeEx.Scrubber
+  alias FastSanitize.Sanitizer
   alias Qrstorage.Scrubber.TextScrubber
 
   def content_group_checked(changeset, content_group) do
@@ -28,8 +28,9 @@ defmodule QrstorageWeb.QrCodeView do
     end
   end
 
-  def sanitize(text) do
-    Scrubber.scrub(text, TextScrubber)
+  def scrub(text) do
+    {:ok, scrubbed_text} = Sanitizer.scrub(text, TextScrubber)
+    scrubbed_text
   end
 
   def deltas_json_from_changeset(changeset) do

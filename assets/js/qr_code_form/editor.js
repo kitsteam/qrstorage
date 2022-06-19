@@ -20,6 +20,12 @@ Quill.register('modules/counter', function(quill, options) {
 const editorContainer = document.querySelector("#editor-container")
 
 if (editorContainer) {
+
+  var ColorClass = Quill.import('attributors/class/color');
+  Quill.register(ColorClass, true);
+  var BackgroundClass = Quill.import('attributors/class/background');
+  Quill.register(BackgroundClass, true);
+
     const quill = new Quill('#editor-container', {
         modules: {
           toolbar: [
@@ -35,6 +41,7 @@ if (editorContainer) {
         },
         theme: 'snow'  // or 'bubble'
       });
+      
 
       // change the link placeholder, default is quilljs.com
       const tooltip = quill.theme.tooltip;
