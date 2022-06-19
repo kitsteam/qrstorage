@@ -8,6 +8,6 @@ do
   sleep 2
 done
 
-exec ./qrstorage eval Qrstorage.Release.migrate
+./qrstorage eval Qrstorage.Release.migrate
 
 PHX_SERVER=true exec ./qrstorage start
