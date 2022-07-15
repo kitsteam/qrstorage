@@ -1,4 +1,4 @@
-<%= form_for @changeset, @action, [id: "text"], fn f -> %>
+<%= form_for @changeset, @action, [id: "text", "data-max-upload-length": Application.get_env(:qrstorage, :max_upload_length)], fn f -> %>
 <!-- invisible fields -->
 <%= radio_button f, :content_type, "text", [class: "visually-hidden", autocomplete: "off", checked: true] %>
 <%= select f, :color, translated_colors_for_select(), class: "visually-hidden" %> 
@@ -13,6 +13,9 @@
   <% end %>
     
   <div class="form-group">
+    <div id="upload-size-warning" class="alert alert-danger d-none">
+      <p><%= max_upload_length_message() %></p>
+    </div>
     <div id="editor-container"></div>
     <span id="character-count" data-max-characters={QrCode.text_length_limits[:text]}><%= QrCode.text_length_limits[:text] %></span> <span><%= gettext("character(s) left") %></span>
     <div class="invalid-feedback">

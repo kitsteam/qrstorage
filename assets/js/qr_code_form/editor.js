@@ -1,5 +1,25 @@
 import Quill from 'quill'
 
+const isFormTooLarge = (form, htmlInput) => {
+  // get maximum upload size from form 
+  const maxUploadLength = form.getAttribute('data-max-upload-length');
+
+  // we use Blob instead of .length, since emojis use 4 bytes instead of 2, because they are UTF encoded. Blob() accounts for this.
+  const estimatedFormLength = new Blob([htmlInput]).size
+  const uploadWarning = document.querySelector('#upload-size-warning');
+
+  // show error message / prevent form submit when too large:
+  if (estimatedFormLength > maxUploadLength) {
+    // make warning visible;
+    uploadWarning.classList.remove("d-none");
+    return false;
+  }
+  
+  // hide warning:
+  uploadWarning.classList.add("d-none");
+
+  return true;
+}
 
 Quill.register('modules/counter', function(quill, options) {
     const container = document.querySelector(options.container);
@@ -68,7 +88,9 @@ if (editorContainer) {
 
       const deltaInput = document.querySelector('textarea[id=deltas]');
       deltaInput.value = JSON.stringify(quill.getContents());
+
+      tooLarge = isFormTooLarge(form, quill.root.innerHTML)
       
-      return true;
+      return tooLarge;
     };
 }

@@ -58,4 +58,16 @@ defmodule QrstorageWeb.QrCodeView do
       changeset.changes.dots_type == dots_type
     end
   end
+
+  def max_upload_length_message() do
+    # we upload images as base64. The actual image size will be 0.75 of the base64 encoded text.
+    # To help the user, we will convert this in the error message.
+    # This is not exactly accurate, because a) 0.75 is just an estimation and b) the upload form also takes text characters into account.
+    max_upload_length =
+      String.to_integer(Application.get_env(:qrstorage, :max_upload_length)) * 0.75
+
+    max_upload_length_in_mb = Decimal.round(Decimal.from_float(max_upload_length * 1.0e-6), 1)
+
+    gettext("The maximum upload size is %{max_length} MB.", max_length: max_upload_length_in_mb)
+  end
 end

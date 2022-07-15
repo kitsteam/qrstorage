@@ -12,7 +12,7 @@ msgstr ""
 "Plural-Forms: nplurals=2\n"
 
 #, elixir-autogen, elixir-format
-#: lib/qrstorage_web/templates/qr_code/download.html.heex:17
+#: lib/qrstorage_web/templates/qr_code/download.html.heex:20
 #: lib/qrstorage_web/templates/qr_code/show.html.heex:32
 msgid "Download"
 msgstr ""
@@ -27,7 +27,7 @@ msgstr "Oops, da ist etwas schiefgelaufen. Bitte korrigiere die folgenden Fehler
 #, elixir-autogen, elixir-format
 #: lib/qrstorage_web/templates/qr_code/form_audio.html.heex:41
 #: lib/qrstorage_web/templates/qr_code/form_link.html.heex:33
-#: lib/qrstorage_web/templates/qr_code/form_text.html.heex:36
+#: lib/qrstorage_web/templates/qr_code/form_text.html.heex:39
 msgid "Save"
 msgstr "Erstellen"
 
@@ -72,7 +72,7 @@ msgid "hide text"
 msgstr "Text in Ausgabe verstecken"
 
 #, elixir-autogen, elixir-format
-#: lib/qrstorage_web/templates/qr_code/download.html.heex:18
+#: lib/qrstorage_web/templates/qr_code/download.html.heex:27
 msgid "Show"
 msgstr "Vorschau"
 
@@ -88,7 +88,7 @@ msgstr "https://..."
 
 #, elixir-autogen, elixir-format
 #: lib/qrstorage_web/templates/qr_code/form_character_counter.html.heex:1
-#: lib/qrstorage_web/templates/qr_code/form_text.html.heex:17
+#: lib/qrstorage_web/templates/qr_code/form_text.html.heex:20
 msgid "character(s) left"
 msgstr "Zeichen übrig"
 
@@ -128,7 +128,7 @@ msgid "Text"
 msgstr "Text"
 
 #, elixir-autogen, elixir-format
-#: lib/qrstorage_web/views/qr_code_view.ex:46
+#: lib/qrstorage_web/views/qr_code_view.ex:47
 msgid "This qr code will be stored indefinitely."
 msgstr "Dieser QR Code wird nicht automatisch gelöscht."
 
@@ -151,3 +151,18 @@ msgstr "Farbe"
 #: lib/qrstorage_web/templates/qr_code/settings/_settings_dots_types.html.heex:3
 msgid "classic design"
 msgstr "Klassisches Design verwenden"
+
+#, elixir-autogen, elixir-format
+#: lib/qrstorage_web/templates/qr_code/download.html.heex:24
+msgid "PNG"
+msgstr ""
+
+#, elixir-autogen, elixir-format
+#: lib/qrstorage_web/templates/qr_code/download.html.heex:23
+msgid "SVG"
+msgstr ""
+
+#, elixir-autogen, elixir-format
+#: lib/qrstorage_web/views/qr_code_view.ex:70
+msgid "The maximum upload size is %{max_length} MB."
+msgstr "Der Inhalt ist zu groß. Die maximale Größe beträgt %{max_length} MB."

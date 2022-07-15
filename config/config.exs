@@ -28,6 +28,8 @@ config :qrstorage, QrstorageWeb.Endpoint,
     layout: false
   ]
 
+config :qrstorage, max_upload_length: System.get_env("QR_CODE_MAX_UPLOAD_LENGTH", "2666666")
+
 # Configures Elixir's Logger
 config :logger, :console,
   format: "$time $metadata[$level] $message\n",
