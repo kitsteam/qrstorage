@@ -2,7 +2,6 @@ defmodule Qrstorage.Scrubber.TextScrubber do
   require FastSanitize.Sanitizer.Meta
   alias FastSanitize.Sanitizer.Meta
 
-  # Meta.remove_cdata_sections_before_scrub()
   Meta.strip_comments()
 
   # These are the quill theme colors:
