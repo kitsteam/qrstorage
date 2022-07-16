@@ -55,4 +55,16 @@ defmodule QrstorageWeb.QrCodeViewTest do
       assert !dots_type_checked?(dots_type, changeset)
     end
   end
+
+  describe "max_upload_length_message/0" do
+    test "returns 2.0 MB for a max_upload_length of 2.6 MB" do
+      Application.put_env(:qrstorage, :max_upload_length, "2666666")
+      assert max_upload_length_message() =~ "2.0 MB"
+    end
+
+    test "returns 2.5 MB for a max_upload_length of 3,3 MB" do
+      Application.put_env(:qrstorage, :max_upload_length, "3333333")
+      assert max_upload_length_message() =~ "2.5 MB"
+    end
+  end
 end

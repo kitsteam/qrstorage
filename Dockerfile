@@ -36,7 +36,8 @@ RUN curl -fsSL $NODE_URL | bash - && \
     build-essential \
     inotify-tools \ 
     postgresql-client \
-    git && \
+    git \
+    cmake && \
     apt-get clean && \ 
     rm -f /var/lib/apt/lists/*_*
 

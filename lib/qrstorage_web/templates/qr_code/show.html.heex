@@ -7,7 +7,7 @@
 <%= if (@qr_code.content_type == :text) do %>
   <div class="text-box">
   <% # text should have been sanitized before storing it to db, but better be safe: %>
-    <%= raw(sanitize(@qr_code.text)) %>
+    <%= raw(scrub(@qr_code.text)) %>
   </div>
 <% end %>
 <%= if (@qr_code.content_type == :link) do %>

@@ -1,5 +1,30 @@
 import Quill from 'quill'
 
+const isFormTooLarge = (form, htmlInput) => {
+ // get maximum upload size from form 
+ const maxUploadLength = form.getAttribute('data-max-upload-length');
+
+ // we use TextEncoder instead of .length, since emojis use 4 bytes instead of 2, because they are UTF encoded. Blob() accounts for this.
+ const estimatedFormLength = new TextEncoder().encode(htmlInput).length;
+
+ return estimatedFormLength > maxUploadLength;
+}
+
+const validateFormSize = (form, htmlInput) => {
+  const uploadWarning = document.querySelector('#upload-size-warning');
+
+  // show error message / prevent form submit when too large:
+  if (isFormTooLarge(form, htmlInput)) {
+    // make warning visible;
+    uploadWarning.classList.remove("d-none");
+    return false;
+  }
+  
+  // hide warning:
+  uploadWarning.classList.add("d-none");
+
+  return true;
+}
 
 Quill.register('modules/counter', function(quill, options) {
     const container = document.querySelector(options.container);
@@ -20,11 +45,17 @@ Quill.register('modules/counter', function(quill, options) {
 const editorContainer = document.querySelector("#editor-container")
 
 if (editorContainer) {
+
+  var ColorClass = Quill.import('attributors/class/color');
+  Quill.register(ColorClass, true);
+  var BackgroundClass = Quill.import('attributors/class/background');
+  Quill.register(BackgroundClass, true);
+
     const quill = new Quill('#editor-container', {
         modules: {
           toolbar: [
             ['bold', 'italic', 'underline', 'strike'],
-            ['link'],
+            ['link', 'image'],
             [ {'align': ['', 'center', 'right'] }, { 'list': 'ordered'}, { 'list': 'bullet' }],
             [{ 'color': [] }, { 'background': [] }]
           ],
@@ -34,6 +65,7 @@ if (editorContainer) {
         },
         theme: 'snow'  // or 'bubble'
       });
+      
 
       // change the link placeholder, default is quilljs.com
       const tooltip = quill.theme.tooltip;
@@ -56,12 +88,14 @@ if (editorContainer) {
     const form = document.querySelector('form#text');
     form.onsubmit = () => {
       // Populate hidden form on submit
-      const htmlInput = document.querySelector('input[id=html]');
+      const htmlInput = document.querySelector('textarea[id=html]');
       htmlInput.value = quill.root.innerHTML;
 
-      const deltaInput = document.querySelector('input[id=deltas]');
+      const deltaInput = document.querySelector('textarea[id=deltas]');
       deltaInput.value = JSON.stringify(quill.getContents());
+
+      formIsValid = validateFormSize(form, quill.root.innerHTML);
       
-      return true;
+      return formIsValid;
     };
 }
