@@ -1,15 +1,20 @@
 import Quill from 'quill'
 
 const isFormTooLarge = (form, htmlInput) => {
-  // get maximum upload size from form 
-  const maxUploadLength = form.getAttribute('data-max-upload-length');
+ // get maximum upload size from form 
+ const maxUploadLength = form.getAttribute('data-max-upload-length');
 
-  // we use Blob instead of .length, since emojis use 4 bytes instead of 2, because they are UTF encoded. Blob() accounts for this.
-  const estimatedFormLength = new Blob([htmlInput]).size
+ // we use TextEncoder instead of .length, since emojis use 4 bytes instead of 2, because they are UTF encoded. Blob() accounts for this.
+ const estimatedFormLength = new TextEncoder().encode(htmlInput).length;
+
+ return estimatedFormLength > maxUploadLength;
+}
+
+const validateFormSize = (form, htmlInput) => {
   const uploadWarning = document.querySelector('#upload-size-warning');
 
   // show error message / prevent form submit when too large:
-  if (estimatedFormLength > maxUploadLength) {
+  if (isFormTooLarge(form, htmlInput)) {
     // make warning visible;
     uploadWarning.classList.remove("d-none");
     return false;
@@ -89,8 +94,8 @@ if (editorContainer) {
       const deltaInput = document.querySelector('textarea[id=deltas]');
       deltaInput.value = JSON.stringify(quill.getContents());
 
-      tooLarge = isFormTooLarge(form, quill.root.innerHTML)
+      formIsValid = validateFormSize(form, quill.root.innerHTML);
       
-      return tooLarge;
+      return formIsValid;
     };
 }
