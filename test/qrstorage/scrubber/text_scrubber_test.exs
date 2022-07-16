@@ -98,6 +98,26 @@ defmodule QrstorageTextScrubberTest do
     assert sanitize(text) == {:ok, filtered_text}
   end
 
+  test "disallows invalid classes" do
+    text = ~s"""
+    <p class="abc def">invalid</p>
+    """
+
+    filtered_text = ~s"""
+    <p class="">invalid</p>
+    """
+
+    assert sanitize(text) == {:ok, filtered_text}
+  end
+
+  test "allows valid classes in combination" do
+    text = ~s"""
+    <p class="ql-bg-#666600 ql-color-#ff9900 ql-align-center">invalid</p>
+    """
+
+    assert sanitize(text) == {:ok, text}
+  end
+
   test "filters invalid styles" do
     text = ~s"""
     <span style="invalid: rgb(230, 0, 0);">invalid</span>
