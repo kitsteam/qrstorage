@@ -18,6 +18,9 @@ jobs:
 
       # we need cmake for fast_sanitize:
       - run: apt-get -y update && apt-get -y install build-essential cmake
+      
+      # install hex:
+      - run: mix local.hex --force && mix local.rebar --force
 
       # See https://github.com/actions/checkout
       - uses: actions/cache@v2
