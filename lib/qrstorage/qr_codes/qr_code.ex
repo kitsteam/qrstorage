@@ -2,8 +2,8 @@ defmodule Qrstorage.QrCodes.QrCode do
   use Ecto.Schema
   import Ecto.Changeset
 
-  alias HtmlSanitizeEx
-  alias HtmlSanitizeEx.Scrubber
+  alias FastSanitize
+  alias FastSanitize.Sanitizer
   alias Qrstorage.Scrubber.TextScrubber
 
   @languages ~w[de en fr es tr pl ar ru it pt nl uk]a
@@ -48,7 +48,7 @@ defmodule Qrstorage.QrCodes.QrCode do
       :deltas,
       :dots_type
     ])
-    |> sanitize_text
+    |> scrub_text
     |> validate_text_length(:text)
     |> validate_inclusion(:color, @colors)
     |> validate_inclusion(:content_type, @content_types)
@@ -138,10 +138,15 @@ defmodule Qrstorage.QrCodes.QrCode do
     end)
   end
 
-  defp sanitize_text(changeset) do
+  defp scrub_text(changeset) when is_map(changeset) do
     if Map.has_key?(changeset.changes, :text) && is_text(changeset),
-      do: change(changeset, text: Scrubber.scrub(changeset.changes.text, TextScrubber)),
+      do: change(changeset, text: scrub_text(changeset.changes.text)),
       else: changeset
+  end
+
+  defp scrub_text(text) when is_bitstring(text) do
+    {:ok, scrubbed_text} = Sanitizer.scrub(text, TextScrubber)
+    scrubbed_text
   end
 
   defp is_text(changeset) do
@@ -149,7 +154,8 @@ defmodule Qrstorage.QrCodes.QrCode do
   end
 
   defp text_length(text, :text) do
-    String.length(HtmlSanitizeEx.strip_tags(text))
+    {:ok, stripped_text} = FastSanitize.strip_tags(text)
+    String.length(stripped_text)
   end
 
   defp text_length(text, _) do

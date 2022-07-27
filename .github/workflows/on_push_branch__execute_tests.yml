@@ -1,26 +1,27 @@
 name: on_push_branch__execute_tests
 
 on:
-  push:
-    branches: [main]
-  # See https://docs.github.com/en/actions/reference/workflow-syntax-for-github-actions#onpushpull_requestbranchestags
-  pull_request:
-    # Only branches and tags on the base are evaluated
-    branches: [main]
+  [push, pull_request]
 
 jobs:
+
   build_deps:
     runs-on: ubuntu-latest
-    container: bitwalker/alpine-elixir-phoenix:latest
+    # Currently, this need to be synced manually with the Dockerfile. In the future, the workflow should be changed,
+    # so that a development container is built from the Dockerfile, pushed, and then re-used in the following steps.
+    # This would also remove the need to install cmake manually in each step:
+    container: hexpm/elixir:1.12.2-erlang-24.0.6-debian-bullseye-20210902-slim
 
     steps:
       # See https://github.com/actions/checkout
       - uses: actions/checkout@v2
 
-      # The following step `actions/cache@v2` needs a tar command that requires the option `--posix` .
-      # The alpine-based docker container that we are using contains a tar command but without a `--posix` option.
-      # This is why we need to install it.
-      - run: apk add tar
+      # we need cmake for fast_sanitize:
+      - run: apt-get -y update && apt-get -y install build-essential cmake
+      
+      # install hex:
+      - run: mix local.hex --force && mix local.rebar --force
+
       # See https://github.com/actions/checkout
       - uses: actions/cache@v2
         id: cache
@@ -36,7 +37,7 @@ jobs:
     # Containers must run in Linux based operating systems
     runs-on: ubuntu-latest
     # Docker Hub image that `container-job` executes in
-    container: bitwalker/alpine-elixir-phoenix:latest
+    container: hexpm/elixir:1.12.2-erlang-24.0.6-debian-bullseye-20210902-slim
 
     needs: build_deps
 
@@ -73,16 +74,17 @@ jobs:
       # Downloads a copy of the code in your repository before running CI tests
       - uses: actions/checkout@v2
 
-      # The following step `actions/cache@v2` needs a tar command that requires the option --posix
-      # The alpine-based docker container that we are using contains a tar command but without a `--posix` option.
-      # This is why we need to install it
-      - run: apk add tar
       - uses: actions/cache@v2
         with:
           path: deps
           key: ${{ runner.os }}-mix-v4-${{ hashFiles('**/mix.lock') }}
           restore-keys: ${{ runner.os }}-mix-v4
+      
+      # install hex:
+      - run: mix local.hex --force && mix local.rebar --force
 
+      # we need cmake for fast_sanitize:
+      - run: apt-get -y update && apt-get -y install build-essential cmake
       - run: mix compile
       - run: mix ecto.create
       - run: mix ecto.migrate
@@ -90,18 +92,20 @@ jobs:
 
   check_mix_format:
     runs-on: ubuntu-latest
-    container: bitwalker/alpine-elixir-phoenix:latest
+    container: hexpm/elixir:1.12.2-erlang-24.0.6-debian-bullseye-20210902-slim
 
     needs: build_deps
 
     steps:
       - name: Check out repository code
         uses: actions/checkout@v2
+      
+      # install hex:
+      - run: mix local.hex --force && mix local.rebar --force
 
-      # The following step `actions/cache@v2` needs a tar command that requires the option --posix
-      # The alpine-based docker container that we are using contains a tar command but wihtout a `-posix` option.
-      # This is why we need to install it
-      - run: apk add tar
+      # we need cmake for fast_sanitize:
+      - run: apt-get -y update && apt-get -y install build-essential cmake
+
       - uses: actions/cache@v2
         with:
           path: deps
