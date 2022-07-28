@@ -26,10 +26,10 @@ $colors:#000000, #e60000, #ff9900, #ffff00, #008a00, #0066cc, #9933ff,
 
 @each $color in $colors {
     .ql-color-#{"\\"+$color} {
-        color: $color;
+        color: $color !important;
     }
 
     .ql-bg-#{"\\"+$color} {
-        background-color: $color;
+        background-color: $color !important;
     }
 }
