@@ -33,3 +33,17 @@ $colors:#000000, #e60000, #ff9900, #ffff00, #008a00, #0066cc, #9933ff,
         background-color: $color !important;
     }
 }
+
+.ql-editor p, .ql-editor ol, .ql-editor ul {
+    margin-top: 0;
+    margin-bottom: 1rem;
+}
+
+.ql-editor ol, .ql-editor ul {
+    padding-left: 2rem;
+}
+
+
+.ql-editor ol li:not(.ql-direction-rtl), .ql-editor ul li:not(.ql-direction-rtl) {
+    padding-left: 0px;
+}
