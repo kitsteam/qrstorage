@@ -23,7 +23,7 @@
               <div class="row mb-4">
                <div class="col">
                    <%= link to: "/" do %>
-                     <img src={Routes.static_path(@conn, "/images/qrstorage.svg")} alt="kits" style="width: 100%;">
+                     <img src={Routes.static_path(@conn, "/images/qrstorage.svg")} id="logo" alt="kits">
                    <% end %>
                  </div>
               </div>
@@ -42,7 +42,7 @@
 
       <div class="kits_footer">
         <a href="https://kits.blog/tools/" target="_blank" title="Zurück zur Tools-Seite">
-          <img src={Routes.static_path(@conn, "/images/kits_footer.svg")} style="width:90px; margin-left: 20px;" alt="kits">
+          <img src={Routes.static_path(@conn, "/images/kits_footer.svg")} id="footer-logo" alt="kits">
         </a>
         <ul class="kits_footer_links">
             <li><a href="https://kits.blog/impressum/" target="_blank">Impressum</a></li>

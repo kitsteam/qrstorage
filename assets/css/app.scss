@@ -11,8 +11,12 @@ $component-active-bg: #00a3d3;
 @import "./editor.scss";
 
 #logo {
-  display: flex;
-  padding-left: 0px;
+  width: 100%;
+}
+
+#footer-logo {
+  width: 90px; 
+  margin-left: 20px;
 }
 
 /* Alerts and form errors */
