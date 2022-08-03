@@ -7,7 +7,10 @@
     <div class="text-box">
         <strong><%= gettext("Admin Link") %></strong><br/>
         <p><%= gettext("Using this admin link you can delete the QR Code later on manually. Save this carefully, it is not possible to retrieve it later:") %></p>
-        <%= link Routes.qr_code_url(@conn, :admin, get_flash(@conn, :admin_url_id)), to: Routes.qr_code_url(@conn, :admin, get_flash(@conn, :admin_url_id))  %>
+        <div class="input-group mb-3">
+          <input id="input-admin-link" type="text" class="form-control" value={Routes.qr_code_url(@conn, :admin, get_flash(@conn, :admin_url_id))} readonly="readonly" aria-label={gettext("Copy")} aria-describedby="button-copy-to-clipboard">
+          <button class="btn btn-outline-secondary"  data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title={gettext("Copy to clipboard")} type="button" id="button-copy-to-clipboard"><%= gettext("Copy") %></button>
+        </div>
     </div>
     <br/>
     <% end %>
