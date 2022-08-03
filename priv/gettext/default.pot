@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 
 #, elixir-autogen, elixir-format
-#: lib/qrstorage_web/templates/qr_code/download.html.heex:20
+#: lib/qrstorage_web/templates/qr_code/download.html.heex:25
 #: lib/qrstorage_web/templates/qr_code/show.html.heex:32
 msgid "Download"
 msgstr ""
@@ -71,7 +71,7 @@ msgid "hide text"
 msgstr ""
 
 #, elixir-autogen, elixir-format
-#: lib/qrstorage_web/templates/qr_code/download.html.heex:27
+#: lib/qrstorage_web/templates/qr_code/download.html.heex:32
 msgid "Show"
 msgstr ""
 
@@ -152,16 +152,28 @@ msgid "classic design"
 msgstr ""
 
 #, elixir-autogen, elixir-format
-#: lib/qrstorage_web/templates/qr_code/download.html.heex:24
+#: lib/qrstorage_web/templates/qr_code/download.html.heex:29
 msgid "PNG"
 msgstr ""
 
 #, elixir-autogen, elixir-format
-#: lib/qrstorage_web/templates/qr_code/download.html.heex:23
+#: lib/qrstorage_web/templates/qr_code/download.html.heex:28
 msgid "SVG"
 msgstr ""
 
 #, elixir-autogen, elixir-format
-#: lib/qrstorage_web/views/qr_code_view.ex:70
+#: lib/qrstorage_web/views/qr_code_view.ex:71
 msgid "The maximum upload size is %{max_length} MB."
+msgstr ""
+
+#, elixir-autogen, elixir-format
+#: lib/qrstorage_web/templates/qr_code/download.html.heex:11
+#: lib/qrstorage_web/templates/qr_code/download.html.heex:12
+#: lib/qrstorage_web/templates/qr_code/download.html.heex:21
+msgid "Copy"
+msgstr ""
+
+#, elixir-autogen, elixir-format
+#: lib/qrstorage_web/templates/qr_code/download.html.heex:21
+msgid "Copy to clipboard"
 msgstr ""
