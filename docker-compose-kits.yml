@@ -14,8 +14,6 @@ services:
       DATABASE_SSL: "false"
       QR_CODE_DEFAULT_LOCALE: "de"
       GCP_CONFIG_PATH: "./.gcp-config.json"
-      # Customize the voice output, e.g. gender
-      # GCP_CONFIG_VOICE_GENDER: "FEMALE"
       # Please create a new secret for production runs:
       # - Use `mix phx.gen.secret` if you have elixir and phoenix installed
       # - Use `openssl rand -base64 64 | head -c 64` on a normal unix system

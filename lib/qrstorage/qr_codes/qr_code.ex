@@ -8,6 +8,8 @@ defmodule Qrstorage.QrCodes.QrCode do
 
   @languages ~w[de en fr es tr pl ar ru it pt nl uk]a
 
+  @voices ~w[male female]a
+
   @colors ~w[black gold darkgreen darkslateblue midnightblue crimson]a
   @content_types ~w[link audio text]a
 
@@ -31,6 +33,7 @@ defmodule Qrstorage.QrCodes.QrCode do
     field :deltas, :map
     field :admin_url_id, :binary_id, read_after_writes: true
     field :dots_type, Ecto.Enum, values: @dots_types
+    field :voice, Ecto.Enum, values: @voices
 
     timestamps()
   end
@@ -46,7 +49,8 @@ defmodule Qrstorage.QrCodes.QrCode do
       :hide_text,
       :content_type,
       :deltas,
-      :dots_type
+      :dots_type,
+      :voice
     ])
     |> scrub_text
     |> validate_text_length(:text)
@@ -123,14 +127,12 @@ defmodule Qrstorage.QrCodes.QrCode do
   end
 
   def validate_audio_type(changeset, field) do
-    validate_change(changeset, field, fn field, content_type ->
-      # we only check the type audio, other types don't have to have a language.
-      # We can't pass :language as a field since validate_change doesnt run on attributes that are nil
+    validate_change(changeset, field, fn _field, content_type ->
+      # we only check the type audio, other types don't have to have a language and a voice
+      # We can't pass :language or :voice as a field since validate_change doesnt run on attributes that are nil
       case content_type do
         :audio ->
-          if Enum.member?(@languages, get_field(changeset, :language)),
-            do: [],
-            else: [{:language, "Audio type requires language"}]
+          [] ++ check_language(changeset) ++ check_voice(changeset)
 
         _ ->
           []
@@ -172,4 +174,16 @@ defmodule Qrstorage.QrCodes.QrCode do
   end
 
   defp valid_url?(_), do: false
+
+  defp check_language(changeset) do
+    if Enum.member?(@languages, get_field(changeset, :language)),
+      do: [],
+      else: [{:language, "Audio type requires language"}]
+  end
+
+  defp check_voice(changeset) do
+    if Enum.member?(@voices, get_field(changeset, :voice)),
+      do: [],
+      else: [{:voice, "Audio type requires voice"}]
+  end
 end

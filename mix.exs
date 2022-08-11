@@ -53,7 +53,8 @@ defmodule Qrstorage.MixProject do
       {:goth, "1.2.0"},
       {:oban, "2.12.1"},
       {:json, "1.4.1"},
-      {:fast_sanitize, "0.2.3"}
+      {:fast_sanitize, "0.2.3"},
+      {:mox, "1.0.2", only: :test}
     ]
   end
 

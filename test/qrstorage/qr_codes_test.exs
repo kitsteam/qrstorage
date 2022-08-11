@@ -15,6 +15,17 @@ defmodule Qrstorage.QrCodesTest do
       deltas: %{"id" => "test"},
       dots_type: "dots"
     }
+
+    @valid_audio_attrs %{
+      delete_after: ~D[2010-04-17],
+      text: "some text",
+      hide_text: false,
+      content_type: "audio",
+      language: "de",
+      voice: "female",
+      dots_type: "dots"
+    }
+
     @attrs_without_hide_text %{
       delete_after: ~D[2010-04-17],
       text: "some text",
@@ -87,15 +98,19 @@ defmodule Qrstorage.QrCodesTest do
     end
 
     test "create_qr_code/1 with audio but without language returns error changeset" do
-      invalid_link_attrs = %{@valid_attrs | content_type: "audio", language: nil}
+      invalid_audio_attrs = %{@valid_audio_attrs | language: nil}
 
-      assert {:error, %Ecto.Changeset{}} = QrCodes.create_qr_code(invalid_link_attrs)
+      assert {:error, %Ecto.Changeset{}} = QrCodes.create_qr_code(invalid_audio_attrs)
     end
 
-    test "create_qr_code/1 with audio and with language returns ok" do
-      valid_link_attrs = %{@valid_attrs | content_type: "audio", language: "de"}
+    test "create_qr_code/1 with valid audio attributes returns ok" do
+      assert {:ok, %QrCode{} = _qr_code} = QrCodes.create_qr_code(@valid_audio_attrs)
+    end
 
-      assert {:ok, %QrCode{} = _qr_code} = QrCodes.create_qr_code(valid_link_attrs)
+    test "create_qr_code/1 with audio but without voice returns error changeset" do
+      invalid_audio_attrs = %{@valid_audio_attrs | voice: nil}
+
+      assert {:error, %Ecto.Changeset{}} = QrCodes.create_qr_code(invalid_audio_attrs)
     end
 
     test "create_qr_code/1 with link longer than 1500 returns error changeset" do
@@ -114,10 +129,8 @@ defmodule Qrstorage.QrCodesTest do
       too_long = String.duplicate("a", 2001)
 
       invalid_audio_attrs = %{
-        @valid_attrs
-        | content_type: "audio",
-          language: "de",
-          text: too_long
+        @valid_audio_attrs
+        | text: too_long
       }
 
       assert {:error, %Ecto.Changeset{}} = QrCodes.create_qr_code(invalid_audio_attrs)
@@ -127,10 +140,8 @@ defmodule Qrstorage.QrCodesTest do
       correct_length = String.duplicate("a", 2000)
 
       valid_audio_attrs = %{
-        @valid_attrs
-        | content_type: "audio",
-          language: "de",
-          text: correct_length
+        @valid_audio_attrs
+        | text: correct_length
       }
 
       assert {:ok, %QrCode{} = _qr_code} = QrCodes.create_qr_code(valid_audio_attrs)

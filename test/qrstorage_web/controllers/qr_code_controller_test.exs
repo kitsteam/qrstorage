@@ -19,7 +19,8 @@ defmodule QrstorageWeb.QrCodeControllerTest do
     text: "some text",
     language: nil,
     content_type: "text",
-    dots_type: "dots"
+    dots_type: "dots",
+    voice: nil
   }
 
   def fixture(attrs) do
@@ -207,7 +208,7 @@ defmodule QrstorageWeb.QrCodeControllerTest do
   end
 
   defp create_audio_qr_code(_) do
-    attrs = %{@fixture_attrs | content_type: "audio", language: "de"}
+    attrs = %{@fixture_attrs | content_type: "audio", language: "de", voice: "female"}
     audio_qr_code = fixture(attrs)
 
     QrCode.store_audio_file(
