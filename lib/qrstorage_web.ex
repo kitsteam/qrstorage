@@ -69,6 +69,7 @@ defmodule QrstorageWeb do
 
       import QrstorageWeb.ErrorHelpers
       import QrstorageWeb.LanguageHelpers
+      import QrstorageWeb.VoiceHelpers
       import QrstorageWeb.Gettext
       alias QrstorageWeb.Router.Helpers, as: Routes
     end

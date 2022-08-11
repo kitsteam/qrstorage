@@ -24,7 +24,7 @@ defmodule QrstorageWeb.QrCodeController do
     case QrCodes.create_qr_code(qr_code_params) do
       {:ok, qr_code} ->
         if qr_code.content_type == :audio do
-          Qrstorage.TtsService.text_to_audio(qr_code)
+          Qrstorage.Services.TtsService.text_to_audio(qr_code)
         end
 
         conn =
