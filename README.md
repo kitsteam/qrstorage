@@ -6,10 +6,10 @@ Qr Codes that link to your server with sound and text information.
 
 The current [entrypoint](./.docker/entrypoint.sh) will not start the phoenix server. Instead, it will just idle to keep the container running. This is approach helps you to have full control of your dev environment and allows you to start up the container whenever you want.
 
-**Important**: Before you start setting up the container, register a Google Cloud Platform account and download the json configuration file from Google Cloud Platform. Reference the file by setting the GCP_CONFIG_PATH environment variable in your docker-compose file. You must not commit this file to a repository!
+**Important**: Before you start setting up the container, register a Google Cloud Platform account and download the json configuration file from Google Cloud Platform. Reference the file by setting the GCP_CONFIG_PATH environment variable in your docker-compose file. You must not commit this file to a repository! You should use volumes to make the file accessible to the container.
 
 To start the container:
-- Create a file called docker-compose.override.yml and fill in at least the `GCP_CONFIG_PATH` and a `SECRET_KEY_BASE` for app. E.g.:
+- Create a file called docker-compose.override.yml and fill in at least the `GCP_CONFIG_PATH`, `SECRET_KEY_BASE` and a correct path to a volume for the GCP credentials file. E.g.:
 
 ```
 version: "3.8"
@@ -18,8 +18,12 @@ services:
   app:
     environment:
       SECRET_KEY_BASE: "generate me with mix phx.gen.secret"
-      GCP_CONFIG_PATH: "/somewhere/.gcp-config.json"
+      GCP_CONFIG_PATH: "/app/.gcp-config.json"
+      ...
+    volumes:
+      - /path-to-your-credentials/gcp/.gcp-config.json:/app/.gcp-config.json
 ```
+
 - Start the development environment with `docker compose up -d app`
 - Check the all services are up an runnung `docker compose ps`
 - Open a new terminal window
