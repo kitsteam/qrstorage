@@ -1,5 +1,5 @@
 const createColor = (color) => {
-    return '<div class="color col" style="background-color:'+color+'" data-color="'+color+'">&nbsp;</div>';
+    return '<div class="color col colorpicker-background-color-'+color+'" data-color="'+color+'">&nbsp;</div>';
 }
 
 const formIdSelector = (colorPicker) => {
