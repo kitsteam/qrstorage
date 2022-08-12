@@ -12,3 +12,12 @@
 .color-selected {
     border: 2px solid black !important;
 }
+
+// these are the default colors from quilljs:
+$colors: black gold darkgreen darkslateblue midnightblue crimson;
+
+@each $color in $colors {
+    .colorpicker-background-color-#{$color} {
+        background-color: $color !important;
+    }
+}
