@@ -105,22 +105,22 @@ msgstr "Löschen"
 #, elixir-autogen, elixir-format
 #: lib/qrstorage_web/templates/qr_code/admin.html.heex:3
 msgid "Delete QR code"
-msgstr "QR Code löschen"
+msgstr "QR-Code löschen"
 
 #, elixir-autogen, elixir-format
 #: lib/qrstorage_web/templates/qr_code/admin.html.heex:7
 msgid "Do you really want to delete this QR code?"
-msgstr "Möchtest Du diesen QR Code wirklich löschen?"
+msgstr "Möchtest Du diesen QR-Code wirklich löschen?"
 
 #, elixir-autogen, elixir-format
 #: lib/qrstorage_web/templates/qr_code/admin.html.heex:4
 msgid "Do you really want to delete this QR code? This action cannot be undone:"
-msgstr "Möchtest Du diesen QR Code wirklich löschen? Diese Handlung kann nicht rückgängig gemacht werden."
+msgstr "Möchtest Du diesen QR-Code wirklich löschen? Diese Handlung kann nicht rückgängig gemacht werden."
 
 #, elixir-autogen, elixir-format
 #: lib/qrstorage_web/controllers/qr_code_controller.ex:89
 msgid "Successfully deleted QR code."
-msgstr "QR Code erfolgreich gelöscht."
+msgstr "QR-Code erfolgreich gelöscht."
 
 #, elixir-autogen, elixir-format
 #: lib/qrstorage_web/templates/qr_code/show.html.heex:2
@@ -130,7 +130,7 @@ msgstr "Text"
 #, elixir-autogen, elixir-format
 #: lib/qrstorage_web/views/qr_code_view.ex:47
 msgid "This qr code will be stored indefinitely."
-msgstr "Dieser QR Code wird nicht automatisch gelöscht."
+msgstr "Dieser QR-Code wird nicht automatisch gelöscht."
 
 #, elixir-autogen, elixir-format
 #: lib/qrstorage_web/templates/qr_code/download.html.heex:9
