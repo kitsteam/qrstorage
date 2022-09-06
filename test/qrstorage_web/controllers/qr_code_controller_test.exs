@@ -5,14 +5,19 @@ defmodule QrstorageWeb.QrCodeControllerTest do
   alias Qrstorage.QrCodes.QrCode
   alias Qrstorage.Repo
 
+  import Mox
+
   @create_attrs %{
     delete_after: "10",
     text: "some text",
     deltas: "{\"ops\":[{\"insert\":\"Assad\\n\"}]}",
     language: nil,
     content_type: "text",
-    dots_type: "dots"
+    dots_type: "dots",
+    voice: nil,
+    translate_text: nil
   }
+
   @invalid_attrs %{delete_after: "10", text: nil, language: nil, content_type: "text"}
   @fixture_attrs %{
     delete_after: ~D[2011-05-18],
@@ -84,6 +89,43 @@ defmodule QrstorageWeb.QrCodeControllerTest do
       assert get_flash(conn, :admin_url_id) == nil
     end
   end
+
+  describe "create audio qr_code" do
+
+    test "audio code is successfully created", %{conn: conn} do
+      Qrstorage.Services.Gcp.GoogleApiServiceMock
+      |> expect(:text_to_audio, fn _text, _language, _voice ->
+        {:ok, "audio binary"}
+      end)
+
+      audio_attrs = %{@create_attrs | content_type: "audio", language: "de", voice: "male"}
+
+      conn = post(conn, Routes.qr_code_path(conn, :create), qr_code: audio_attrs)
+      assert %{id: id} = redirected_params(conn)
+      qr_code = QrCode |> Repo.get!(id)
+      assert qr_code.audio_file == "audio binary"
+    end
+
+    test "translate flag translates qr_code to different language", %{conn: conn} do
+
+      Qrstorage.Services.Gcp.GoogleApiServiceMock
+      |> expect(:text_to_audio, fn _text, _language, _voice ->
+        {:ok, "audio binary"}
+      end)
+      |> expect(:translate, fn _text, _language ->
+        {:ok, "translated text"}
+      end)
+
+      audio_attrs = %{@create_attrs | content_type: "audio", language: "de", voice: "male", translate_text: "true"}
+
+      conn = post(conn, Routes.qr_code_path(conn, :create), qr_code: audio_attrs)
+      assert %{id: id} = redirected_params(conn)
+      qr_code = QrCode |> Repo.get!(id)
+      assert qr_code.translated_text == "translated text"
+      assert qr_code.audio_file == "audio binary"
+    end
+  end
+
 
   describe "show qr_code" do
     setup [:create_audio_qr_code, :create_link_qr_code]

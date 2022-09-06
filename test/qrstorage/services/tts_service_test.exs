@@ -3,12 +3,14 @@ defmodule Qrstorage.Services.TtsServiceTest do
 
   alias Qrstorage.Services.TtsService
   alias Qrstorage.QrCodes
+  alias Qrstorage.QrCodes.QrCode
+  alias Qrstorage.Repo
 
   import Mox
 
   @valid_attrs %{
     delete_after: ~D[2010-04-17],
-    text: "t",
+    text: "text",
     content_type: "audio",
     language: "de",
     dots_type: "dots",
@@ -75,6 +77,28 @@ defmodule Qrstorage.Services.TtsServiceTest do
       qr_code = QrCodes.get_qr_code!(qr_code.id)
       assert qr_code.audio_file == "string"
       assert qr_code.audio_file_type == "audio/mp3"
+    end
+
+    test "text_to_audio/1 with translated text uses translated text for audio", %{qr_code: qr_code} do
+      # add translation:
+      translated_text = "some translated text"
+      qr_code = QrCode.changeset_with_translated_text(
+        qr_code,
+        %{"translated_text" => translated_text}
+      )
+      |> Repo.update!()
+
+      Qrstorage.Services.Gcp.GoogleApiServiceMock
+      |> expect(:text_to_audio, fn text, _language, _voice ->
+        assert qr_code.text != text
+        assert qr_code.translated_text == text
+
+        {:ok, "string"}
+      end)
+
+      assert TtsService.text_to_audio(qr_code) == {:ok}
+      qr_code = QrCodes.get_qr_code!(qr_code.id)
+      assert qr_code.audio_file == "string"
     end
   end
 end

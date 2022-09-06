@@ -7,15 +7,26 @@ defmodule Qrstorage.Services.Gcp.GoogleApiServiceImpl do
   def text_to_audio(text, language, voice) do
     request = build_synthesize_speech_request(text, language, voice)
 
-    # Authentication
-    {:ok, token} = Goth.Token.for_scope("https://www.googleapis.com/auth/cloud-platform")
-    connection = GoogleApi.TextToSpeech.V1.Connection.new(token.token)
-
     {:ok, response} =
-      GoogleApi.TextToSpeech.V1.Api.Text.texttospeech_text_synthesize(connection, body: request)
+      GoogleApi.TextToSpeech.V1.Api.Text.texttospeech_text_synthesize(authenticated_connection(), body: request)
 
     decoded_file = Base.decode64!(response.audioContent)
     {:ok, decoded_file}
+  end
+
+  @impl GoogleApiService
+  def translate(text, target_language) do
+    # https://hexdocs.pm/google_api_translate/GoogleApi.Translate.V2.Api.Translations.html#language_translations_list/5
+
+    {:ok, response} =
+      GoogleApi.Translate.V2.Api.Translations.language_translations_list(
+        authenticated_connection(),
+        [text],
+        target_language
+      )
+
+    translated_text = List.first(response.translations).translatedText
+    {:ok, translated_text}
   end
 
   def build_synthesize_speech_request(text, language, voice) do
@@ -31,5 +42,11 @@ defmodule Qrstorage.Services.Gcp.GoogleApiServiceImpl do
         ssmlGender: voice || "female"
       }
     }
+  end
+
+  defp authenticated_connection() do
+    # Authentication
+    {:ok, token} = Goth.Token.for_scope("https://www.googleapis.com/auth/cloud-platform")
+    GoogleApi.Translate.V2.Connection.new(token.token)
   end
 end

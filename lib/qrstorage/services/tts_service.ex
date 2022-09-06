@@ -12,14 +12,20 @@ defmodule Qrstorage.Services.TtsService do
   end
 
   def text_to_audio(qr_code) do
+    text = text_for_audio(qr_code)
+
     case GoogleApiService.text_to_audio(
-           qr_code.text,
+           text,
            qr_code.language,
            Atom.to_string(qr_code.voice)
          ) do
       {:ok, audio_file} -> store_audio_file(qr_code, audio_file)
       {:error} -> {:error}
     end
+  end
+
+  def text_for_audio(qr_code) do
+    if qr_code.translated_text != nil, do: qr_code.translated_text, else: qr_code.text
   end
 
   def store_audio_file(qr_code, audio_file) do

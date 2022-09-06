@@ -24,6 +24,16 @@ defmodule QrstorageWeb.QrCodeController do
     case QrCodes.create_qr_code(qr_code_params) do
       {:ok, qr_code} ->
         if qr_code.content_type == :audio do
+          qr_code = if Map.get(qr_code_params, "translate_text") == "true" do
+            case Qrstorage.Services.TranslationService.add_translation(qr_code) do
+              {:ok, translated_qr_code} -> translated_qr_code
+              {:error} -> qr_code
+            end
+          else
+            qr_code
+          end
+
+          # get audio:
           Qrstorage.Services.TtsService.text_to_audio(qr_code)
         end
 

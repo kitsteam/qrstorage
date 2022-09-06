@@ -24,6 +24,7 @@ defmodule Qrstorage.QrCodes.QrCode do
   schema "qrcodes" do
     field :delete_after, :date
     field :text, :string
+    field :translated_text, :string
     field :audio_file, :binary
     field :audio_file_type, :string
     field :language, Ecto.Enum, values: @languages
@@ -65,6 +66,11 @@ defmodule Qrstorage.QrCodes.QrCode do
   def store_audio_file(qr_code, attrs) do
     qr_code
     |> cast(attrs, [:audio_file, :audio_file_type])
+  end
+
+  def changeset_with_translated_text(qr_code, attrs) do
+    qr_code
+    |> cast(attrs, [:translated_text])
   end
 
   def languages do
