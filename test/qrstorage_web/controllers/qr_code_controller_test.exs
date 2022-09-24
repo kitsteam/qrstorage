@@ -91,7 +91,6 @@ defmodule QrstorageWeb.QrCodeControllerTest do
   end
 
   describe "create audio qr_code" do
-
     test "audio code is successfully created", %{conn: conn} do
       Qrstorage.Services.Gcp.GoogleApiServiceMock
       |> expect(:text_to_audio, fn _text, _language, _voice ->
@@ -107,7 +106,6 @@ defmodule QrstorageWeb.QrCodeControllerTest do
     end
 
     test "translate flag translates qr_code to different language", %{conn: conn} do
-
       Qrstorage.Services.Gcp.GoogleApiServiceMock
       |> expect(:text_to_audio, fn _text, _language, _voice ->
         {:ok, "audio binary"}
@@ -116,7 +114,13 @@ defmodule QrstorageWeb.QrCodeControllerTest do
         {:ok, "translated text"}
       end)
 
-      audio_attrs = %{@create_attrs | content_type: "audio", language: "de", voice: "male", translate_text: "true"}
+      audio_attrs = %{
+        @create_attrs
+        | content_type: "audio",
+          language: "de",
+          voice: "male",
+          translate_text: "true"
+      }
 
       conn = post(conn, Routes.qr_code_path(conn, :create), qr_code: audio_attrs)
       assert %{id: id} = redirected_params(conn)
@@ -125,7 +129,6 @@ defmodule QrstorageWeb.QrCodeControllerTest do
       assert qr_code.audio_file == "audio binary"
     end
   end
-
 
   describe "show qr_code" do
     setup [:create_audio_qr_code, :create_link_qr_code]
@@ -153,6 +156,25 @@ defmodule QrstorageWeb.QrCodeControllerTest do
     } do
       conn = get(conn, Routes.qr_code_path(conn, :show, link_qr_code.id))
       assert html_response(conn, 302) =~ link_qr_code.text
+    end
+
+    test "that codes with translated text prefer the translation", %{
+      conn: conn,
+      audio_qr_code: audio_qr_code
+    } do
+      # set translation and make text visible:
+      audio_qr_code
+      |> QrCode.changeset(%{hide_text: false})
+      |> QrCode.changeset_with_translated_text(%{translated_text: "translated text"})
+      |> Repo.update!()
+
+      # get updated code:
+      audio_qr_code = Repo.get(QrCode, audio_qr_code.id)
+
+      conn = get(conn, Routes.qr_code_path(conn, :show, audio_qr_code.id))
+      response = html_response(conn, 200)
+      assert response =~ audio_qr_code.translated_text
+      assert !(response =~ audio_qr_code.text)
     end
   end
 

@@ -8,7 +8,9 @@ defmodule Qrstorage.Services.Gcp.GoogleApiServiceImpl do
     request = build_synthesize_speech_request(text, language, voice)
 
     {:ok, response} =
-      GoogleApi.TextToSpeech.V1.Api.Text.texttospeech_text_synthesize(authenticated_connection(), body: request)
+      GoogleApi.TextToSpeech.V1.Api.Text.texttospeech_text_synthesize(authenticated_connection(),
+        body: request
+      )
 
     decoded_file = Base.decode64!(response.audioContent)
     {:ok, decoded_file}

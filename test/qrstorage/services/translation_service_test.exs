@@ -5,6 +5,7 @@ defmodule Qrstorage.Services.TranslationServiceTest do
   alias Qrstorage.QrCodes
 
   import Mox
+  import ExUnit.CaptureLog
 
   @valid_attrs %{
     delete_after: ~D[2010-04-17],
@@ -45,7 +46,6 @@ defmodule Qrstorage.Services.TranslationServiceTest do
   describe "add_translation/1 with audio code" do
     setup [:create_audio_qr_code]
 
-
     test "add_translation/1 with an audio code adds translated text", %{qr_code: qr_code} do
       Qrstorage.Services.Gcp.GoogleApiServiceMock
       |> expect(:translate, fn _text, _language ->
@@ -55,6 +55,21 @@ defmodule Qrstorage.Services.TranslationServiceTest do
       {:ok, translated_qr_code} = TranslationService.add_translation(qr_code)
 
       assert translated_qr_code.translated_text == "translated text"
+    end
+
+    test "add_translation/1 with broken GoogleApiServiceMock returns :error", %{qr_code: qr_code} do
+      Qrstorage.Services.Gcp.GoogleApiServiceMock
+      |> expect(:translate, fn _text, _language ->
+        {:error}
+      end)
+
+      {result, log} =
+        with_log(fn ->
+          TranslationService.add_translation(qr_code)
+        end)
+
+      assert result == {:error, qr_code}
+      assert log =~ "Text not translated"
     end
   end
 end
