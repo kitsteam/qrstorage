@@ -25,7 +25,7 @@ msgid "Oops, something went wrong! Please check the errors below."
 msgstr "Oops, da ist etwas schiefgelaufen. Bitte korrigiere die folgenden Fehler."
 
 #, elixir-autogen, elixir-format
-#: lib/qrstorage_web/templates/qr_code/form_audio.html.heex:42
+#: lib/qrstorage_web/templates/qr_code/form_audio.html.heex:43
 #: lib/qrstorage_web/templates/qr_code/form_link.html.heex:33
 #: lib/qrstorage_web/templates/qr_code/form_text.html.heex:39
 msgid "Save"
@@ -52,14 +52,14 @@ msgid "delete after"
 msgstr "Speicherdauer in Monaten"
 
 #, elixir-autogen, elixir-format
-#: lib/qrstorage_web/controllers/qr_code_controller.ex:36
+#: lib/qrstorage_web/controllers/qr_code_controller.ex:37
 msgid "Qr code created successfully."
 msgstr "QR-Code erfolgreich erstellt."
 
 #, elixir-autogen, elixir-format
 #: lib/qrstorage_web/templates/qr_code/form_audio.html.heex:25
 msgid "Audio Text to Speech via Google"
-msgstr "Für die Sprachausgabe kommunizieren wir mit Google. Du bleibst für Google unsichtbar. Personenbezogene oder andere sensible Daten solltest du nicht eingeben."
+msgstr "Für die Sprachausgabe und für die Übersetzung kommunizieren wir mit Google. Du bleibst für Google unsichtbar. Personenbezogene oder andere sensible Daten solltest du nicht eingeben."
 
 #, elixir-autogen, elixir-format
 #: lib/qrstorage_web/templates/qr_code/form_audio.html.heex:14
@@ -105,22 +105,22 @@ msgstr "Löschen"
 #, elixir-autogen, elixir-format
 #: lib/qrstorage_web/templates/qr_code/admin.html.heex:3
 msgid "Delete QR code"
-msgstr "QR Code löschen"
+msgstr "QR-Code löschen"
 
 #, elixir-autogen, elixir-format
 #: lib/qrstorage_web/templates/qr_code/admin.html.heex:7
 msgid "Do you really want to delete this QR code?"
-msgstr "Möchtest Du diesen QR Code wirklich löschen?"
+msgstr "Möchtest Du diesen QR-Code wirklich löschen?"
 
 #, elixir-autogen, elixir-format
 #: lib/qrstorage_web/templates/qr_code/admin.html.heex:4
 msgid "Do you really want to delete this QR code? This action cannot be undone:"
-msgstr "Möchtest Du diesen QR Code wirklich löschen? Diese Handlung kann nicht rückgängig gemacht werden."
+msgstr "Möchtest Du diesen QR-Code wirklich löschen? Diese Handlung kann nicht rückgängig gemacht werden."
 
 #, elixir-autogen, elixir-format
-#: lib/qrstorage_web/controllers/qr_code_controller.ex:79
+#: lib/qrstorage_web/controllers/qr_code_controller.ex:80
 msgid "Successfully deleted QR code."
-msgstr "QR Code erfolgreich gelöscht."
+msgstr "QR-Code erfolgreich gelöscht."
 
 #, elixir-autogen, elixir-format
 #: lib/qrstorage_web/templates/qr_code/show.html.heex:2
@@ -130,7 +130,7 @@ msgstr "Text"
 #, elixir-autogen, elixir-format
 #: lib/qrstorage_web/views/qr_code_view.ex:47
 msgid "This qr code will be stored indefinitely."
-msgstr "Dieser QR Code wird nicht automatisch gelöscht."
+msgstr "Dieser QR-Code wird nicht automatisch gelöscht."
 
 #, elixir-autogen, elixir-format
 #: lib/qrstorage_web/templates/qr_code/download.html.heex:9
@@ -187,3 +187,18 @@ msgstr "Diese Sprache unterstützt nur eine weibliche Stimme."
 #: lib/qrstorage_web/templates/qr_code/settings/_settings_voice.html.heex:3
 msgid "Voice"
 msgstr "Männliche statt weiblicher Stimme verwenden"
+
+#, elixir-autogen, elixir-format
+#: lib/qrstorage_web/templates/qr_code/settings/_settings_translate.html.heex:3
+msgid "translate text"
+msgstr "Text übersetzen"
+
+#, elixir-autogen, elixir-format
+#: lib/qrstorage_web/controllers/qr_code_controller.ex:149
+msgid "Qr code audio transcription failed."
+msgstr "Audio-Transkription ist fehlgeschlagen."
+
+#, elixir-autogen, elixir-format
+#: lib/qrstorage_web/controllers/qr_code_controller.ex:135
+msgid "Qr code translation failed."
+msgstr "Übersetzung ist fehlgeschlagen."
