@@ -1,0 +1,16 @@
+.feather {
+    width: 24px;
+    height: 24px;
+    stroke: #00a3d3;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    fill: none;
+    // this transition is necessary to keep the transition to the 
+    // hovered state in sync with the hover transition of the bootstrap button:
+    transition: stroke 0.15s ease-in-out;
+}
+
+.btn-secondary:hover .feather, .btn-secondary:focus .feather, .btn-secondary:active .feather {
+    stroke: #00456f; 
+}

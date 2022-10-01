@@ -25,7 +25,7 @@
       <small id="emailHelp" class="form-text text-muted"><%= gettext("Audio Text to Speech via Google") %></small>
     </div>
 
-  <%= render("settings/_settings_button.html", id: "collapse-settings-audio") %>
+  <%= render("settings/_settings_button.html", id: "collapse-settings-audio", conn: @conn) %>
 
   <div class="collapse mb-3" id="collapse-settings-audio">
     <div class="card card-body">

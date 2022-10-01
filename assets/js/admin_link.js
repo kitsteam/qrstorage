@@ -1,11 +1,13 @@
+import {icon} from './icon';
+
 const cross = (button) => {
-    const cross = '\u2716';
-    button.textContent = cross;
+    const cross = icon("alert-circle");
+    button.innerHTML = cross;
 }
 
 const check = (button) => {
-    const check = '\u2713';
-    button.textContent = check;
+    const check = icon("check");
+    button.innerHTML = check;
 }
 
 const copyToClipboard = (buttonCopyToClipboard, inputAdminLink) => {

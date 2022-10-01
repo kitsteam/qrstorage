@@ -1,7 +1,11 @@
 <div class="row m-3">
     <div class="col">
         <button class="btn btn-secondary" type="button" data-bs-toggle="collapse" data-bs-target={"#" <> @id } aria-expanded="false" aria-controls={@id}>
-            &#x2699; <%= gettext("settings") %>
+            <svg class="feather">
+                <use href={Routes.static_path(@conn, "/images/feather-icons/feather-sprite.svg#settings")}/>
+            </svg> 
+
+            <%= gettext("settings") %>
         </button>
   </div>
 </div>
