@@ -48,7 +48,7 @@ defmodule Qrstorage.Services.Gcp.GoogleApiServiceImpl do
 
   defp authenticated_connection() do
     # Authentication
-    {:ok, token} = Goth.Token.for_scope("https://www.googleapis.com/auth/cloud-platform")
+    {:ok, token} = Goth.fetch(Qrstorage.Goth)
     GoogleApi.Translate.V2.Connection.new(token.token)
   end
 end

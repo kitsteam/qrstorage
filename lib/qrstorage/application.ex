@@ -18,6 +18,8 @@ defmodule Qrstorage.Application do
       {Oban, oban_config()}
     ]
 
+    children = if Application.get_env(:goth, :disabled, false), do: children, else: [{Goth, name: Qrstorage.Goth, source: goth_config()} | children]
+
     # See https://hexdocs.pm/elixir/Supervisor.html
     # for other strategies and supported options
     opts = [strategy: :one_for_one, name: Qrstorage.Supervisor]
@@ -33,5 +35,11 @@ defmodule Qrstorage.Application do
 
   defp oban_config do
     Application.get_env(:qrstorage, Oban)
+  end
+
+  defp goth_config do
+    credentials = Application.get_env(:qrstorage, :gcp_credentials)
+    scopes = ["https://www.googleapis.com/auth/cloud-platform"]
+    {:service_account, credentials, scopes: scopes}
   end
 end

@@ -41,14 +41,19 @@ default_locale =
 config :gettext, :default_locale, default_locale
 config :timex, :default_locale, default_locale
 
-if gcp_config = System.get_env("GCP_CONFIG_PATH") do
-  Logger.info("Loading GCP Config file: #{gcp_config}")
-  config :goth, json: gcp_config |> File.read!()
-else
-  Logger.warn("""
-  Environment variable GCP_CONFIG_PATH is missing or empty.
-  For example: ./gcp-config.json
-  """)
+cond do
+  gcp_config = System.get_env("GCP_CONFIG_PATH") ->
+    Logger.info("Loading GCP Config file: #{gcp_config}")
+    config :qrstorage, gcp_credentials: gcp_config |> File.read!() |> Jason.decode!()
+  gcp_config = System.get_env("GCP_CONFIG_BASE64") ->
+    Logger.info("Loading GCP Config from Base64.")
+    config :qrstorage, gcp_credentials: gcp_config |> Base.decode64!() |> Jason.decode!()
+  true ->
+    config :goth, disabled: true
+    Logger.warn("""
+    Environment variables GCP_CONFIG_PATH or GCP_CONFIG_BASE64 are missing or empty.
+    Either set a path to a GCP Config file with GCP_CONFIG_PATH or base64 encode the credentials and put them in GCP_CONFIG_BASE64
+    """)
 end
 
 # Here some environment specific configurations
