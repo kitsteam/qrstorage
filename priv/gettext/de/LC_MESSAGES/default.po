@@ -13,7 +13,7 @@ msgstr ""
 
 #, elixir-autogen, elixir-format
 #: lib/qrstorage_web/templates/qr_code/download.html.heex:23
-#: lib/qrstorage_web/templates/qr_code/show.html.heex:32
+#: lib/qrstorage_web/templates/qr_code/show.html.heex:47
 msgid "Download"
 msgstr ""
 
@@ -138,7 +138,7 @@ msgid "Using this admin link you can delete the QR Code later on manually. Save 
 msgstr "Mit diesem Admin-Link kannst Du den QR-Code zukünftig manuell löschen. Speicher den Link ab. Es ist nicht möglich, den Link später wiederherzustellen."
 
 #, elixir-autogen, elixir-format
-#: lib/qrstorage_web/templates/qr_code/settings/_settings_button.html.heex:4
+#: lib/qrstorage_web/templates/qr_code/settings/_settings_button.html.heex:8
 msgid "settings"
 msgstr "Einstellungen"
 
@@ -202,3 +202,8 @@ msgstr "Audio-Transkription ist fehlgeschlagen."
 #: lib/qrstorage_web/controllers/qr_code_controller.ex:135
 msgid "Qr code translation failed."
 msgstr "Übersetzung ist fehlgeschlagen."
+
+#, elixir-autogen, elixir-format
+#: lib/qrstorage_web/templates/qr_code/show.html.heex:40
+msgid "Text was automatically translated."
+msgstr "Der Text wurde automatisch übersetzt."

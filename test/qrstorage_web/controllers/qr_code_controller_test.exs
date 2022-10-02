@@ -131,7 +131,7 @@ defmodule QrstorageWeb.QrCodeControllerTest do
   end
 
   describe "show qr_code" do
-    setup [:create_audio_qr_code, :create_link_qr_code]
+    setup [:create_audio_qr_code, :create_link_qr_code, :create_translated_audio_qr_code]
 
     test "hides text for audio files by default", %{conn: conn, audio_qr_code: audio_qr_code} do
       conn = get(conn, Routes.qr_code_path(conn, :show, audio_qr_code.id))
@@ -160,30 +160,42 @@ defmodule QrstorageWeb.QrCodeControllerTest do
 
     test "that codes with translated text prefer the translation", %{
       conn: conn,
-      audio_qr_code: audio_qr_code
+      translated_audio_qr_code: translated_audio_qr_code
     } do
-      # set translation and make text visible:
-      audio_qr_code
-      |> QrCode.changeset(%{hide_text: false})
-      |> QrCode.changeset_with_translated_text(%{translated_text: "translated text"})
-      |> Repo.update!()
-
-      # get updated code:
-      audio_qr_code = Repo.get(QrCode, audio_qr_code.id)
-
-      conn = get(conn, Routes.qr_code_path(conn, :show, audio_qr_code.id))
+      conn = get(conn, Routes.qr_code_path(conn, :show, translated_audio_qr_code.id))
       response = html_response(conn, 200)
-      assert response =~ audio_qr_code.translated_text
-      assert !(response =~ audio_qr_code.text)
+      assert response =~ translated_audio_qr_code.translated_text
+      assert !(response =~ translated_audio_qr_code.text)
     end
   end
 
   describe "preview qr_code" do
-    setup [:create_text_qr_code, :create_audio_qr_code, :create_link_qr_code]
+    setup [
+      :create_text_qr_code,
+      :create_audio_qr_code,
+      :create_link_qr_code,
+      :create_translated_audio_qr_code
+    ]
 
     test "that audio qr codes show a preview", %{conn: conn, audio_qr_code: audio_qr_code} do
       conn = get(conn, Routes.qr_code_path(conn, :preview, audio_qr_code.id))
       assert html_response(conn, 200) =~ "/qrcodes/download/"
+    end
+
+    test "that translated audio qr codes show a hint that they were translated", %{
+      conn: conn,
+      translated_audio_qr_code: translated_audio_qr_code
+    } do
+      conn = get(conn, Routes.qr_code_path(conn, :preview, translated_audio_qr_code.id))
+      assert html_response(conn, 200) =~ "Text was automatically translated."
+    end
+
+    test "that non-translated audio qr codes do not show a hint that they were translated", %{
+      conn: conn,
+      audio_qr_code: audio_qr_code
+    } do
+      conn = get(conn, Routes.qr_code_path(conn, :preview, audio_qr_code.id))
+      assert !(html_response(conn, 200) =~ "Text was automatically translated.")
     end
 
     test "that text qr codes show a preview", %{conn: conn, text_qr_code: text_qr_code} do
@@ -275,13 +287,27 @@ defmodule QrstorageWeb.QrCodeControllerTest do
     attrs = %{@fixture_attrs | content_type: "audio", language: "de", voice: "female"}
     audio_qr_code = fixture(attrs)
 
-    QrCode.store_audio_file(
-      audio_qr_code,
-      %{"audio_file" => "some binary text", "audio_file_type" => "audio/mp3"}
-    )
-    |> Repo.update!()
+    audio_qr_code =
+      QrCode.store_audio_file(
+        audio_qr_code,
+        %{"audio_file" => "some binary text", "audio_file_type" => "audio/mp3"}
+      )
+      |> Repo.update!()
 
     %{audio_qr_code: audio_qr_code}
+  end
+
+  defp create_translated_audio_qr_code(context) do
+    audio_qr_code = create_audio_qr_code(context)[:audio_qr_code]
+
+    # set translation and make text visible:
+    translated_audio_qr_code =
+      audio_qr_code
+      |> QrCode.changeset(%{hide_text: false})
+      |> QrCode.changeset_with_translated_text(%{translated_text: "translated text"})
+      |> Repo.update!()
+
+    %{translated_audio_qr_code: translated_audio_qr_code}
   end
 
   defp create_link_qr_code(_) do

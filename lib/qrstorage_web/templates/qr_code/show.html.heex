@@ -22,13 +22,31 @@
   <strong><%= gettext("Audio Language") %></strong><br/>
   <%= Gettext.dgettext(QrstorageWeb.Gettext, "languages", Atom.to_string(@qr_code.language)) %>
   <br/><br/>
-  <audio
-        controls
-        src={Routes.qr_code_path(@conn, :audio_file, @qr_code.id)}>
-            Your browser does not support the
-            <code>audio</code> element.
-    </audio>
-    <br/><br/>
-    <%= link gettext("Download"), to: Routes.qr_code_path(@conn, :audio_file, @qr_code.id),  download: true %>
-    <br/><br/>
+  <div class="row">
+    <div class="col-md-12">
+      <audio
+            controls
+            src={Routes.qr_code_path(@conn, :audio_file, @qr_code.id)}>
+                Your browser does not support the
+                <code>audio</code> element.
+        </audio>
+    
+      </div>
+    </div>
+
+    <%= if @qr_code.translated_text do %>
+      <div class="row">
+        <div class="col-md-12">
+          <small class="text-muted"><%= gettext("Text was automatically translated.") %></small>
+        </div>
+      </div>
+    <% end %>
+
+    <div class="row">
+      <div class="col-md-12">
+        <%= link gettext("Download"), to: Routes.qr_code_path(@conn, :audio_file, @qr_code.id),  download: true %>
+      </div>
+    </div>
+    
+    <br/>
 <% end %>
