@@ -18,7 +18,10 @@ defmodule Qrstorage.Application do
       {Oban, oban_config()}
     ]
 
-    children = if Application.get_env(:goth, :disabled, false), do: children, else: [{Goth, name: Qrstorage.Goth, source: goth_config()} | children]
+    children =
+      if Application.get_env(:goth, :disabled, false),
+        do: children,
+        else: [{Goth, name: Qrstorage.Goth, source: goth_config()} | children]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
     # for other strategies and supported options

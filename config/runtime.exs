@@ -45,11 +45,14 @@ cond do
   gcp_config = System.get_env("GCP_CONFIG_PATH") ->
     Logger.info("Loading GCP Config file: #{gcp_config}")
     config :qrstorage, gcp_credentials: gcp_config |> File.read!() |> Jason.decode!()
+
   gcp_config = System.get_env("GCP_CONFIG_BASE64") ->
     Logger.info("Loading GCP Config from Base64.")
     config :qrstorage, gcp_credentials: gcp_config |> Base.decode64!() |> Jason.decode!()
+
   true ->
     config :goth, disabled: true
+
     Logger.warn("""
     Environment variables GCP_CONFIG_PATH or GCP_CONFIG_BASE64 are missing or empty.
     Either set a path to a GCP Config file with GCP_CONFIG_PATH or base64 encode the credentials and put them in GCP_CONFIG_BASE64
