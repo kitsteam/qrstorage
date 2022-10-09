@@ -58,7 +58,7 @@ config :dart_sass,
     cd: Path.expand("../assets", __DIR__)
   ]
 
-  # Tesla uses httpc as a default adapter. httpc does not verify TLS certificates, so we use Hackney:
+# Tesla uses httpc as a default adapter. httpc does not verify TLS certificates, so we use Hackney:
 config :tesla, adapter: {Tesla.Adapter.Hackney, []}
 
 # Import environment specific config. This must remain at the bottom
