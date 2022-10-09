@@ -128,6 +128,32 @@ defmodule QrstorageWeb.QrCodeControllerTest do
       assert qr_code.translated_text == "translated text"
       assert qr_code.audio_file == "audio binary"
     end
+
+    test "translate flag translates is able to handle text longer than 255 chars", %{conn: conn} do
+      translated_text = String.duplicate("a", 260)
+
+      Qrstorage.Services.Gcp.GoogleApiServiceMock
+      |> expect(:text_to_audio, fn _text, _language, _voice ->
+        {:ok, "audio binary"}
+      end)
+      |> expect(:translate, fn _text, _language ->
+        {:ok, translated_text}
+      end)
+
+      audio_attrs = %{
+        @create_attrs
+        | content_type: "audio",
+          language: "de",
+          voice: "male",
+          translate_text: "true"
+      }
+
+      conn = post(conn, Routes.qr_code_path(conn, :create), qr_code: audio_attrs)
+      assert %{id: id} = redirected_params(conn)
+      qr_code = QrCode |> Repo.get!(id)
+      assert qr_code.translated_text == translated_text
+      assert qr_code.audio_file == "audio binary"
+    end
   end
 
   describe "show qr_code" do
