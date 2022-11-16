@@ -24,7 +24,8 @@ defmodule Qrstorage.Services.Gcp.GoogleApiServiceImpl do
       GoogleApi.Translate.V2.Api.Translations.language_translations_list(
         authenticated_connection(),
         [text],
-        target_language
+        target_language,
+        format: "text"
       )
 
     translated_text = List.first(response.translations).translatedText
