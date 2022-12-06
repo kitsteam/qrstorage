@@ -1,0 +1,1 @@
+web: bash _build/prod/rel/qrstorage/bin/server

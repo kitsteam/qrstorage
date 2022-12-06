@@ -1,0 +1,4 @@
+https://github.com/Scalingo/apt-buildpack.git
+https://github.com/nwittstruck/heroku-buildpack-elixir#scalingo
+https://github.com/gjaldon/heroku-buildpack-phoenix-static
+https://github.com/chrismcg/heroku-buildpack-elixir-mix-release
