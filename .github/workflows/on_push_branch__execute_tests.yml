@@ -14,7 +14,7 @@ jobs:
 
     steps:
       # See https://github.com/actions/checkout
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       # we need cmake for fast_sanitize:
       - run: apt-get -y update && apt-get -y install build-essential cmake
@@ -72,7 +72,7 @@ jobs:
 
     steps:
       # Downloads a copy of the code in your repository before running CI tests
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - uses: actions/cache@v2
         with:
@@ -98,7 +98,7 @@ jobs:
 
     steps:
       - name: Check out repository code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       
       # install hex:
       - run: mix local.hex --force && mix local.rebar --force
