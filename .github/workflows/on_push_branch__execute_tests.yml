@@ -23,7 +23,7 @@ jobs:
       - run: mix local.hex --force && mix local.rebar --force
 
       # See https://github.com/actions/checkout
-      - uses: actions/cache@v2
+      - uses: actions/cache@v3
         id: cache
         with:
           path: deps
@@ -74,7 +74,7 @@ jobs:
       # Downloads a copy of the code in your repository before running CI tests
       - uses: actions/checkout@v3
 
-      - uses: actions/cache@v2
+      - uses: actions/cache@v3
         with:
           path: deps
           key: ${{ runner.os }}-mix-v4-${{ hashFiles('**/mix.lock') }}
@@ -106,7 +106,7 @@ jobs:
       # we need cmake for fast_sanitize:
       - run: apt-get -y update && apt-get -y install build-essential cmake
 
-      - uses: actions/cache@v2
+      - uses: actions/cache@v3
         with:
           path: deps
           key: ${{ runner.os }}-mix-v4-${{ hashFiles('**/mix.lock') }}
