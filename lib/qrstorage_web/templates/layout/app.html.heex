@@ -1,58 +1,77 @@
 <!DOCTYPE html>
-<html lang="en" class="h-100">
+<!--[if lte 8]><html class="pre-ie9" lang="de"><![endif]-->
+<!--[if gte IE 9]><!--><html lang="de"><!--<![endif]-->
   <head>
-    <meta charset="utf-8"/>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-    <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' >
+    <title>QRStorage</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="description" content="" />
+
+    <link rel="manifest" href={Routes.static_path(@conn, "/images/site.webmanifest")} />
+    <link rel="mask-icon" href={Routes.static_path(@conn, "/images/safari-pinned-tab.svg")} color="#5bbad5" />
+    <meta name="msapplication-TileColor" content="#da532c" />
+    <meta name="theme-color" content="#ffffff" />
+
     <%= csrf_meta_tag() %>
     <link phx-track-static rel="stylesheet" href={Routes.static_path(@conn, "/assets/app.css")}/>
-    <link rel="stylesheet" href={Routes.static_path(@conn, "/css/kits.css")}/>
-    <link rel="stylesheet" href={Routes.static_path(@conn, "/css/kits_home.css")}/>
     <link rel="apple-touch-icon" href={Routes.static_path(@conn, "/images/apple-touch-icon.png")}>
     <link rel="icon" sizes="192x192" href={Routes.static_path(@conn, "/images/favicon-192x192.png")}>
     <link rel="icon" sizes="96x96" href={Routes.static_path(@conn, "/images/favicon-96x96.png")}>
     <script defer phx-track-static type="text/javascript" src={Routes.static_path(@conn, "/assets/app.js")}></script>
   </head>
-
   <body>
-    <main role="main" class="container">
-      <div id="wrapper">
-        <div id="inner">
-          <div class="row">
-            <div class="col-10 offset-1">
-              <div class="row mb-4">
-               <div class="col">
-                   <%= link to: "/" do %>
-                     <img src={Routes.static_path(@conn, "/images/qrstorage.svg")} id="logo" alt="kits">
-                   <% end %>
-                 </div>
-              </div>
-              <div class="row">
-                <div class="col">
-                  <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>
-                  <p class="alert alert-danger" role="alert"><%= get_flash(@conn, :error) %></p>
-                </div>
-              </div>
+    <div class="container-fluid g-0">
+      <div class="row g-0">
+        <div class="col-sm-6 bg-gradient bg-gradient-primary min-vh-100 d-flex flex-column align-items-center justify-content-between order">
+          <div></div>
+          <div class="">
+            <img src={Routes.static_path(@conn, "/images/qrstorage_logo.svg")} class="img-fluid d-block" alt="QRStorage Logo" />
+          </div>
+          <div class="d-flex align-items-center pb-4">
+            <a href="https://github.com/kitsteam/qrstorage"><img src={Routes.static_path(@conn, "/images/github-logo.svg")} class="img-fluid d-block" alt="GitHub Logo"
+            /></a>
+            <p class="m-0 text-white p-2 d-sm-inline">QRStorage</p>
+          </div>
+        </div>
+
+        <div class="col-sm-6 min-vh-100 d-flex flex-column align-items-center justify-content-between">
+          <div class="d-flex w-100 g-0 justify-content-end px-3">
+            <div class="pt-3">
+              <a href="https://kits.blog/tools/"><img src={Routes.static_path(@conn, "/images/kits-logo.svg")} class="img-fluid d-block" alt="Kits Logo"
+              /></a>
+            </div>
+          </div>
+          <div class="row g-0">
+            <div class="container w-50">
+              <h1 class="fw-bold">QRStorage</h1>
+              <%= @inner_content %>
             </div>
           </div>
 
-          <%= @inner_content %>
+          <div class="d-flex w-100 g-0 justify-content-around px-sm-3">
+            <div>
+              <p class="fs-6">
+                Dieses Tool darf in Lehr-Lern-Kontexten genutzt werden. Die Eingabe personenbezogener Daten ist nicht
+                erwünscht.
+              </p>
+            </div>
+            <div class="fs-6">
+              <a class="link-dark px-lg-2 text-decoration-none" href="https://kits.blog/impressum/">Impressum</a>
+              <a class="link-dark text-decoration-none" href="https://kits.blog/datenschutzerklaerung/">Datenschutz</a>
+            </div>
+          </div>
         </div>
       </div>
-
-      <div class="kits_footer">
-        <a href="https://kits.blog/tools/" target="_blank" title="Zurück zur Tools-Seite">
-          <img src={Routes.static_path(@conn, "/images/kits_footer.svg")} id="footer-logo" alt="kits">
-        </a>
-        <ul class="kits_footer_links">
-            <li><a href="https://kits.blog/impressum/" target="_blank">Impressum</a></li>
-            <li><a href="https://kits.blog/datenschutzerklaerung/" target="_blank">Datenschutz</a></li>
-        </ul>
-        <div class="github_link">
-            <svg aria-hidden="true" focusable="false" data-prefix="fab" data-icon="github" class="svg-inline--fa fa-github fa-w-16" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512" id="kits_github_link"><path fill="currentColor" d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"></path></svg>
-            <a href="https://github.com/kitsteam/qrstorage" target="_blank">qrstorage</a>
-        </div>
-      </div>
-    </main>
+    </div>
+    <!--[if IE
+      ]><div
+        class="w-100 text-center bg-dark text-white pt-3 px-4 pb-1 position-fixed"
+        style="z-index: 1000; bottom: 0"
+      >
+        <p onClick="parentNode.remove()">
+          Please use a modern browser for a better browsing experience. <span class="float-right">X</span>
+        </p>
+      </div><!
+    [endif]-->
   </body>
 </html>

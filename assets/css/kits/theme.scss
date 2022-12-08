@@ -1,0 +1,27 @@
+// Import customisations first, afterwards import bootstrap::after
+
+@import "colors";
+@import "fonts";
+@import "button";
+@import "gradient";
+@import "form";
+
+//
+// Custom styles not related to bootstrap:
+//
+
+.list-unstyled {
+  border-left: 3px solid #00a3d3;
+  padding-left: 7px;
+}
+
+
+.list-group {
+  border-radius: 0 !important;
+}
+
+@media screen and (max-width: 576px) {
+  .order {
+    order: 1;
+  }
+}

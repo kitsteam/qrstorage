@@ -1,7 +1,7 @@
 .feather {
     width: 24px;
     height: 24px;
-    stroke: #00a3d3;
+    stroke: white;
     stroke-width: 2;
     stroke-linecap: round;
     stroke-linejoin: round;
@@ -12,7 +12,7 @@
 }
 
 .btn-secondary:hover .feather, .btn-secondary:focus .feather, .btn-secondary:active .feather {
-    stroke: #00456f; 
+    stroke: white; 
 }
 
 .feather.settings {
