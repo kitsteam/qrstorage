@@ -11,3 +11,8 @@ $component-active-bg: #00a3d3;
 @import "./colorpicker.scss";
 @import "./editor.scss";
 @import "./feather-icons.scss";
+
+
+.alert:empty {
+    display: none;
+  }
