@@ -59,7 +59,7 @@ msgstr "QR-Code erfolgreich erstellt."
 #, elixir-autogen, elixir-format
 #: lib/qrstorage_web/templates/qr_code/form_audio.html.heex:25
 msgid "Audio Text to Speech via Google"
-msgstr "Für die Sprachausgabe und für die Übersetzung kommunizieren wir mit Google. Du bleibst für Google unsichtbar. Personenbezogene oder andere sensible Daten solltest du nicht eingeben."
+msgstr "Für die Sprachausgabe und für die Übersetzung kommunizieren wir mit Google. Du bleibst für Google unsichtbar."
 
 #, elixir-autogen, elixir-format
 #: lib/qrstorage_web/templates/qr_code/form_audio.html.heex:14
@@ -202,3 +202,8 @@ msgstr "Übersetzung ist fehlgeschlagen."
 #: lib/qrstorage_web/templates/qr_code/show.html.heex:41
 msgid "Text was automatically translated."
 msgstr "Der Text wurde automatisch übersetzt."
+
+#, elixir-autogen, elixir-format
+#: lib/qrstorage_web/templates/layout/app.html.heex:54
+msgid "This tool may only be used in Teaching/Learning situations. It is not permitted to enter personal information."
+msgstr "Dieses Tool darf nur in Lehr-Lern-Kontexten genutzt werden. Die Eingabe personenbezogener Daten ist nicht gestattet."

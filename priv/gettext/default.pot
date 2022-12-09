@@ -201,3 +201,8 @@ msgstr ""
 #: lib/qrstorage_web/templates/qr_code/show.html.heex:41
 msgid "Text was automatically translated."
 msgstr ""
+
+#, elixir-autogen, elixir-format
+#: lib/qrstorage_web/templates/layout/app.html.heex:54
+msgid "This tool may only be used in Teaching/Learning situations. It is not permitted to enter personal information."
+msgstr ""
