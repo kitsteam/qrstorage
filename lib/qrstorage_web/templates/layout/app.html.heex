@@ -22,7 +22,7 @@
   <body>
     <div class="container-fluid g-0">
       <div class="row g-0">
-        <div class="col-sm-6 bg-gradient bg-gradient-primary min-vh-100 d-flex flex-column align-items-center justify-content-between order">
+        <div class="col-lg-6 order bg-gradient bg-gradient-primary min-vh-100 d-flex flex-column align-items-center justify-content-between order">
           <div></div>
           <div class="">
             <img src={Routes.static_path(@conn, "/images/qrstorage_logo.svg")} class="img-fluid d-block" alt="QRStorage Logo" />
@@ -30,15 +30,13 @@
           <div class="d-flex align-items-center pb-4">
             <a href="https://github.com/kitsteam/qrstorage"><img src={Routes.static_path(@conn, "/images/github-logo.svg")} class="img-fluid d-block" alt="GitHub Logo"
             /></a>
-            <p class="m-0 text-white p-2 d-sm-inline">QRStorage</p>
-            <div class="fs-6">
-              <a class="text-white px-lg-2 text-decoration-none" href="https://kits.blog/impressum/">Impressum</a>
-              <a class="text-white text-decoration-none" href="https://kits.blog/datenschutzerklaerung/">Datenschutz</a>
-            </div>
+            <a class="text-white px-lg-2 p-2 text-decoration-none">QRStorage</a>
+            <a class="text-white px-lg-2 p-2 text-decoration-none" href="https://kits.blog/impressum/">Impressum</a>
+            <a class="text-white p-2 text-decoration-none" href="https://kits.blog/datenschutzerklaerung/">Datenschutz</a>
           </div>
         </div>
 
-        <div class="col-sm-6 min-vh-100 d-flex flex-column justify-content-between">
+        <div class="col-lg-6 min-vh-100 d-flex flex-column justify-content-between">
           <div class="d-flex w-100 g-0 justify-content-end px-3">
             <div class="pt-3">
               <a href="https://kits.blog/tools/"><img src={Routes.static_path(@conn, "/images/kits-logo.svg")} class="img-fluid d-block" alt="Kits Logo"
