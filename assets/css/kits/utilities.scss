@@ -1,0 +1,16 @@
+// this adds an additional 90% percent width:
+$utilities: (
+    "width": (
+      property: width,
+      responsive: true,
+      class: w,
+      values: (
+        25: 25%,
+        50: 50%,
+        75: 75%,
+        90: 90%,
+        100: 100%,
+        auto: auto
+      )
+    )
+);

@@ -1,12 +1,5 @@
-/* Override bootstrap parameters, they have to be before the import: */
-$btn-focus-width:0; $btn-focus-box-shadow:none;
-$form-check-input-checked-bg-color: #00a3d3;
-$component-active-bg: #00a3d3;
-
-
 /* Import files: */
 @import "./kits/theme.scss";
-@import "../node_modules/bootstrap/scss/bootstrap";
 @import "../node_modules/quill/dist/quill.snow";
 @import "./colorpicker.scss";
 @import "./editor.scss";
@@ -15,4 +8,4 @@ $component-active-bg: #00a3d3;
 
 .alert:empty {
     display: none;
-  }
+}
