@@ -1,5 +1,6 @@
 <%= if @qr_code.content_type == :link do %>
     <div id="canvas" data-color={@qr_code.color} data-url={@qr_code.text} data-dots-type={@qr_code.dots_type}></div>
+    <br/>
 <% else %>
     <div id="canvas" data-color={@qr_code.color} data-url={Routes.qr_code_url(@conn, :show, @qr_code)} data-dots-type={@qr_code.dots_type}></div>
     <%= if get_flash(@conn, :admin_url_id) do %>
@@ -9,14 +10,12 @@
         <p><%= gettext("Using this admin link you can delete the QR Code later on manually. Save this carefully, it is not possible to retrieve it later:") %></p>
         <div class="input-group mb-3">
           <input id="input-admin-link" type="text" class="form-control" value={Routes.qr_code_url(@conn, :admin, get_flash(@conn, :admin_url_id))} readonly="readonly" aria-label={gettext("Copy")} aria-describedby="button-copy-to-clipboard">
-          <button class="btn btn-outline-secondary"  data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title={gettext("Copy to clipboard")} type="button" id="button-copy-to-clipboard"><%= gettext("Copy") %></button>
+          <button class="btn btn-secondary"  data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title={gettext("Copy to clipboard")} type="button" id="button-copy-to-clipboard"><%= gettext("Copy") %></button>
         </div>
     </div>
     <br/>
     <% end %>
 <% end %>
-
-<br/>
 
 <div class="dropdown">
   <button class="btn btn-secondary dropdown-toggle" type="button" id="qr-download-dropdown-button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -29,3 +28,5 @@
 
   <%= link gettext("Show"), class: "btn btn-primary", to: Routes.qr_code_path(@conn, :preview, @qr_code.id) %>
 </div>
+
+<br/>
