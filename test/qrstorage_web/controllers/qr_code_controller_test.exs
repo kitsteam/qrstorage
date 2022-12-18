@@ -25,7 +25,7 @@ defmodule QrstorageWeb.QrCodeControllerTest do
     content_type: "text",
     dots_type: "dots",
     voice: nil,
-    translated_text: "nil"
+    translated_text: nil
   }
 
   def fixture(attrs) do
