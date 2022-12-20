@@ -5,7 +5,7 @@ services:
     build:
       context: .
       target: development
-    entrypoint: .docker/entrypoint.sh
+    tty: true
     environment:
       DATABASE_USER: ${POSTGRES_USER:-postgres}
       DATABASE_USER_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
@@ -32,6 +32,8 @@ services:
       # Ensure that the file `gcp-config.json` is available in the container
       # You can override this in `docker-compose.override.yml`
       - ./:/app
+      - /app/deps/
+      - /app/assets/node_modules
 
   app_prod:
     build:
