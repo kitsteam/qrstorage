@@ -1,8 +1,8 @@
 <%= if @qr_code.content_type == :link do %>
-    <div id="canvas" data-color={@qr_code.color} data-url={@qr_code.text} data-dots-type={@qr_code.dots_type}></div>
+    <div id="canvas" class="py-3" data-color={@qr_code.color} data-url={@qr_code.text} data-dots-type={@qr_code.dots_type}></div>
     <br/>
 <% else %>
-    <div id="canvas" data-color={@qr_code.color} data-url={Routes.qr_code_url(@conn, :show, @qr_code)} data-dots-type={@qr_code.dots_type}></div>
+    <div id="canvas" class="py-3"data-color={@qr_code.color} data-url={Routes.qr_code_url(@conn, :show, @qr_code)} data-dots-type={@qr_code.dots_type}></div>
     <%= if get_flash(@conn, :admin_url_id) do %>
     <br/>
     <div class="text-box">
