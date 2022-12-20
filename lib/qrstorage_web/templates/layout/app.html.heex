@@ -31,9 +31,9 @@
           </div>
           <div class="d-flex align-items-center pb-4">
             <a href="https://github.com/kitsteam/qrstorage"><img src={Routes.static_path(@conn, "/images/github-logo.svg")} class="img-fluid d-block" alt="GitHub Logo"/></a>
-            <a class="text-white px-lg-2 p-2 text-decoration-none">QRStorage</a>
-            <a class="text-white px-lg-2 p-2 text-decoration-none" href="https://kits.blog/impressum/">Impressum</a>
-            <a class="text-white p-2 text-decoration-none" href="https://kits.blog/datenschutzerklaerung/">Datenschutz</a>
+            <a href="https://github.com/kitsteam/qrstorage" class="text-white px-lg-2 p-2 text-decoration-none">QRStorage</a>
+            <a href="https://kits.blog/impressum/" class="text-white px-lg-2 p-2 text-decoration-none">Impressum</a>
+            <a href="https://kits.blog/datenschutzerklaerung/" class="text-white p-2 text-decoration-none">Datenschutz</a>
           </div>
         </div>
 
@@ -48,7 +48,7 @@
               <h1 class="fw-bold">
                 <%= link "QRStorage", to: "/", title: "QRStorage", class: "text-decoration-none" %>
               </h1>
-              <div class="row">
+              <div class="row w-65">
                 <div class="col">
                   <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>
                   <p class="alert alert-danger" role="alert"><%= get_flash(@conn, :error) %></p>

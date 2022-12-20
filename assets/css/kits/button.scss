@@ -19,3 +19,8 @@
 .btn-secondary:hover {
   background-color: #00456f;
 }
+
+.btn-group > :not(.btn-check:first-child) + .btn,
+.btn-group > .btn-group:not(:first-child) {
+  margin-left: 0px !important;
+}
