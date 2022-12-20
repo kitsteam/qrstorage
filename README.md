@@ -4,19 +4,22 @@ Qr Codes that link to your server with sound and text information.
 
 ### Development
 
-The current [entrypoint](./.docker/entrypoint.sh) will not start the phoenix server. Instead, it will just idle to keep the container running. This is approach helps you to have full control of your dev environment and allows you to start up the container whenever you want.
-
-**Important**: Before you start setting up the container, register an account on [Google Cloud Platform](https://console.cloud.google.com). Create a new project and create a Service Account credential with access to the `Cloud Text-to-Speech API` and `Cloud Translation API`. You will be able to download a json file that contains all necessary credentials, e.g. `project_id`, `client_id`, `private_key`, etc. Put this json file the project root directory and name the file `.gcp-config.json`.
+- **Important**: Before you start setting up the container, register an account on [Google Cloud Platform](https://console.cloud.google.com). Create a new project and create a Service Account credential with access to the `Cloud Text-to-Speech API` and `Cloud Translation API`. You will be able to download a json file that contains all necessary credentials, e.g. `project_id`, `client_id`, `private_key`, etc. Put this json file the project root directory and name the file `.gcp-config.json`.
 
 - Start the development environment with `docker compose up -d app`
-- Check the all services are up an runnung `docker compose ps`
-- Open a new terminal window
-- Enter the running container: `docker compose exec app sh`
-- Get the latest elixir dependencies: `mix do deps.get`
-- Get the latest node packages: `cd npm install`
+
+- Enter the running container: `docker compose exec app bash`
+
+- Get the latest elixir dependencies: `mix do deps.get, deps.compile`
+
+- Get the latest node packages: `npm --prefix assets install`
+
 - Setup the database: `mix ecto.setup`
+
 - Start the phoenix server: `mix phx.server`
-- Go to http://localhost:4000/qrcodes
+
+- Go to http://localhost:4000
+
 - Start developing
 
 ### Localization
