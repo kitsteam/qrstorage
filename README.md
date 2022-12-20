@@ -6,36 +6,20 @@ Qr Codes that link to your server with sound and text information.
 
 The current [entrypoint](./.docker/entrypoint.sh) will not start the phoenix server. Instead, it will just idle to keep the container running. This is approach helps you to have full control of your dev environment and allows you to start up the container whenever you want.
 
-**Important**: Before you start setting up the container, register a Google Cloud Platform account and download the json configuration file from Google Cloud Platform. Reference the file by setting the GCP_CONFIG_PATH environment variable in your docker-compose file. You must not commit this file to a repository! You should use volumes to make the file accessible to the container.
-
-To start the container:
-- Create a file called docker-compose.override.yml and fill in at least the `GCP_CONFIG_PATH`, `SECRET_KEY_BASE` and a correct path to a volume for the GCP credentials file. E.g.:
-
-```
-version: "3.8"
-
-services:
-  app:
-    environment:
-      SECRET_KEY_BASE: "generate me with mix phx.gen.secret"
-      GCP_CONFIG_PATH: "/app/.gcp-config.json"
-      ...
-    volumes:
-      - /path-to-your-credentials/gcp/.gcp-config.json:/app/.gcp-config.json
-```
+**Important**: Before you start setting up the container, register an account on [Google Cloud Platform](https://console.cloud.google.com). Create a new project and create a Service Account credential with access to the `Cloud Text-to-Speech API` and `Cloud Translation API`. You will be able to download a json file that contains all necessary credentials, e.g. `project_id`, `client_id`, `private_key`, etc. Put this json file the project root directory and name the file `.gcp-config.json`.
 
 - Start the development environment with `docker compose up -d app`
 - Check the all services are up an runnung `docker compose ps`
 - Open a new terminal window
 - Enter the running container: `docker compose exec app sh`
 - Get the latest elixir dependencies: `mix do deps.get`
-- Get the latest node packages: `cd assets && npm install`
+- Get the latest node packages: `cd npm install`
 - Setup the database: `mix ecto.setup`
 - Start the phoenix server: `mix phx.server`
 - Go to http://localhost:4000/qrcodes
 - Start developing
 
-### Localisation
+### Localization
 
 Currently, there are two language files available, german ("de") and english ("en"). To set the default_locale, you can set QR_DEFAULT_LOCALE. The default is german.
 
