@@ -13,7 +13,7 @@ msgstr ""
 
 #, elixir-autogen, elixir-format
 #: lib/qrstorage_web/templates/qr_code/download.html.heex:23
-#: lib/qrstorage_web/templates/qr_code/show.html.heex:47
+#: lib/qrstorage_web/templates/qr_code/show.html.heex:48
 msgid "Download"
 msgstr ""
 
@@ -25,7 +25,7 @@ msgid "Oops, something went wrong! Please check the errors below."
 msgstr "Oops, da ist etwas schiefgelaufen. Bitte korrigiere die folgenden Fehler."
 
 #, elixir-autogen, elixir-format
-#: lib/qrstorage_web/templates/qr_code/form_audio.html.heex:43
+#: lib/qrstorage_web/templates/qr_code/form_audio.html.heex:42
 #: lib/qrstorage_web/templates/qr_code/form_link.html.heex:33
 #: lib/qrstorage_web/templates/qr_code/form_text.html.heex:39
 msgid "Save"
@@ -189,21 +189,16 @@ msgid "Voice"
 msgstr "Männliche statt weiblicher Stimme verwenden"
 
 #, elixir-autogen, elixir-format
-#: lib/qrstorage_web/templates/qr_code/settings/_settings_translate.html.heex:3
-msgid "translate text"
-msgstr "Text übersetzen"
-
-#, elixir-autogen, elixir-format
-#: lib/qrstorage_web/controllers/qr_code_controller.ex:149
+#: lib/qrstorage_web/controllers/qr_code_controller.ex:142
 msgid "Qr code audio transcription failed."
 msgstr "Audio-Transkription ist fehlgeschlagen."
 
 #, elixir-autogen, elixir-format
-#: lib/qrstorage_web/controllers/qr_code_controller.ex:135
+#: lib/qrstorage_web/controllers/qr_code_controller.ex:131
 msgid "Qr code translation failed."
 msgstr "Übersetzung ist fehlgeschlagen."
 
 #, elixir-autogen, elixir-format
-#: lib/qrstorage_web/templates/qr_code/show.html.heex:40
+#: lib/qrstorage_web/templates/qr_code/show.html.heex:41
 msgid "Text was automatically translated."
 msgstr "Der Text wurde automatisch übersetzt."

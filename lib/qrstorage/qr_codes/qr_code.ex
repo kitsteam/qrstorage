@@ -146,6 +146,10 @@ defmodule Qrstorage.QrCodes.QrCode do
     end)
   end
 
+  def translation_changed_text(qr_code) do
+    qr_code.text != qr_code.translated_text
+  end
+
   defp scrub_text(changeset) when is_map(changeset) do
     if Map.has_key?(changeset.changes, :text) && is_text(changeset),
       do: change(changeset, text: scrub_text(changeset.changes.text)),

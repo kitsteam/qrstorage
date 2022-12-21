@@ -35,7 +35,7 @@
       </div>
     </div>
 
-    <%= if @qr_code.translated_text do %>
+    <%= if QrCode.translation_changed_text(@qr_code) do %>
       <div class="row">
         <div class="col-md-12">
           <small class="text-muted"><%= gettext("Text was automatically translated.") %></small>

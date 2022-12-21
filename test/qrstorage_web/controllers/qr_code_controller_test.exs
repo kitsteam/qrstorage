@@ -14,8 +14,7 @@ defmodule QrstorageWeb.QrCodeControllerTest do
     language: nil,
     content_type: "text",
     dots_type: "dots",
-    voice: nil,
-    translate_text: nil
+    voice: nil
   }
 
   @invalid_attrs %{delete_after: "10", text: nil, language: nil, content_type: "text"}
@@ -25,7 +24,8 @@ defmodule QrstorageWeb.QrCodeControllerTest do
     language: nil,
     content_type: "text",
     dots_type: "dots",
-    voice: nil
+    voice: nil,
+    translated_text: nil
   }
 
   def fixture(attrs) do
@@ -96,6 +96,9 @@ defmodule QrstorageWeb.QrCodeControllerTest do
       |> expect(:text_to_audio, fn _text, _language, _voice ->
         {:ok, "audio binary"}
       end)
+      |> expect(:translate, fn _text, _language ->
+        {:ok, "translated text"}
+      end)
 
       audio_attrs = %{@create_attrs | content_type: "audio", language: "de", voice: "male"}
 
@@ -105,7 +108,7 @@ defmodule QrstorageWeb.QrCodeControllerTest do
       assert qr_code.audio_file == "audio binary"
     end
 
-    test "translate flag translates qr_code to different language", %{conn: conn} do
+    test "audio qr codes are always translated to different language", %{conn: conn} do
       Qrstorage.Services.Gcp.GoogleApiServiceMock
       |> expect(:text_to_audio, fn _text, _language, _voice ->
         {:ok, "audio binary"}
@@ -118,8 +121,7 @@ defmodule QrstorageWeb.QrCodeControllerTest do
         @create_attrs
         | content_type: "audio",
           language: "de",
-          voice: "male",
-          translate_text: "true"
+          voice: "male"
       }
 
       conn = post(conn, Routes.qr_code_path(conn, :create), qr_code: audio_attrs)
@@ -129,7 +131,15 @@ defmodule QrstorageWeb.QrCodeControllerTest do
       assert qr_code.audio_file == "audio binary"
     end
 
-    test "translate flag translates is able to handle text longer than 255 chars", %{conn: conn} do
+    test "text qr codes are never translated to different language", %{conn: conn} do
+      conn = post(conn, Routes.qr_code_path(conn, :create), qr_code: @create_attrs)
+      assert %{id: id} = redirected_params(conn)
+      qr_code = QrCode |> Repo.get!(id)
+      assert qr_code.translated_text == nil
+      assert qr_code.audio_file == nil
+    end
+
+    test "translates is able to handle text longer than 255 chars", %{conn: conn} do
       translated_text = String.duplicate("a", 260)
 
       Qrstorage.Services.Gcp.GoogleApiServiceMock
@@ -144,8 +154,7 @@ defmodule QrstorageWeb.QrCodeControllerTest do
         @create_attrs
         | content_type: "audio",
           language: "de",
-          voice: "male",
-          translate_text: "true"
+          voice: "male"
       }
 
       conn = post(conn, Routes.qr_code_path(conn, :create), qr_code: audio_attrs)
@@ -192,6 +201,22 @@ defmodule QrstorageWeb.QrCodeControllerTest do
       response = html_response(conn, 200)
       assert response =~ translated_audio_qr_code.translated_text
       assert !(response =~ translated_audio_qr_code.text)
+    end
+
+    test "shows hint that text was translated for translated codes", %{
+      conn: conn,
+      translated_audio_qr_code: translated_audio_qr_code
+    } do
+      conn = get(conn, Routes.qr_code_path(conn, :show, translated_audio_qr_code.id))
+      assert html_response(conn, 200) =~ "Text was automatically translated"
+    end
+
+    test "shows no hint that text was translated for not translated codes", %{
+      conn: conn,
+      audio_qr_code: audio_qr_code
+    } do
+      conn = get(conn, Routes.qr_code_path(conn, :show, audio_qr_code.id))
+      assert !(html_response(conn, 200) =~ "Text was automatically translated")
     end
   end
 
@@ -313,11 +338,16 @@ defmodule QrstorageWeb.QrCodeControllerTest do
     attrs = %{@fixture_attrs | content_type: "audio", language: "de", voice: "female"}
     audio_qr_code = fixture(attrs)
 
+    # we set translated_text to text, since this is what happens when google detects no difference between source and target language
+    # we also add a fake audio file
     audio_qr_code =
-      QrCode.store_audio_file(
-        audio_qr_code,
-        %{"audio_file" => "some binary text", "audio_file_type" => "audio/mp3"}
-      )
+      audio_qr_code
+      |> QrCode.changeset(%{hide_text: audio_qr_code.hide_text})
+      |> QrCode.changeset_with_translated_text(%{translated_text: audio_qr_code.text})
+      |> QrCode.store_audio_file(%{
+        "audio_file" => "some binary text",
+        "audio_file_type" => "audio/mp3"
+      })
       |> Repo.update!()
 
     %{audio_qr_code: audio_qr_code}

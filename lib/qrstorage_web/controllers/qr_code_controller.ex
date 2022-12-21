@@ -25,7 +25,7 @@ defmodule QrstorageWeb.QrCodeController do
       {:ok, qr_code} ->
         {qr_code, conn} =
           if qr_code.content_type == :audio,
-            do: handle_audio_qr_code(qr_code_params, qr_code, conn),
+            do: handle_audio_qr_code(qr_code, conn),
             else: {qr_code, conn}
 
         conn =
@@ -115,32 +115,25 @@ defmodule QrstorageWeb.QrCodeController do
     qr_code_params
   end
 
-  defp handle_audio_qr_code(qr_code_params, qr_code, conn) do
-    # add translation if necessary:
-    {qr_code, conn} = add_translation(qr_code_params, qr_code, conn)
-
-    # get audio:
-    {qr_code, conn} = add_audio(qr_code, conn)
-
+  defp handle_audio_qr_code(qr_code, conn) do
+    # always add translation and get audio:
     {qr_code, conn}
+    |> add_translation
+    |> add_audio
   end
 
-  defp add_translation(qr_code_params, qr_code, conn) do
-    if Map.get(qr_code_params, "translate_text") == "true" do
-      case Qrstorage.Services.TranslationService.add_translation(qr_code) do
-        {:ok, translated_qr_code} ->
-          {translated_qr_code, conn}
+  defp add_translation({qr_code, conn}) do
+    case Qrstorage.Services.TranslationService.add_translation(qr_code) do
+      {:ok, translated_qr_code} ->
+        {translated_qr_code, conn}
 
-        {:error, _} ->
-          conn = conn |> put_flash(:error, gettext("Qr code translation failed."))
-          {qr_code, conn}
-      end
-    else
-      {qr_code, conn}
+      {:error, _} ->
+        conn = conn |> put_flash(:error, gettext("Qr code translation failed."))
+        {qr_code, conn}
     end
   end
 
-  defp add_audio(qr_code, conn) do
+  defp add_audio({qr_code, conn}) do
     case Qrstorage.Services.TtsService.text_to_audio(qr_code) do
       {:ok, audio_qr_code} ->
         {audio_qr_code, conn}
