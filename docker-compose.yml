@@ -5,7 +5,7 @@ services:
     build:
       context: .
       target: development
-    entrypoint: .docker/entrypoint.sh
+    tty: true
     environment:
       DATABASE_USER: ${POSTGRES_USER:-postgres}
       DATABASE_USER_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
@@ -19,7 +19,7 @@ services:
       # - Use `mix phx.gen.secret` if you have elixir and phoenix installed
       # - Use `openssl rand -base64 64 | head -c 64` on a normal unix system
       # You can override this in `docker-compose.override.yml`
-      SECRET_KEY_BASE: "generate_your_own_secret_key_base_and_save_it"
+      SECRET_KEY_BASE: "this_secret_key_base_needs_to_have_a_length_of_at_least_64_characters_like_this_one!"
       URL_HOST: localhost
       URL_SCHEME: http
       URL_PORT: "4000"
@@ -32,11 +32,15 @@ services:
       # Ensure that the file `gcp-config.json` is available in the container
       # You can override this in `docker-compose.override.yml`
       - ./:/app
+      - /app/deps/
+      - /app/assets/node_modules
 
   app_prod:
     build:
       context: .
       target: production
+    profiles:
+      - prod
     environment:
       DATABASE_USER: ${POSTGRES_USER:-postgres}
       DATABASE_USER_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
@@ -60,7 +64,6 @@ services:
       - postgres
     # volumes:
       # Ensure that the file `gcp-config.json` is available in the container/
-      # You can override this in `docker-compose.override.yml`
       #
       # How to get the fiel `docker-compose-kits.yml`?
       # - Go to Coogle Cloud Platform dashboard
