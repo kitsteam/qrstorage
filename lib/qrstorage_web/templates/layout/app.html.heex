@@ -48,8 +48,8 @@
               <h1 class="fw-bold">
                 <%= link "QRStorage", to: "/", title: "QRStorage", class: "text-decoration-none" %>
               </h1>
-              <div class="row w-65">
-                <div class="col">
+              <div class="row">
+                <div class="col-sm-6">
                   <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>
                   <p class="alert alert-danger" role="alert"><%= get_flash(@conn, :error) %></p>
                 </div>
