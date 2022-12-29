@@ -54,7 +54,7 @@
 //
 // Custom styles not related to bootstrap:
 //
-@media screen and (max-width: 1024px) and (orientation: portrait) {
+@media screen and (max-width: 1024px) {
   .order {
     position: relative !important;
     width: 100% !important;
@@ -76,7 +76,6 @@
       min-height: 770px !important;
     }
   }
-
 
   .float-end {
     width: 100% !important;
