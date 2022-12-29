@@ -92,8 +92,8 @@
   }
 }
 
-/* ipad in landscape mode */ 
-@media screen and (min-height : 768px) and (orientation: landscape) {
+/* ipads in landscape mode */ 
+@media screen and (min-height: 768px) and (max-height: 1366px) and (orientation: landscape) {
   #footer-links {
     padding-bottom: 4.5rem !important;
   }
