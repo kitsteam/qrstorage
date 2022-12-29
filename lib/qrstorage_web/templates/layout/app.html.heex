@@ -22,14 +22,14 @@
   <body>
     <!-- Left Block -->
     <div class="order-1">
-      <div class="order float-start position-fixed vh-100 bg-gradient bg-gradient-primary w-50 d-flex flex-column align-items-center justify-content-between">
+      <div id="left-column" class="order float-start position-fixed vh-100 bg-gradient bg-gradient-primary w-50 d-flex flex-column align-items-center justify-content-between">
           <div></div>
           <div>
             <%= link to: "/", title: "QRStorage" do %>
               <img src={Routes.static_path(@conn, "/images/qrstorage_logo.svg")} class="img-fluid d-block" alt="QRStorage Logo" />
             <% end %>
           </div>
-          <div class="d-flex align-items-center pb-4">
+          <div id="footer-links" class="d-flex align-items-center">
             <a href="https://github.com/kitsteam/qrstorage"><img src={Routes.static_path(@conn, "/images/github-logo.svg")} class="img-fluid d-block" alt="GitHub Logo"/></a>
             <a href="https://github.com/kitsteam/qrstorage" class="text-white px-lg-2 p-2 text-decoration-none">QRStorage</a>
             <a href="https://kits.blog/impressum/" class="text-white px-lg-2 p-2 text-decoration-none">Impressum</a>
