@@ -63,8 +63,8 @@
     min-height: 560px;
   }
 
-  // (somewhat) tall and wide devices, such as  iPad Pro 11 inch:
-  @media screen and (min-device-height: 1194px) and (max-device-height: 1365px) {
+  // (somewhat) tall and wide devices, such as iPad Air or iPad Pro 11 inch:
+  @media screen and (min-device-height: 1180px) and (max-device-height: 1365px) {
     .order {
       min-height: 600px !important;
     }
