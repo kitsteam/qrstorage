@@ -206,4 +206,4 @@ msgstr "Der Text wurde automatisch übersetzt."
 #, elixir-autogen, elixir-format
 #: lib/qrstorage_web/templates/layout/app.html.heex:54
 msgid "This tool may only be used in Teaching/Learning situations. It is not permitted to enter personal information."
-msgstr "Dieses Tool darf nur in Lehr-Lern-Kontexten genutzt werden. Die Eingabe personenbezogener Daten ist nicht gestattet."
+msgstr "Dieses Tool darf nur in Bildungskontexten genutzt werden. Die Eingabe personenbezogener Daten ist nicht gestattet."

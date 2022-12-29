@@ -1,8 +1,8 @@
 
-<ul class="list-group list-unstyled mb-3">
-    <li class="list-group-item pb-2">Erstelle sprechende QR-Codes!</li>
-    <li class="list-group-item pb-2">Übersetze deine Texte!</li>
-    <li class="list-group-item pb-2">Gestalte den Text hinter dem QR-Code!</li>
+<ul id="teaser" class="list-group list-unstyled">
+    <li class="list-group-item pb-2 audio">Erstelle sprechende QR-Codes!</li>
+    <li class="list-group-item pb-2 link">Verlinke Bilder und Videos</li>
+    <li class="list-group-item pb-2 text">Gestalte deinen Text!</li>
 </ul>
 <br/>
 <%= render "form.html", Map.put(assigns, :action, Routes.qr_code_path(@conn, :create)) %>
