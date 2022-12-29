@@ -6,3 +6,11 @@
 </ul>
 <br/>
 <%= render "form.html", Map.put(assigns, :action, Routes.qr_code_path(@conn, :create)) %>
+
+<div class="d-flex w-100 g-0 justify-content-around px-sm-3">
+<div>
+    <p class="fs-6 text-center">
+    <%= gettext("This tool may only be used in Teaching/Learning situations. It is not permitted to enter personal information.") %>
+    </p>
+</div>
+</div>
