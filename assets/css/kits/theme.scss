@@ -87,18 +87,6 @@
   }
 }
 
-/* ipads in landscape mode */ 
-@media screen and (orientation: landscape) {
-
-  // list of iPads sizes to fix the URL navigation bar issues:
-  @media (min-device-width: 768px) and (max-device-width: 768px), (min-device-width: 820px) and (max-device-width: 820px), (min-device-width: 834px) and (max-device-width: 834px), (min-device-width: 1024px) and (max-device-width: 1024px)
-   {
-     #footer-links {
-      padding-bottom: 4.5rem !important;
-     }
-   }
- }
-
 #footer-links {
   padding-bottom: 1.5rem;
 }
