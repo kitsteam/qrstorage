@@ -15,7 +15,13 @@ const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new Tooltip(
 const leftColumn = document.getElementById('left-column');
 
 function setLeftColumnHeight(){
-    leftColumn.setAttribute("style", "height: "+(window.innerHeight)+"px !important");
+    // only resize in landscape mode:
+
+    const isLandscape = window.matchMedia('(orientation: landscape)').matches;
+
+    if (isLandscape) {
+        leftColumn.setAttribute("style", "height: "+(window.innerHeight)+"px !important");
+    }
 }
 // change the left column size whenever the window is resized
 window.addEventListener("resize", setLeftColumnHeight);
