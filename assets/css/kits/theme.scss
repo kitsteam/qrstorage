@@ -54,7 +54,7 @@
 //
 // Custom styles not related to bootstrap:
 //
-@media screen and (max-width: 1024px) {
+@media screen and (max-width: 992px) {
   .order {
     position: relative !important;
     width: 100% !important;
@@ -80,6 +80,7 @@
   .float-end {
     width: 100% !important;
     height: auto !important;
+    margin-bottom: 100px;
   }
   .order-1 {
     display: flex;
@@ -87,6 +88,6 @@
   }
 }
 
-#footer-links {
+/*#footer-links {
   padding-bottom: 1.5rem;
-}
+}*/

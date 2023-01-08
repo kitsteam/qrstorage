@@ -17,6 +17,8 @@ const leftColumn = document.getElementById('left-column');
 function setLeftColumnHeight(){
     // only resize in landscape mode:
 
+    // ::TODOO:: check ipad pro 12.9 inch - here, the screen is so wide that it's still in portrait mode 
+    
     const isLandscape = window.matchMedia('(orientation: landscape)').matches;
 
     if (isLandscape) {
