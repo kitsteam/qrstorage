@@ -67,9 +67,17 @@
   margin-top: 3rem;
 }
 
+#static-footer .row {
+  margin: 1rem;
+}
+
 @media screen and (max-height: 812px) {
   #content {
     margin-top: 0rem;
+  }
+
+  #static-footer .row {
+    margin: 0.5rem;
   }
 }
 
