@@ -54,40 +54,23 @@
 //
 // Custom styles not related to bootstrap:
 //
-@media screen and (max-width: 992px) {
-  .order {
-    position: relative !important;
-    width: 100% !important;
-    height: auto !important;
-    padding-top: 30px;
-    min-height: 560px;
-  }
-
-  // (somewhat) tall and wide devices, such as iPad Air or iPad Pro 11 inch:
-  @media screen and (min-device-height: 1180px) and (max-device-height: 1365px) {
-    .order {
-      min-height: 600px !important;
-    }
-  }
-
-  // tall and wide devices, such as iPad Pro 12.9 inch:
-  @media screen and (min-device-height: 1366px) {
-    .order {
-      min-height: 770px !important;
-    }
-  }
-
+@include media-breakpoint-down(lg) {
+  // starting with LG size we only want one column:
   .float-end {
     width: 100% !important;
     height: auto !important;
     margin-bottom: 100px;
   }
-  .order-1 {
-    display: flex;
-    flex-direction: column-reverse;
+}
+
+@media screen and (max-width: 379px) {
+  // for very small display widhts we need to reduce the font size for the footer:
+  #static-footer {
+    font-size: 12px;
   }
 }
 
-/*#footer-links {
-  padding-bottom: 1.5rem;
-}*/
+// we don't want the footer logo to grow too big, otherwise the footer becomes too high:
+#static-footer-logo {
+  max-width: 80px !important;
+}
