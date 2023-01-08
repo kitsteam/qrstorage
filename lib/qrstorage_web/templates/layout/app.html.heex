@@ -27,12 +27,12 @@
           <div id="static-footer" class="footer fixed-bottom bg-gradient bg-gradient-primary">
             <div class="row m-3">
               <div class="d-flex align-items-center">
-                <div class="col-2">
+                <div class="col-1 col-sm-2">
                   <%= link to: "/", title: "QRStorage" do %>
                     <img id="static-footer-logo" src={Routes.static_path(@conn, "/images/qrstorage_logo.svg")} class="img-fluid d-block" width="100%" alt="QRStorage Logo" />
                   <% end %>
                 </div>
-                <div class="col-10 d-flex justify-content-end">
+                <div class="col-11 col-sm-10 d-flex justify-content-end">
                   <a href="https://github.com/kitsteam/qrstorage" class="text-white px-lg-2 p-2 text-decoration-none">GitHub</a>
                   <a href="https://kits.blog/impressum/" class="text-white px-lg-2 p-2 text-decoration-none">Impressum</a>
                   <a href="https://kits.blog/datenschutzerklaerung/" class="text-white p-2 text-decoration-none">Datenschutz</a>
