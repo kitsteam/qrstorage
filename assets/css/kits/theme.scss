@@ -63,6 +63,16 @@
   }
 }
 
+#content {
+  margin-top: 3rem;
+}
+
+@media screen and (max-height: 812px) {
+  #content {
+    margin-top: 0rem;
+  }
+}
+
 @media screen and (max-width: 374px) {
   // for very small display widhts we need to reduce the font size for the footer:
   #static-footer {
