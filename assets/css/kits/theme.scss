@@ -91,4 +91,5 @@
 // we don't want the footer logo to grow too big, otherwise the footer becomes too high:
 #static-footer-logo {
   max-width: 80px !important;
+  min-width: 40px;
 }
