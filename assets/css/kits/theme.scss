@@ -71,7 +71,6 @@
   margin: 1rem;
 }
 
-
 @media screen and (max-height: 812px) {
   #content {
     margin-top: 1rem;
@@ -79,6 +78,10 @@
 
   #static-footer .row {
     margin: 0.5rem;
+  }
+
+  .form-text.text-muted {
+    font-size: 0.75em;
   }
 }
 
@@ -89,6 +92,10 @@
 
   #static-footer .row {
     margin: 0.5rem;
+  }
+
+  .form-text.text-muted {
+    font-size: 0.65em;
   }
 }
 

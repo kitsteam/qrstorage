@@ -22,12 +22,11 @@
         <%= error_tag f, :text %>
       </div>
     </div>
-  <br/>
     <div class="form-group">
       <%= label f, :language, gettext("audio language") %>
       <%= select f, :language, translated_languages_for_select(), class: "form-control" %>
       <%= error_tag f, :language %>
-      <small class="form-text text-muted"><%= gettext("Audio Text to Speech via Google") %></small>
+      <p class="form-text text-muted"><%= gettext("Audio Text to Speech via Google") %></p>
     </div>
 
   <%= render("settings/_settings_button.html", id: "collapse-settings-audio", conn: @conn) %>

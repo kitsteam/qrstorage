@@ -59,7 +59,7 @@ msgstr "QR-Code erfolgreich erstellt."
 #, elixir-autogen, elixir-format
 #: lib/qrstorage_web/templates/qr_code/form_audio.html.heex:25
 msgid "Audio Text to Speech via Google"
-msgstr "Für die Sprachausgabe und für die Übersetzung kommunizieren wir mit Google. Du bleibst für Google unsichtbar."
+msgstr "Für die Sprachausgabe kommunizieren wir mit Google. Du bleibst für Google unsichtbar."
 
 #, elixir-autogen, elixir-format
 #: lib/qrstorage_web/templates/qr_code/form_audio.html.heex:14
