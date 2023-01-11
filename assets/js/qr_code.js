@@ -41,8 +41,8 @@ if (canvas) {
   const url = canvas.getAttribute("data-url");
   const color = canvas.getAttribute("data-color");
   const dots_type = canvas.getAttribute("data-dots-type");
-  const width = 300;
-  const height = 300;
+  const width = (document.getElementById("content").offsetWidth <= 400) ? document.getElementById("content").offsetWidth - 28 : 372;
+  const height = width;
   const qrCode = createQrCode(canvas, color, url, dots_type, width, height);
 
   document.querySelectorAll("#qr-download-dropdown-menu .dropdown-item").forEach((dropdownItem) => {
