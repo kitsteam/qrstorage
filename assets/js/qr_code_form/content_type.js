@@ -6,12 +6,23 @@ const showGroups = (contentType) => {
     document.querySelectorAll('.content-type-group').forEach((contentTypeGroup) => {
         contentTypeGroup.classList.add('visually-hidden');
     });
+
+    // hide all teasers:
+    document.querySelectorAll('#teaser li').forEach((contentTypeGroup) => {
+        contentTypeGroup.classList.add('d-none');
+    });
     
     // show form for selected content type group:
     const formGroups = document.querySelectorAll('.'+contentType.value);
     formGroups.forEach((formGroup) => {
         formGroup.classList.remove('visually-hidden');
     });
+
+    // show correct teaser:
+    const teaser = document.querySelector('#teaser .'+contentType.value);
+    if (teaser) {
+        teaser.classList.remove('d-none');
+    }
 }
 
 if (contentType) {

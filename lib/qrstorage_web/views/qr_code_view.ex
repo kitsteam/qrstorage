@@ -6,10 +6,10 @@ defmodule QrstorageWeb.QrCodeView do
   alias Qrstorage.Scrubber.TextScrubber
 
   def content_group_checked(changeset, content_group) do
-    # Without changes, we default to show the content group of the type link:
+    # Without changes, we default to show the content group of the type audio:
     if changeset.changes == %{} do
       case content_group do
-        "link" -> true
+        "audio" -> true
         _ -> false
       end
     else

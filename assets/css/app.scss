@@ -1,75 +1,65 @@
-/* Override bootstrap parameters, they have to be before the import: */
-$btn-focus-width:0; $btn-focus-box-shadow:none;
-$form-check-input-checked-bg-color: #00a3d3;
-$component-active-bg: #00a3d3;
-
-
 /* Import files: */
-@import "../node_modules/bootstrap/scss/bootstrap";
+@import "./kits/theme.scss";
 @import "../node_modules/quill/dist/quill.snow";
 @import "./colorpicker.scss";
 @import "./editor.scss";
 @import "./feather-icons.scss";
 
-#logo {
-  width: 100%;
+alert {
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid transparent;
+    border-radius: 4px;
 }
 
-#footer-logo {
-  width: 90px; 
-  margin-left: 20px;
-}
-
-/* Alerts and form errors */
-.alert {
-  padding: 15px;
-  margin-bottom: 20px;
-  border: 1px solid transparent;
-  border-radius: 4px;
-}
 .alert-info {
-  color: #31708f;
-  background-color: #d9edf7;
-  border-color: #bce8f1;
+    color: #31708f;
+    background-color: #d9edf7;
+    border-color: #bce8f1;
 }
+
 .alert-warning {
-  color: #8a6d3b;
-  background-color: #fcf8e3;
-  border-color: #faebcc;
+    color: #8a6d3b;
+    background-color: #fcf8e3;
+    border-color: #faebcc;
 }
+
 .alert-danger {
-  color: #a94442;
-  background-color: #f2dede;
-  border-color: #ebccd1;
+    color: #a94442;
+    background-color: #f2dede;
+    border-color: #ebccd1;
 }
+
 .alert p {
-  margin-bottom: 0;
+    margin-bottom: 0;
 }
+
 .alert:empty {
-  display: none;
+    display: none;
 }
+
 .invalid-feedback {
-  color: #a94442;
-  display: block;
-  margin: -1rem 0 2rem;
+    color: #a94442;
+    display: block;
+    margin: -1rem 0 2rem;
 }
 
 .text-box {
-  border: 1px solid #00a3d3;
-  border-radius: 5px;
-  text-align: left;
-  padding: 10px;
-  min-height: 100px;
+    border: 1px solid #00a3d3;
+    border-radius: 5px;
+    text-align: left;
+    padding: 10px;
+    min-height: 100px;
 }
 
 .invalid-feedback {
-  margin: 0px;
+    margin: 0px;
 }
 
 a {
-  word-break:break-all;
+    word-break:break-all;
 }
 
 .text-box img {
-  width: 100%;
+    width: 100%;
 }

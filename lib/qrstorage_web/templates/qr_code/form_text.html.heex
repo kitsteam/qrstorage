@@ -18,6 +18,9 @@
     </div>
     <div id="editor-container"></div>
     <span id="character-count" data-max-characters={QrCode.text_length_limits[:text]}><%= QrCode.text_length_limits[:text] %></span> <span><%= gettext("character(s) left") %></span>
+    <p class="form-text text-muted">
+      <%= gettext("This tool may only be used in Teaching/Learning situations. It is not permitted to enter personal information.") %>
+    </p>    
     <div class="invalid-feedback">
       <%= error_tag f, :text %>
       <%= error_tag f, :deltas %>
@@ -34,7 +37,7 @@
       </div>
   </div>  
 
-<div class="row">
+<div class="row mb-4">
   <div class="col">
     <%= submit gettext("Save"), class: "btn btn-primary" %>
   </div>

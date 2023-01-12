@@ -11,18 +11,22 @@
   <% end %>
     
     <div class="form-group">
+      
       <%= textarea f, :text, id: "audio", class: "form-control", required: true, maxlength: QrCode.text_length_limits[:audio], placeholder: gettext("Type your text here") %>
       <%= render("form_character_counter.html", max_length: QrCode.text_length_limits[:audio]) %>
+      <p class="form-text text-muted">
+        <%= gettext("This tool may only be used in Teaching/Learning situations. It is not permitted to enter personal information.") %>
+      </p>    
+      
       <div class="invalid-feedback">
         <%= error_tag f, :text %>
       </div>
     </div>
-  <br/>
     <div class="form-group">
       <%= label f, :language, gettext("audio language") %>
       <%= select f, :language, translated_languages_for_select(), class: "form-control" %>
       <%= error_tag f, :language %>
-      <small id="emailHelp" class="form-text text-muted"><%= gettext("Audio Text to Speech via Google") %></small>
+      <p class="form-text text-muted"><%= gettext("Audio Text to Speech via Google") %></p>
     </div>
 
   <%= render("settings/_settings_button.html", id: "collapse-settings-audio", conn: @conn) %>
@@ -37,7 +41,7 @@
     </div>
   </div>
 
-  <div class="row">
+  <div class="row mb-4">
     <div class="col">
       <%= submit gettext("Save"), class: "btn btn-primary" %>
     </div>

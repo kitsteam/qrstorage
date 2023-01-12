@@ -1,18 +1,18 @@
-<div class="btn-group mb-3" id="content-type-selector" role="group">
-  <%= radio_button :qr_code, :content_type, "link", [class: "btn-check content-type", autocomplete: "off", checked: content_group_checked(@changeset, "link")] %>
-  <label class="btn btn-secondary" for="qr_code_content_type_link">Link</label>
+<div class="btn-group mb-3 w-100 d-flex justify-content-between" id="content-type-selector" role="group">
   <%= radio_button :qr_code, :content_type, "audio", [class: "btn-check content-type", autocomplete: "off", checked: content_group_checked(@changeset, "audio")] %>
-  <label class="btn btn-secondary" for="qr_code_content_type_audio">Audio</label>
+  <label class="btn btn-primary" for="qr_code_content_type_audio">Audio</label>
   <%= radio_button :qr_code, :content_type, "text", [class: "btn-check content-type", autocomplete: "off", checked: content_group_checked(@changeset, "text")] %>
-  <label class="btn btn-secondary" for="qr_code_content_type_text">Text</label>
+  <label class="btn btn-primary" for="qr_code_content_type_text">Text</label>
+  <%= radio_button :qr_code, :content_type, "link", [class: "btn-check content-type", autocomplete: "off", checked: content_group_checked(@changeset, "link")] %>
+  <label class="btn btn-primary" for="qr_code_content_type_link">Link</label>
 </div>
 
-<div class="content-type-group visually-hidden link">
-  <%= render("form_link.html", changeset: changeset_for_content_type(@changeset, "link"), action: @action, conn: @conn) %>
-</div>
 <div class="content-type-group visually-hidden audio">
   <%= render("form_audio.html", changeset: changeset_for_content_type(@changeset, "audio"), action: @action,conn: @conn) %>
 </div>
 <div class="content-type-group visually-hidden text">
   <%= render("form_text.html", changeset: changeset_for_content_type(@changeset, "text"), action: @action,conn: @conn) %>
+</div>
+<div class="content-type-group visually-hidden link">
+  <%= render("form_link.html", changeset: changeset_for_content_type(@changeset, "link"), action: @action, conn: @conn) %>
 </div>
