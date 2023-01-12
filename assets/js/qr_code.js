@@ -1,4 +1,3 @@
-import { offset } from "@popperjs/core";
 import QRCodeStyling from "qr-code-styling";
 
 const qrCodeOptions = (color, url, dots_type, width, height) => (
