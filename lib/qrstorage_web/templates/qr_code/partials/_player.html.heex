@@ -17,12 +17,12 @@
                     </span>
                 </button>
             </div>
-            <span id="skip-back" class="position-absolute bottom-0 start-0 translate-middle badge border border-light rounded-circle bg-primary p-2 translate-middle-x">
+            <span id="skip-back" data-skip-back-seconds="10" class="position-absolute bottom-0 start-0 translate-middle badge border border-light rounded-circle bg-primary p-2 translate-middle-x">
                 <svg class="feather">
                     <use href={Routes.static_path(@conn, "/images/feather-icons/feather-sprite.svg#skip-back")}/>
                 </svg>
             </span>
-            <span id="stop" class="position-absolute bottom-0 start-100 translate-middle badge border border-light rounded-circle bg-primary p-2 translate-middle-x">
+            <span id="stop" class="amplitude-stop position-absolute bottom-0 start-100 translate-middle badge border border-light rounded-circle bg-primary p-2 translate-middle-x">
                 <svg class="feather">
                 <use href={Routes.static_path(@conn, "/images/feather-icons/feather-sprite.svg#stop-circle")}/>
                 </svg>

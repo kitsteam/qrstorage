@@ -68,5 +68,13 @@ Amplitude.init({
     ]
 });
 
+const skipBackButton = document.getElementById("skip-back");
+
+skipBackButton.addEventListener('click', (event) => {
+    const seconds = Amplitude.getSongPlayedSeconds();
+    const skipBackSeconds = skipBackButton.getAttribute("data-skip-back-seconds");
+    Amplitude.skipTo(Math.max(0, seconds - skipBackSeconds), 0);
+})
+
 // start with an empty circle:
 drawProgressCircle(0);
