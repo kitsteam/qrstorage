@@ -1,10 +1,10 @@
 <div id="player" class="row m-3" data-url={Routes.qr_code_path(@conn, :audio_file, @qr_code.id)}>
     <div id="play-button-wrapper" class="col">
-        <div class="position-relative">
+        <div class="position-relative mb-4">
             <div class="position-absolute top-0 start-0"></div>
             <div id="progressbar"></div>
             <div class="position-absolute top-50 start-50 translate-middle">
-                <button id="play" class="amplitude-play-pause" type="button">
+                <div id="play" class="amplitude-play-pause position-absolute top-50 start-50  translate-middle">
                     <span id="play-icon" class="d-none">
                     <svg class="feather">
                         <use href={Routes.static_path(@conn, "/images/feather-icons/feather-sprite.svg#play")}/>
@@ -15,17 +15,20 @@
                         <use href={Routes.static_path(@conn, "/images/feather-icons/feather-sprite.svg#pause")}/>
                     </svg>
                     </span>
-                </button>
+                </div>
             </div>
-            <span id="skip-back" data-skip-back-seconds="10" class="position-absolute bottom-0 start-0 translate-middle badge border border-light rounded-circle bg-primary p-2 translate-middle-x">
+            <span id="skip-back" data-skip-back-seconds="10" class="position-absolute bottom-0 start-0 translate-middle badge border border-light rounded-circle bg-secondary p-4 translate-middle-x">
                 <svg class="feather">
-                    <use href={Routes.static_path(@conn, "/images/feather-icons/feather-sprite.svg#skip-back")}/>
+                    <use href={Routes.static_path(@conn, "/images/feather-icons/feather-sprite.svg#rotate-ccw")}/>
                 </svg>
             </span>
-            <span id="stop" class="amplitude-stop position-absolute bottom-0 start-100 translate-middle badge border border-light rounded-circle bg-primary p-2 translate-middle-x">
+            <span id="stop" class="amplitude-stop position-absolute bottom-0 start-100 translate-middle badge border border-light rounded-circle bg-secondary p-4 translate-middle-x">
                 <svg class="feather">
-                <use href={Routes.static_path(@conn, "/images/feather-icons/feather-sprite.svg#stop-circle")}/>
+                <use href={Routes.static_path(@conn, "/images/feather-icons/feather-sprite.svg#square")}/>
                 </svg>
+            </span>
+            <span id="playback-speed" data-playback-speed="1.0" class="position-absolute bottom-0 start-50 translate-middle badge border border-light rounded-circle bg-secondary p-3 translate-middle-x">
+                1x
             </span>
         </div>
     </div>

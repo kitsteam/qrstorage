@@ -3,7 +3,7 @@
 }
 
 #player {
-    width: 150px;
+    width: 275px;
 }
 
 #player canvas {
@@ -12,26 +12,40 @@
 }
 
 #play {
-    width: 60px;
-    height: 60px;
+    width: 100px;
+    height: 100px;
     background: white;
     border: none;
-    margin-left: 10px;
 }
 
 #play .feather {
-    width: 50px;
-    height: 50px;
+    width: 100px;
+    height: 100px;
     stroke: #6c757d !important;
     fill: #6c757d !important;
 }
 
-#play:hover .feather {
-    fill: white !important;
+#play-icon .feather {
+    margin-left: 10px;
 }
 
-#skip-back, #stop {
+#skip-back, #stop, #playback-speed, #play {
     cursor: pointer;
+}
+
+#playback-speed {
+    bottom: -25px !important;
+    display: inline-block;
+    overflow: hidden;
+    width: 60px;
+    height: 60px;
+    padding-top: 23px !important;
+}
+
+
+#skip-back .feather, #stop .feather {
+    height: 35px;
+    width: 35px;
 }
 
 #play.amplitude-paused #play-icon {
