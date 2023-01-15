@@ -48,7 +48,7 @@ defmodule QrstorageWeb.QrCodeControllerTest do
       assert redirected_to(conn) == Routes.qr_code_path(conn, :download, id)
 
       conn = get(conn, Routes.qr_code_path(conn, :show, id))
-      assert html_response(conn, 200) =~ "Qr code created successfully"
+      assert html_response(conn, 200) =~ @create_attrs.text
     end
 
     test "renders errors when data is invalid", %{conn: conn} do
