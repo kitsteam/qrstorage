@@ -56,3 +56,19 @@
     display: block !important;
 }
     
+
+// starting with MD sizes we want the player to be larger:
+@include media-breakpoint-up(md) {
+
+    #player {
+        width: 375px;
+    }
+    
+    #skip-back {
+        left: 10% !important;
+    }
+
+    #stop {
+        left: 90% !important;
+    }
+}

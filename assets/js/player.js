@@ -51,7 +51,7 @@ if (player) {
     
             // redraw:
             drawCircle(ctx, '#efefef', radius, lineWidth, 100 / 100);
-            drawCircle(ctx, '#00a3d3', radius, lineWidth, percentage / 100);
+            drawCircle(ctx, '#00456f', radius, lineWidth, percentage / 100);
         }
     
     
