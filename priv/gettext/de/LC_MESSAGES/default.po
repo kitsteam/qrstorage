@@ -52,11 +52,6 @@ msgid "delete after"
 msgstr "Speicherdauer in Monaten"
 
 #, elixir-autogen, elixir-format
-#: lib/qrstorage_web/controllers/qr_code_controller.ex:37
-msgid "Qr code created successfully."
-msgstr "QR-Code erfolgreich erstellt."
-
-#, elixir-autogen, elixir-format
 #: lib/qrstorage_web/templates/qr_code/form_audio.html.heex:29
 msgid "Audio Text to Speech via Google"
 msgstr "Für die Sprachausgabe kommunizieren wir mit Google. Du bleibst für Google unsichtbar."
@@ -118,7 +113,7 @@ msgid "Do you really want to delete this QR code? This action cannot be undone:"
 msgstr "Möchtest Du diesen QR-Code wirklich löschen? Diese Handlung kann nicht rückgängig gemacht werden."
 
 #, elixir-autogen, elixir-format
-#: lib/qrstorage_web/controllers/qr_code_controller.ex:80
+#: lib/qrstorage_web/controllers/qr_code_controller.ex:79
 msgid "Successfully deleted QR code."
 msgstr "QR-Code erfolgreich gelöscht."
 
@@ -189,12 +184,12 @@ msgid "Voice"
 msgstr "Männliche statt weiblicher Stimme verwenden"
 
 #, elixir-autogen, elixir-format
-#: lib/qrstorage_web/controllers/qr_code_controller.ex:142
+#: lib/qrstorage_web/controllers/qr_code_controller.ex:141
 msgid "Qr code audio transcription failed."
 msgstr "Audio-Transkription ist fehlgeschlagen."
 
 #, elixir-autogen, elixir-format
-#: lib/qrstorage_web/controllers/qr_code_controller.ex:131
+#: lib/qrstorage_web/controllers/qr_code_controller.ex:130
 msgid "Qr code translation failed."
 msgstr "Übersetzung ist fehlgeschlagen."
 

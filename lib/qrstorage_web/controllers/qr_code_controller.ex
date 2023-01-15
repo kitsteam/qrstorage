@@ -34,7 +34,6 @@ defmodule QrstorageWeb.QrCodeController do
             else: conn
 
         conn
-        |> put_flash(:info, gettext("Qr code created successfully."))
         |> redirect(to: Routes.qr_code_path(conn, :download, qr_code))
 
       {:error, %Ecto.Changeset{} = changeset} ->
