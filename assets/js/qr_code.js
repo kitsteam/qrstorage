@@ -36,7 +36,8 @@ const createQrCode = (canvas, color, url, dots_type, width, height) => {
 
 const calculcateWidth = () => {
     const offsetWidth = document.getElementById("content").offsetWidth;
-    return offsetWidth * 0.8;
+    // 28 px is the margin to the left - on smaller devices, this centers the code
+    return Math.min(450, offsetWidth - 28);
 }
 
 // show qr code after saving:
