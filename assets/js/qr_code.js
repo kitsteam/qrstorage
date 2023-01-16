@@ -1,4 +1,4 @@
-import QRCodeStyling from "qr-code-styling";
+import QRCodeStyling from "./libs/qr-code-styling/qr-code-styling";
 
 const qrCodeOptions = (color, url, dots_type, width, height) => (
      {
@@ -36,21 +36,7 @@ const createQrCode = (canvas, color, url, dots_type, width, height) => {
 
 const calculcateWidth = () => {
     const offsetWidth = document.getElementById("content").offsetWidth;
-
-    // these widths are hardcoded (372+28px -> 400, 492+28px -> 520)
-    // where 28px is the margin to the left, so we want that on the right side as well if possible
-    // 290/372/492px are chosen carefully so that qr-code-styling does not add a margin. 
-    // This has been fixed in a newer, unreleased version, see https://github.com/kozakdenys/qr-code-styling/issues/97
-
-    if (offsetWidth <= 400) {
-        return 290;
-    }
-    else if (offsetWidth <= 520) {
-        return 372;
-    }
-    else {
-        return 492;
-    }
+    return offsetWidth * 0.8;
 }
 
 // show qr code after saving:
@@ -60,8 +46,7 @@ if (canvas) {
   const url = canvas.getAttribute("data-url");
   const color = canvas.getAttribute("data-color");
   const dots_type = canvas.getAttribute("data-dots-type");
-  const width = calculcateWidth();
-  const height = width;
+  const height = width = calculcateWidth();
   const qrCode = createQrCode(canvas, color, url, dots_type, width, height);
 
   document.querySelectorAll("#qr-download-dropdown-menu .dropdown-item").forEach((dropdownItem) => {
@@ -71,5 +56,14 @@ if (canvas) {
         e.stopPropagation();
         return false;
     });
+  });
+
+  // redraw on size change:
+  window.addEventListener("resize", (event) => {
+    const height = width = calculcateWidth();
+    
+    canvas.innerHTML = '';
+
+    const qrCode = createQrCode(canvas, color, url, dots_type, width, height);
   });
 }
