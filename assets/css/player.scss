@@ -1,0 +1,74 @@
+#player .feather {
+    stroke-width: 1.2;
+}
+
+#player {
+    width: 275px;
+}
+
+#player canvas {
+    width: 100%;
+    height: 100%;
+}
+
+#play {
+    width: 100px;
+    height: 100px;
+    background: white;
+    border: none;
+}
+
+#play .feather {
+    width: 100px;
+    height: 100px;
+    stroke: #6c757d !important;
+    fill: #6c757d !important;
+}
+
+#play-icon .feather {
+    margin-left: 10px;
+}
+
+#skip-back, #stop, #playback-speed, #play {
+    cursor: pointer;
+}
+
+#playback-speed {
+    bottom: -25px !important;
+    display: inline-block;
+    overflow: hidden;
+    width: 60px;
+    height: 60px;
+    padding-top: 23px !important;
+}
+
+
+#skip-back .feather, #stop .feather {
+    height: 35px;
+    width: 35px;
+}
+
+#play.amplitude-paused #play-icon {
+    display: block !important;
+}
+
+#play.amplitude-playing #pause-icon {
+    display: block !important;
+}
+    
+
+// starting with MD sizes we want the player to be larger:
+@include media-breakpoint-up(md) {
+
+    #player {
+        width: 330px;
+    }
+    
+    #skip-back {
+        left: 10% !important;
+    }
+
+    #stop {
+        left: 90% !important;
+    }
+}

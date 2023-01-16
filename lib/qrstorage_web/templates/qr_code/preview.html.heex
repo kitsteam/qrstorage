@@ -1,2 +1,6 @@
 <%= render("show.html", qr_code: @qr_code, conn: @conn) %>
-<%= link gettext("Back to code"), class: "btn btn-primary", to: Routes.qr_code_path(@conn, :download, @qr_code.id) %>
+<div class="row mt-2">
+    <div class="col">
+        <%= link gettext("Back to code"), class: "btn btn-primary", to: Routes.qr_code_path(@conn, :download, @qr_code.id) %>
+    </div>
+</div>
