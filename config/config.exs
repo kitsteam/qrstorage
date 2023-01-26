@@ -46,7 +46,8 @@ config :phoenix, :json_library, Jason
 config :esbuild,
   version: "0.14.1",
   default: [
-    args: ~w(js/app.js --bundle --target=es2016 --external:amplitudejs --external:*.webmanifest --outdir=../priv/static/assets),
+    args:
+      ~w(js/app.js --bundle --target=es2016 --external:amplitudejs --external:*.webmanifest --outdir=../priv/static/assets),
     cd: Path.expand("../assets", __DIR__),
     env: %{"NODE_PATH" => Path.expand("../deps", __DIR__)}
   ]
