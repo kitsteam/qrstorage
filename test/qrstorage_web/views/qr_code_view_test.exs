@@ -24,7 +24,8 @@ defmodule QrstorageWeb.QrCodeViewTest do
     end
 
     test "shows relative deletion date for qr codes that should be deleted automatically" do
-      delete_after = Timex.shift(Timex.now(), months: 5)
+      # we add one hour, since Timex seems to round down - e.g. 5 months, minus a few milliseconds results in "in 4 months"
+      delete_after = Timex.shift(Timex.now(), months: 5, hours: 1)
       text = show_delete_after_text(delete_after)
       assert text =~ "in 5 months"
     end
