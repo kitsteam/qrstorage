@@ -47,7 +47,7 @@ config :esbuild,
   version: "0.14.1",
   default: [
     args:
-      ~w(js/app.js --bundle --target=es2016 --external:amplitudejs --external:*.webmanifest --outdir=../priv/static/assets),
+      ~w(js/app.js --bundle --target=es2016 --external:*.webmanifest --outdir=../priv/static/assets),
     cd: Path.expand("../assets", __DIR__),
     env: %{"NODE_PATH" => Path.expand("../deps", __DIR__)}
   ]
