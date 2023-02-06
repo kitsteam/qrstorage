@@ -1,12 +1,13 @@
 defmodule Qrstorage.Services.Gcp.GoogleApiServiceImplTest do
   use ExUnit.Case, async: true
+  import ExUnit.CaptureLog
 
   alias Qrstorage.Services.Gcp.GoogleApiServiceImpl
 
   describe "build_synthesize_speech_request/3" do
     test "build_synthesize_speech_request contains text, language and voice" do
       text = "a"
-      language = "en"
+      language = :en
       voice = "female"
 
       assert GoogleApiServiceImpl.build_synthesize_speech_request(text, language, voice) ==
@@ -18,18 +19,24 @@ defmodule Qrstorage.Services.Gcp.GoogleApiServiceImplTest do
                    text: text
                  },
                  voice: %GoogleApi.TextToSpeech.V1.Model.VoiceSelectionParams{
-                   languageCode: language,
-                   ssmlGender: voice
+                   languageCode: "en",
+                   name: "en-US-Wavenet-C",
+                   ssmlGender: "female"
                  }
                }
     end
 
-    test "build_synthesize_speech_request defaults to german, when no language is set" do
+    test "build_synthesize_speech_request defaults to german/female, when no language is set" do
       text = "a"
       language = nil
       voice = "female"
 
-      assert GoogleApiServiceImpl.build_synthesize_speech_request(text, language, voice) ==
+      {result, log} =
+        with_log(fn ->
+          GoogleApiServiceImpl.build_synthesize_speech_request(text, language, voice)
+        end)
+
+      assert result ==
                %GoogleApi.TextToSpeech.V1.Model.SynthesizeSpeechRequest{
                  audioConfig: %GoogleApi.TextToSpeech.V1.Model.AudioConfig{
                    audioEncoding: "MP3"
@@ -39,14 +46,17 @@ defmodule Qrstorage.Services.Gcp.GoogleApiServiceImplTest do
                  },
                  voice: %GoogleApi.TextToSpeech.V1.Model.VoiceSelectionParams{
                    languageCode: "de",
-                   ssmlGender: voice
+                   name: "de-DE-Wavenet-A",
+                   ssmlGender: "female"
                  }
                }
+
+      assert log =~ "Language / Gender combination not found!"
     end
 
-    test "build_synthesize_speech_request defaults to female, when no voice is set" do
+    test "build_synthesize_speech_request defaults to language/female, when no voice is set" do
       text = "a"
-      language = "en"
+      language = :en
       voice = nil
 
       assert GoogleApiServiceImpl.build_synthesize_speech_request(text, language, voice) ==
@@ -58,7 +68,8 @@ defmodule Qrstorage.Services.Gcp.GoogleApiServiceImplTest do
                    text: text
                  },
                  voice: %GoogleApi.TextToSpeech.V1.Model.VoiceSelectionParams{
-                   languageCode: language,
+                   languageCode: "en",
+                   name: "en-US-Wavenet-C",
                    ssmlGender: "female"
                  }
                }
