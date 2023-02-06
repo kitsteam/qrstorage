@@ -42,3 +42,5 @@ docker-compose-kits.override.yml
 # Just to be sure - ignore gcp file in case anyone puts this in the same folder (DONT!)
 .gcp-config.json
 
+# dev containers uses this:
+tmp 
