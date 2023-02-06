@@ -1,5 +1,6 @@
 defmodule Qrstorage.Services.Gcp.GoogleApiServiceImpl do
   alias Qrstorage.Services.Gcp.GoogleApiService
+  alias Qrstorage.Services.Gcp.GoogleTtsVoices
 
   @behaviour GoogleApiService
 
@@ -32,7 +33,7 @@ defmodule Qrstorage.Services.Gcp.GoogleApiServiceImpl do
     {:ok, translated_text}
   end
 
-  def build_synthesize_speech_request(text, language, voice) do
+  def build_synthesize_speech_request(text, language, gender) do
     %GoogleApi.TextToSpeech.V1.Model.SynthesizeSpeechRequest{
       audioConfig: %GoogleApi.TextToSpeech.V1.Model.AudioConfig{
         audioEncoding: "MP3"
@@ -41,8 +42,9 @@ defmodule Qrstorage.Services.Gcp.GoogleApiServiceImpl do
         text: text
       },
       voice: %GoogleApi.TextToSpeech.V1.Model.VoiceSelectionParams{
-        languageCode: language || "de",
-        ssmlGender: voice || "female"
+        languageCode: Atom.to_string(language || :de),
+        name: GoogleTtsVoices.voice(language, gender),
+        ssmlGender: gender || "female"
       }
     }
   end
