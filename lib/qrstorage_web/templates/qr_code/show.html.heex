@@ -18,7 +18,7 @@
 <%= if @qr_code.content_type == :audio do %>
   <div class="row">
     <div class="col-md-12">
-        <%= render "partials/_player.html", conn: @conn, qr_code: @qr_code %>  
+        <%= render "partials/_player.html", conn: @conn, qr_code: @qr_code %>
     </div>
   </div>
 
@@ -31,15 +31,20 @@
     <% end %>
 <% end %>
 
-<div class="row">
-  <div class="col-5 col-md-3">
-    <strong><%= gettext("Deletion Date") %></strong><br />
-    <%= show_delete_after_text(@qr_code.delete_after) %>
-  </div>
+<div class="row mt-2">
   <%= if @qr_code.content_type == :audio do %>
-    <div class="col-4">
+    <div class="col-6 col-md-4">
+      <strong><%= gettext("Deletion Date") %></strong><br />
+      <%= show_delete_after_text(@qr_code.delete_after) %>
+    </div>
+    <div class="col-6">
       <strong><%= gettext("Audio Language") %></strong><br/>
       <%= Gettext.dgettext(QrstorageWeb.Gettext, "languages", Atom.to_string(@qr_code.language)) %>
+    </div>
+  <% else %>
+    <div class="col">
+      <strong><%= gettext("Deletion Date") %></strong><br />
+      <%= show_delete_after_text(@qr_code.delete_after) %>
     </div>
   <% end %>
 </div>
