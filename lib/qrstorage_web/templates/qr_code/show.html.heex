@@ -33,7 +33,7 @@
 
 <div class="row mt-2">
   <%= if @qr_code.content_type == :audio do %>
-    <div class="col-6">
+    <div class="col-6 col-md-4">
       <strong><%= gettext("Deletion Date") %></strong><br />
       <%= show_delete_after_text(@qr_code.delete_after) %>
     </div>
