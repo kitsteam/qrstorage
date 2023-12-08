@@ -34,7 +34,7 @@ defmodule Qrstorage.MixProject do
   defp deps do
     [
       {:phoenix, "1.6.10"},
-      {:phoenix_ecto, "4.4.0"},
+      {:phoenix_ecto, "4.4.3"},
       {:ecto_sql, "3.8.3"},
       {:postgrex, "0.16.3"},
       {:phoenix_html, "3.2.0"},
