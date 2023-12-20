@@ -15,7 +15,6 @@ on:
   push:
     branches: 
       - main
-      - 145-add-image-ci-flow
   release:
     types: [published]
 
