@@ -65,6 +65,7 @@ FROM base as production_builder
 # set build ENV
 ENV MIX_ENV="prod"
 ENV NODE_ENV="production"
+ENV ERL_FLAGS="+JPperf true"
 
 # install mix dependencies
 COPY mix.exs mix.lock ./
