@@ -15,7 +15,6 @@ on:
   push:
     branches: 
       - main
-      - chore-upgrade-base-image
   release:
     types: [published]
 
