@@ -16,8 +16,8 @@
 #   - Ex: hexpm/elixir:1.13.3-erlang-24.3.4.2-debian-bullseye-20210902-slim
 #
 ARG ELIXIR_VERSION=1.13.4
-ARG OTP_VERSION=25.1.1
-ARG DEBIAN_VERSION=bullseye-20220801-slim
+ARG OTP_VERSION=25.3.2.8
+ARG DEBIAN_VERSION=bullseye-20231009-slim
 
 ARG BUILDER_IMAGE="hexpm/elixir:${ELIXIR_VERSION}-erlang-${OTP_VERSION}-debian-${DEBIAN_VERSION}"
 ARG RUNNER_IMAGE="debian:${DEBIAN_VERSION}"
@@ -32,21 +32,21 @@ RUN apt-get -y update && apt-get install -y curl
 
 # install build dependencies
 RUN curl -fsSL $NODE_URL | bash - && \
-    apt-get install -y nodejs \
-    build-essential \
-    inotify-tools \ 
-    postgresql-client \
-    git \
-    cmake && \
-    apt-get clean && \ 
-    rm -f /var/lib/apt/lists/*_*
+  apt-get install -y nodejs \
+  build-essential \
+  inotify-tools \ 
+  postgresql-client \
+  git \
+  cmake && \
+  apt-get clean && \ 
+  rm -f /var/lib/apt/lists/*_*
 
 # prepare build dir
 WORKDIR /app
 
 # install hex + rebar
 RUN mix local.hex --force && \
-    mix local.rebar --force
+  mix local.rebar --force
 
 # This is the image we use during development:
 FROM base as development
@@ -65,6 +65,7 @@ FROM base as production_builder
 # set build ENV
 ENV MIX_ENV="prod"
 ENV NODE_ENV="production"
+ENV ERL_FLAGS="+JPperf true"
 
 # install mix dependencies
 COPY mix.exs mix.lock ./
