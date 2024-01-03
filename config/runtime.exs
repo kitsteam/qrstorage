@@ -30,14 +30,14 @@ config :qrstorage, Qrstorage.Repo,
   pool_size: String.to_integer(System.get_env("POOL_SIZE", "15")),
   socket_options: maybe_ipv6,
   ssl: System.get_env("DATABASE_SSL", "true") == "true",
-  ssl_opts: [verify: :verify_peer,
-              cacerts: :public_key.cacerts_get(),
-              server_name_indication: String.to_charlist(System.get_env("DATABASE_HOST")),
-              customize_hostname_check: [
-              match_fun: :public_key.pkix_verify_hostname_match_fun(:https)
-              ]
-            ]
-
+  ssl_opts: [
+    verify: :verify_peer,
+    cacerts: :public_key.cacerts_get(),
+    server_name_indication: String.to_charlist(System.get_env("DATABASE_HOST")),
+    customize_hostname_check: [
+      match_fun: :public_key.pkix_verify_hostname_match_fun(:https)
+    ]
+  ]
 
 # Set possible translations
 default_locale =
