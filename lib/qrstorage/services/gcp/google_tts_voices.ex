@@ -31,13 +31,13 @@ defmodule Qrstorage.Services.Gcp.GoogleTtsVoices do
 
       _ ->
         # nothing found:
-        Logger.warn("Language / Gender combination not found! #{language} #{gender}")
+        Logger.warning("Language / Gender combination not found! #{language} #{gender}")
         "de-DE-Wavenet-A"
     end
   end
 
   def voice(language, gender) do
-    Logger.warn("Language is not an atom! #{language} #{gender}")
+    Logger.warning("Language is not an atom! #{language} #{gender}")
     # default to german female:
     "de-DE-Wavenet-A"
   end

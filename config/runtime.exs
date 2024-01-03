@@ -53,7 +53,7 @@ cond do
   true ->
     config :goth, disabled: true
 
-    Logger.warn("""
+    Logger.warning("""
     Environment variables GCP_CONFIG_PATH or GCP_CONFIG_BASE64 are missing or empty.
     Either set a path to a GCP Config file with GCP_CONFIG_PATH or base64 encode the credentials and put them in GCP_CONFIG_BASE64
     """)

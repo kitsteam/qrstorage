@@ -25,7 +25,7 @@ defmodule Qrstorage.Services.TtsService do
         store_audio_file(qr_code, audio_file)
 
       {:error} ->
-        Logger.warn("Text not transcribed for qr_code id: #{qr_code.id}")
+        Logger.warning("Text not transcribed for qr_code id: #{qr_code.id}")
         {:error, qr_code}
     end
   end

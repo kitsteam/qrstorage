@@ -33,10 +33,10 @@ defmodule Qrstorage.MixProject do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
-      {:phoenix, "1.6.10"},
+      {:phoenix, "1.6.16"},
       {:phoenix_ecto, "4.4.0"},
-      {:ecto_sql, "3.8.3"},
-      {:postgrex, "0.16.3"},
+      {:ecto_sql, "3.11.1"},
+      {:postgrex, "0.17.4"},
       {:phoenix_html, "3.2.0"},
       {:phoenix_live_reload, "1.3.3", only: :dev},
       {:phoenix_live_dashboard, "0.6.5"},
@@ -47,7 +47,7 @@ defmodule Qrstorage.MixProject do
       {:gettext, "0.19.1"},
       {:timex, "3.7.8"},
       {:jason, "1.3.0"},
-      {:plug_cowboy, "2.5.2"},
+      {:plug_cowboy, "2.6.1"},
       {:google_api_text_to_speech, "0.15.0"},
       {:google_api_translate, "0.15.0"},
       {:goth, "1.3.1"},

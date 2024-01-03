@@ -45,7 +45,7 @@ defmodule QrstorageWeb.Endpoint do
     parsers: [:urlencoded, :multipart, :json],
     pass: ["*/*"],
     json_decoder: Phoenix.json_library(),
-    length: max_upload_length * upload_length_buffer
+    length: ceil(max_upload_length * upload_length_buffer)
 
   plug Plug.MethodOverride
   plug Plug.Head
