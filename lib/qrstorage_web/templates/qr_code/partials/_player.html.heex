@@ -4,22 +4,15 @@
       <div class="position-absolute top-0 start-0"></div>
       <div id="progressbar"></div>
       <div class="position-absolute top-50 start-50 translate-middle">
-        <div
-          id="play"
-          class="amplitude-play-pause position-absolute top-50 start-50  translate-middle"
-        >
+        <div id="play" class="amplitude-play-pause position-absolute top-50 start-50  translate-middle">
           <span id="play-icon" class="d-none">
             <svg class="feather">
-              <use href={
-                Routes.static_path(@conn, "/images/feather-icons/feather-sprite.svg#play")
-              } />
+              <use href={Routes.static_path(@conn, "/images/feather-icons/feather-sprite.svg#play")} />
             </svg>
           </span>
           <span id="pause-icon" class="d-none">
             <svg class="feather">
-              <use href={
-                Routes.static_path(@conn, "/images/feather-icons/feather-sprite.svg#pause")
-              } />
+              <use href={Routes.static_path(@conn, "/images/feather-icons/feather-sprite.svg#pause")} />
             </svg>
           </span>
         </div>
@@ -29,10 +22,7 @@
         data-skip-back-seconds="10"
         class="position-absolute bottom-0 start-0 translate-middle badge border border-light rounded-circle bg-secondary p-4 translate-middle-x"
       >
-        <img
-          src={Routes.static_path(@conn, "/images/feather-icons/rotate-ccw.svg")}
-          class="feather"
-        />
+        <img src={Routes.static_path(@conn, "/images/feather-icons/rotate-ccw.svg")} class="feather" />
       </span>
       <span
         id="stop"

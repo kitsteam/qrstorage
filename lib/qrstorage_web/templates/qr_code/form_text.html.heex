@@ -27,7 +27,8 @@
     <div id="editor-container"></div>
     <span id="character-count" data-max-characters={QrCode.text_length_limits()[:text]}>
       <%= QrCode.text_length_limits()[:text] %>
-    </span> <span><%= gettext("character(s) left") %></span>
+    </span>
+    <span><%= gettext("character(s) left") %></span>
     <p class="form-text text-muted">
       <%= gettext(
         "This tool may only be used in Teaching/Learning situations. It is not permitted to enter personal information."
