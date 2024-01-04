@@ -21,7 +21,7 @@ defmodule Qrstorage.Services.TranslationService do
         save_translated_text(qr_code, translated_text)
 
       {:error} ->
-        Logger.warn("Text not translated for qr_code id: #{qr_code.id}")
+        Logger.warning("Text not translated for qr_code id: #{qr_code.id}")
         {:error, qr_code}
     end
   end

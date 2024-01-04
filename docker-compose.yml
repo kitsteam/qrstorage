@@ -14,7 +14,7 @@ services:
       DATABASE_HOST: postgres
       DATABASE_SSL: "false"
       QR_CODE_DEFAULT_LOCALE: "de"
-      GCP_CONFIG_PATH: ".gcp-config.json"
+      # GCP_CONFIG_PATH: ".gcp-config.json"
       # Please create a new secret for production runs:
       # - Use `mix phx.gen.secret` if you have elixir and phoenix installed
       # - Use `openssl rand -base64 64 | head -c 64` on a normal unix system
@@ -63,22 +63,22 @@ services:
     depends_on:
       - postgres
     # volumes:
-      # Ensure that the file `gcp-config.json` is available in the container/
-      #
-      # How to get the fiel `docker-compose-kits.yml`?
-      # - Go to Coogle Cloud Platform dashboard
-      # - On the lefthand side, go to `APIs und Dienste` -> `Anmeldedaten`
-      # - In the upper section, click on `+ Anmeldedaten erstellen`
-      # - If not already existing, create a service account (Dienstkonto)
-      # - Afterwards, click on the newly created service account
-      # - In the details sectino of the service account, click on keys (Schlüssel)
-      # - In the key section of the service account click on `Schlüssel hinzufügen` -> `Neuen Schlüssel erstellen`
-      # - In the creatino dialog choose as key type `json` and finish creation of the .gcp-config.json
-      # - Please .gcp-config.json in the root of this project and let the following line inject this file into the docker container
-      # - ./.gcp-config.json:/app/.gcp-config.json
+    # Ensure that the file `gcp-config.json` is available in the container/
+    #
+    # How to get the fiel `docker-compose-kits.yml`?
+    # - Go to Coogle Cloud Platform dashboard
+    # - On the lefthand side, go to `APIs und Dienste` -> `Anmeldedaten`
+    # - In the upper section, click on `+ Anmeldedaten erstellen`
+    # - If not already existing, create a service account (Dienstkonto)
+    # - Afterwards, click on the newly created service account
+    # - In the details sectino of the service account, click on keys (Schlüssel)
+    # - In the key section of the service account click on `Schlüssel hinzufügen` -> `Neuen Schlüssel erstellen`
+    # - In the creatino dialog choose as key type `json` and finish creation of the .gcp-config.json
+    # - Please .gcp-config.json in the root of this project and let the following line inject this file into the docker container
+    # - ./.gcp-config.json:/app/.gcp-config.json
 
   postgres:
-    image: postgres:12-alpine
+    image: postgres:15
     environment:
       POSTGRES_USER: ${POSTGRES_USER:-postgres}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}

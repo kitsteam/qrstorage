@@ -28,8 +28,16 @@ config :qrstorage, Qrstorage.Repo,
   hostname: System.get_env("DATABASE_HOST"),
   port: String.to_integer(System.get_env("DATABASE_PORT", "5432")),
   pool_size: String.to_integer(System.get_env("POOL_SIZE", "15")),
+  socket_options: maybe_ipv6,
   ssl: System.get_env("DATABASE_SSL", "true") == "true",
-  socket_options: maybe_ipv6
+  ssl_opts: [
+    verify: :verify_peer,
+    cacerts: :public_key.cacerts_get(),
+    server_name_indication: String.to_charlist(System.get_env("DATABASE_HOST")),
+    customize_hostname_check: [
+      match_fun: :public_key.pkix_verify_hostname_match_fun(:https)
+    ]
+  ]
 
 # Set possible translations
 default_locale =
@@ -53,7 +61,7 @@ cond do
   true ->
     config :goth, disabled: true
 
-    Logger.warn("""
+    Logger.warning("""
     Environment variables GCP_CONFIG_PATH or GCP_CONFIG_BASE64 are missing or empty.
     Either set a path to a GCP Config file with GCP_CONFIG_PATH or base64 encode the credentials and put them in GCP_CONFIG_BASE64
     """)
@@ -74,7 +82,7 @@ if config_env() == :prod || config_env() == :dev do
          {"@midnight", Qrstorage.Worker.RemoveCodesWorker}
        ]}
     ],
-    queues: [default: 5]
+    queues: [default: 1]
 end
 
 # from mix phx.gen.release

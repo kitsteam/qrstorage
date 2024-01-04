@@ -1,5 +1,20 @@
 const createColor = (color) => {
-    return '<div class="color col colorpicker-background-color-'+color+'" data-color="'+color+'">&nbsp;</div>';
+    const div = document.createElement('div');
+    div.classList.add('color', 'col', `colorpicker-background-color-${color}`);
+    div.dataset.color = color;
+    div.textContent = '\u00A0';
+    return div;
+}
+
+const escapedColor = (color) => {
+  // this will be filtered server side anyway, but just to be sure that no one injects something client side:
+  const validColors = ['black', 'gold', 'darkgreen', 'darkslateblue', 'midnightblue', 'crimson'];
+
+  if (validColors.includes(color)) {
+    return color;
+  }
+
+  return 'black'
 }
 
 const formIdSelector = (colorPicker) => {
@@ -50,7 +65,7 @@ if (colorPickers.length > 0) {
 
     for (let colorPicker of colorPickers) {
         for (let color of colors) {
-            colorPicker.innerHTML += createColor(color.value);
+            colorPicker.appendChild(createColor(escapedColor(color.value)));
         }
         
         // select default color:
