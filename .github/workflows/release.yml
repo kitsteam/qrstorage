@@ -15,6 +15,7 @@ on:
   push:
     branches: 
       - main
+      - 160-chore-upgrade-to-phoenix-17
   release:
     types: [published]
 

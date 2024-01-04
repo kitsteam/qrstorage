@@ -1,33 +1,54 @@
 <div id="player" class="row m-3" data-url={Routes.qr_code_path(@conn, :audio_file, @qr_code.id)}>
-    <div id="play-button-wrapper" class="col">
-        <div class="position-relative mb-4">
-            <div class="position-absolute top-0 start-0"></div>
-            <div id="progressbar"></div>
-            <div class="position-absolute top-50 start-50 translate-middle">
-                <div id="play" class="amplitude-play-pause position-absolute top-50 start-50  translate-middle">
-                    <span id="play-icon" class="d-none">
-                    <svg class="feather">
-                        <use href={Routes.static_path(@conn, "/images/feather-icons/feather-sprite.svg#play")}/>
-                    </svg>
-                    </span>
-                    <span id="pause-icon" class="d-none">
-                    <svg class="feather">
-                        <use href={Routes.static_path(@conn, "/images/feather-icons/feather-sprite.svg#pause")}/>
-                    </svg>
-                    </span>
-                </div>
-            </div>
-            <span id="skip-back" data-skip-back-seconds="10" class="position-absolute bottom-0 start-0 translate-middle badge border border-light rounded-circle bg-secondary p-4 translate-middle-x">
-                <img src={Routes.static_path(@conn, "/images/feather-icons/rotate-ccw.svg")} class="feather">
-            </span>
-            <span id="stop" class="amplitude-stop position-absolute bottom-0 start-100 translate-middle badge border border-light rounded-circle bg-secondary p-4 translate-middle-x">
-                <svg class="feather">
-                <use href={Routes.static_path(@conn, "/images/feather-icons/feather-sprite.svg#square")}/>
-                </svg>
-            </span>
-            <span id="playback-speed" data-playback-speed="1.0" class="position-absolute bottom-0 start-50 translate-middle badge border border-light rounded-circle bg-secondary p-3 translate-middle-x">
-                1x
-            </span>
+  <div id="play-button-wrapper" class="col">
+    <div class="position-relative mb-4">
+      <div class="position-absolute top-0 start-0"></div>
+      <div id="progressbar"></div>
+      <div class="position-absolute top-50 start-50 translate-middle">
+        <div
+          id="play"
+          class="amplitude-play-pause position-absolute top-50 start-50  translate-middle"
+        >
+          <span id="play-icon" class="d-none">
+            <svg class="feather">
+              <use href={
+                Routes.static_path(@conn, "/images/feather-icons/feather-sprite.svg#play")
+              } />
+            </svg>
+          </span>
+          <span id="pause-icon" class="d-none">
+            <svg class="feather">
+              <use href={
+                Routes.static_path(@conn, "/images/feather-icons/feather-sprite.svg#pause")
+              } />
+            </svg>
+          </span>
         </div>
+      </div>
+      <span
+        id="skip-back"
+        data-skip-back-seconds="10"
+        class="position-absolute bottom-0 start-0 translate-middle badge border border-light rounded-circle bg-secondary p-4 translate-middle-x"
+      >
+        <img
+          src={Routes.static_path(@conn, "/images/feather-icons/rotate-ccw.svg")}
+          class="feather"
+        />
+      </span>
+      <span
+        id="stop"
+        class="amplitude-stop position-absolute bottom-0 start-100 translate-middle badge border border-light rounded-circle bg-secondary p-4 translate-middle-x"
+      >
+        <svg class="feather">
+          <use href={Routes.static_path(@conn, "/images/feather-icons/feather-sprite.svg#square")} />
+        </svg>
+      </span>
+      <span
+        id="playback-speed"
+        data-playback-speed="1.0"
+        class="position-absolute bottom-0 start-50 translate-middle badge border border-light rounded-circle bg-secondary p-3 translate-middle-x"
+      >
+        1x
+      </span>
     </div>
+  </div>
 </div>

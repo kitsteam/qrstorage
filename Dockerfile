@@ -27,7 +27,7 @@ FROM ${BUILDER_IMAGE} as base
 
 
 # Install node
-ENV NODE_MAJOR=18
+ENV NODE_MAJOR=20
 
 RUN apt-get update && apt-get install -y ca-certificates curl gnupg
 RUN mkdir -p /etc/apt/keyrings  

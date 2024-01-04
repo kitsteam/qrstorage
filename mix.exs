@@ -7,7 +7,6 @@ defmodule Qrstorage.MixProject do
       version: "0.1.0",
       elixir: "~> 1.7",
       elixirc_paths: elixirc_paths(Mix.env()),
-      compilers: [:phoenix] ++ Mix.compilers(),
       start_permanent: Mix.env() == :prod,
       aliases: aliases(),
       deps: deps()
@@ -33,15 +32,16 @@ defmodule Qrstorage.MixProject do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
-      {:phoenix, "1.6.16"},
+      {:phoenix, "1.7.10"},
       {:phoenix_ecto, "4.4.3"},
       {:ecto_sql, "3.11.1"},
       {:postgrex, "0.17.4"},
-      {:phoenix_html, "3.2.0"},
-      {:phoenix_live_reload, "1.3.3", only: :dev},
-      {:phoenix_live_dashboard, "0.6.5"},
-      {:esbuild, "0.5.0", runtime: Mix.env() == :dev},
-      {:dart_sass, "0.5.0", runtime: Mix.env() == :dev},
+      {:phoenix_html, "3.3.3"},
+      {:phoenix_view, "2.0.3"},
+      {:phoenix_live_reload, "1.4.1", only: :dev},
+      {:phoenix_live_dashboard, "0.8.3", runtime: Mix.env() == :dev},
+      {:esbuild, "0.8.1", runtime: Mix.env() == :dev},
+      {:dart_sass, "0.7.0", runtime: Mix.env() == :dev},
       {:telemetry_metrics, "0.6.1"},
       {:telemetry_poller, "1.0.0"},
       {:gettext, "0.24.0"},

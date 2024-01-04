@@ -1,58 +1,64 @@
 <%= if (@qr_code.content_type == :audio && !@qr_code.hide_text)  do %>
-  <strong><%= gettext("Text") %></strong><br />
+  <strong><%= gettext("Text") %></strong>
+  <br />
   <div class="text-box">
     <%= @qr_code.translated_text || @qr_code.text %>
   </div>
 <% end %>
 <%= if (@qr_code.content_type == :text) do %>
   <div class="text-box">
-  <% # text should have been sanitized before storing it to db, but better be safe: %>
+    <% # text should have been sanitized before storing it to db, but better be safe: %>
     <%= raw(scrub(@qr_code.text)) %>
   </div>
 <% end %>
 <%= if (@qr_code.content_type == :link) do %>
-  <strong>Link</strong><br/>
+  <strong>Link</strong>
+  <br />
   <p><%= @qr_code.text %></p>
 <% end %>
 
 <%= if @qr_code.content_type == :audio do %>
   <div class="row">
     <div class="col-md-12">
-        <%= render "partials/_player.html", conn: @conn, qr_code: @qr_code %>
+      <%= render("partials/_player.html", conn: @conn, qr_code: @qr_code) %>
     </div>
   </div>
 
-    <%= if QrCode.translation_changed_text(@qr_code) do %>
-      <div class="row my-2">
-        <div class="col-12">
-          <small class="text-muted"><%= gettext("Text was automatically translated.") %></small>
-        </div>
+  <%= if QrCode.translation_changed_text(@qr_code) do %>
+    <div class="row my-2">
+      <div class="col-12">
+        <small class="text-muted"><%= gettext("Text was automatically translated.") %></small>
       </div>
-    <% end %>
+    </div>
+  <% end %>
 <% end %>
 
 <div class="row mt-2">
   <%= if @qr_code.content_type == :audio do %>
     <div class="col-6 col-md-4">
-      <strong><%= gettext("Deletion Date") %></strong><br />
+      <strong><%= gettext("Deletion Date") %></strong> <br />
       <%= show_delete_after_text(@qr_code.delete_after) %>
     </div>
     <div class="col-6">
-      <strong><%= gettext("Audio Language") %></strong><br/>
+      <strong><%= gettext("Audio Language") %></strong> <br />
       <%= Gettext.dgettext(QrstorageWeb.Gettext, "languages", Atom.to_string(@qr_code.language)) %>
     </div>
   <% else %>
     <div class="col">
-      <strong><%= gettext("Deletion Date") %></strong><br />
+      <strong><%= gettext("Deletion Date") %></strong> <br />
       <%= show_delete_after_text(@qr_code.delete_after) %>
     </div>
   <% end %>
 </div>
 
 <%= if @qr_code.content_type == :audio do %>
- <div class="row mt-3">
-      <div class="col">
-        <%= link gettext("Download"), class: "btn btn-primary", to: Routes.qr_code_path(@conn, :audio_file, @qr_code.id),  download: true %>
-      </div>
+  <div class="row mt-3">
+    <div class="col">
+      <%= link(gettext("Download"),
+        class: "btn btn-primary",
+        to: Routes.qr_code_path(@conn, :audio_file, @qr_code.id),
+        download: true
+      ) %>
     </div>
+  </div>
 <% end %>
