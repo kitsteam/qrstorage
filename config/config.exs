@@ -44,16 +44,15 @@ config :phoenix, :json_library, Jason
 
 # Configure esbuild (the version is required)
 config :esbuild,
-  version: "0.14.1",
+  version: "0.19.11",
   default: [
-    args:
-      ~w(js/app.js --bundle --target=es2016 --external:*.webmanifest --outdir=../priv/static/assets),
+    args: ~w(js/app.js --bundle --target=es2016 --external:*.webmanifest --outdir=../priv/static/assets),
     cd: Path.expand("../assets", __DIR__),
     env: %{"NODE_PATH" => Path.expand("../deps", __DIR__)}
   ]
 
 config :dart_sass,
-  version: "1.57.1",
+  version: "1.69.7",
   default: [
     args: ~w(css/app.scss ../priv/static/assets/app.css),
     cd: Path.expand("../assets", __DIR__)

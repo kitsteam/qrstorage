@@ -79,14 +79,14 @@ defmodule QrstorageWeb.QrCodeControllerTest do
          %{conn: conn} do
       link_attrs = %{@create_attrs | delete_after: "0"}
       conn = post(conn, Routes.qr_code_path(conn, :create), qr_code: link_attrs)
-      assert get_flash(conn, :admin_url_id) != nil
+      assert Phoenix.Flash.get(conn.assigns.flash, :admin_url_id) != nil
     end
 
     test "does not add the admin_url_id to the flash message for QR codes that are not stored indefinitely",
          %{conn: conn} do
       link_attrs = %{@create_attrs | delete_after: "1"}
       conn = post(conn, Routes.qr_code_path(conn, :create), qr_code: link_attrs)
-      assert get_flash(conn, :admin_url_id) == nil
+      assert Phoenix.Flash.get(conn.assigns.flash, :admin_url_id) == nil
     end
   end
 

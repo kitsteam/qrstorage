@@ -1,29 +1,42 @@
 <%= form_for @changeset, @action, [id: "text", "data-max-upload-length": Application.get_env(:qrstorage, :max_upload_length)], fn f -> %>
-<!-- invisible fields -->
-<%= radio_button f, :content_type, "text", [class: "visually-hidden", autocomplete: "off", checked: true] %>
-<%= select f, :color, translated_colors_for_select(), class: "visually-hidden" %> 
+  <!-- invisible fields -->
+  <%= radio_button(f, :content_type, "text",
+    class: "visually-hidden",
+    autocomplete: "off",
+    checked: true
+  ) %>
+  <%= select(f, :color, translated_colors_for_select(), class: "visually-hidden") %>
 
-<%= textarea f, :deltas, value: deltas_json_from_changeset(@changeset), class: "visually-hidden", id: "deltas" %> 
-<%= textarea f, :text, class: "visually-hidden", id: "html" %> 
+  <%= textarea(f, :deltas,
+    value: deltas_json_from_changeset(@changeset),
+    class: "visually-hidden",
+    id: "deltas"
+  ) %>
+  <%= textarea(f, :text, class: "visually-hidden", id: "html") %>
 
   <%= if @changeset.action do %>
     <div class="alert alert-danger">
       <p><%= gettext("Oops, something went wrong! Please check the errors below.") %></p>
     </div>
   <% end %>
-    
+
   <div class="form-group">
     <div id="upload-size-warning" class="alert alert-danger d-none">
       <p><%= max_upload_length_message() %></p>
     </div>
     <div id="editor-container"></div>
-    <span id="character-count" data-max-characters={QrCode.text_length_limits[:text]}><%= QrCode.text_length_limits[:text] %></span> <span><%= gettext("character(s) left") %></span>
+    <span id="character-count" data-max-characters={QrCode.text_length_limits()[:text]}>
+      <%= QrCode.text_length_limits()[:text] %>
+    </span>
+    <span><%= gettext("character(s) left") %></span>
     <p class="form-text text-muted">
-      <%= gettext("This tool may only be used in Teaching/Learning situations. It is not permitted to enter personal information.") %>
-    </p>    
+      <%= gettext(
+        "This tool may only be used in Teaching/Learning situations. It is not permitted to enter personal information."
+      ) %>
+    </p>
     <div class="invalid-feedback">
-      <%= error_tag f, :text %>
-      <%= error_tag f, :deltas %>
+      <%= error_tag(f, :text) %>
+      <%= error_tag(f, :deltas) %>
     </div>
   </div>
 
@@ -31,16 +44,15 @@
 
   <div class="collapse mb-3" id="collapse-settings-text">
     <div class="card card-body">
-        <%= render "settings/_settings_delete_after.html", f: f %>
-        <%= render "settings/_settings_dots_types.html", f: f, changeset: @changeset %>
-        <%= render "settings/_settings_colorpicker.html", f: f %>
-      </div>
-  </div>  
-
-<div class="row mb-4">
-  <div class="col">
-    <%= submit gettext("Save"), class: "btn btn-primary" %>
+      <%= render("settings/_settings_delete_after.html", f: f) %>
+      <%= render("settings/_settings_dots_types.html", f: f, changeset: @changeset) %>
+      <%= render("settings/_settings_colorpicker.html", f: f) %>
+    </div>
   </div>
-</div>
 
+  <div class="row mb-4">
+    <div class="col">
+      <%= submit(gettext("Save"), class: "btn btn-primary") %>
+    </div>
+  </div>
 <% end %>

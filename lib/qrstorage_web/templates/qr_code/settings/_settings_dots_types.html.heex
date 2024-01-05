@@ -1,12 +1,16 @@
 <div class="row m-2">
-    <div class="col-auto mx-auto">
-        <h6><%= label @f, :dots_type, gettext("classic design") %></h6>
-        <div class="row">
-            <div class="col-auto mx-auto">
-                <div class="form-check form-switch">
-                    <%= checkbox @f, :dots_type, checked_value: :square, unchecked_value: :dots, class: "form-control form-check-input" %>
-                </div>
-            </div>
+  <div class="col-auto mx-auto">
+    <h6><%= label(@f, :dots_type, gettext("classic design")) %></h6>
+    <div class="row">
+      <div class="col-auto mx-auto">
+        <div class="form-check form-switch">
+          <%= checkbox(@f, :dots_type,
+            checked_value: :square,
+            unchecked_value: :dots,
+            class: "form-control form-check-input"
+          ) %>
         </div>
+      </div>
     </div>
+  </div>
 </div>

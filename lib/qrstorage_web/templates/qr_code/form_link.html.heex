@@ -1,24 +1,33 @@
 <%= form_for @changeset, @action, [id: "link"], fn f -> %>
-
-<!-- invisible fields -->
-<%= radio_button f, :content_type, "link", [class: "visually-hidden", autocomplete: "off", checked: true] %>
-<%= select f, :color, translated_colors_for_select(), class: "visually-hidden" %>    
-
+  <!-- invisible fields -->
+  <%= radio_button(f, :content_type, "link",
+    class: "visually-hidden",
+    autocomplete: "off",
+    checked: true
+  ) %>
+  <%= select(f, :color, translated_colors_for_select(), class: "visually-hidden") %>
 
   <%= if @changeset.action do %>
     <div class="alert alert-danger">
       <p><%= gettext("Oops, something went wrong! Please check the errors below.") %></p>
     </div>
   <% end %>
-   
+
   <div class="form-group">
-    <%= textarea f, :text, class: "form-control", required: true, maxlength: QrCode.text_length_limits[:link], placeholder: gettext("Type your link here") %>
-    <%= render("form_character_counter.html", max_length: QrCode.text_length_limits[:link]) %>
+    <%= textarea(f, :text,
+      class: "form-control",
+      required: true,
+      maxlength: QrCode.text_length_limits()[:link],
+      placeholder: gettext("Type your link here")
+    ) %>
+    <%= render("form_character_counter.html", max_length: QrCode.text_length_limits()[:link]) %>
     <p class="form-text text-muted">
-      <%= gettext("This tool may only be used in Teaching/Learning situations. It is not permitted to enter personal information.") %>
-    </p>    
+      <%= gettext(
+        "This tool may only be used in Teaching/Learning situations. It is not permitted to enter personal information."
+      ) %>
+    </p>
     <div class="invalid-feedback">
-      <%= error_tag f, :text %>
+      <%= error_tag(f, :text) %>
     </div>
   </div>
 
@@ -26,15 +35,14 @@
 
   <div class="collapse mb-3" id="collapse-settings-link">
     <div class="card card-body">
-      <%= render "settings/_settings_dots_types.html", f: f, changeset: @changeset %>
-      <%= render "settings/_settings_colorpicker.html", f: f %>
+      <%= render("settings/_settings_dots_types.html", f: f, changeset: @changeset) %>
+      <%= render("settings/_settings_colorpicker.html", f: f) %>
     </div>
   </div>
 
   <div class="row mb-4">
     <div class="col">
-      <%= submit gettext("Save"), class: "btn btn-primary" %>
+      <%= submit(gettext("Save"), class: "btn btn-primary") %>
     </div>
   </div>
-  
 <% end %>
