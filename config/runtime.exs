@@ -4,7 +4,7 @@ require Logger
 if config_env() == :prod do
   # configure logging:
   config :logger_json, :backend,
-    metadata: :all,
+    metadata: [:request_id],
     json_encoder: Jason,
     formatter: LoggerJSON.Formatters.BasicLogger
 
