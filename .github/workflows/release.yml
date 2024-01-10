@@ -15,7 +15,6 @@ on:
   push:
     branches: 
       - main
-      - 164-chore-use-json-adapter-for-logging
   release:
     types: [published]
 
