@@ -4,8 +4,11 @@ defmodule Qrstorage.Application do
   @moduledoc false
 
   use Application
+  require Logger
 
   def start(_type, _args) do
+    Oban.Telemetry.attach_default_logger()
+
     children = [
       # Start the Ecto repository
       Qrstorage.Repo,
@@ -22,6 +25,17 @@ defmodule Qrstorage.Application do
       if Application.get_env(:goth, :disabled, false),
         do: children,
         else: [{Goth, name: Qrstorage.Goth, source: goth_config()} | children]
+
+    # when logger_json is defined, we also want it to take care of ecto:
+    if Application.get_env(:qrstorage, :logger_json) do
+      :ok =
+        :telemetry.attach(
+          "logger-json-ecto",
+          [:qrstorage, :repo, :query],
+          &LoggerJSON.Ecto.telemetry_logging_handler/4,
+          Logger.level()
+        )
+    end
 
     # See https://hexdocs.pm/elixir/Supervisor.html
     # for other strategies and supported options

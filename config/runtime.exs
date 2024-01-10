@@ -1,6 +1,17 @@
 import Config
 require Logger
 
+if config_env() == :prod do
+  # configure logging:
+  config :logger_json, :backend,
+    metadata: [:request_id],
+    json_encoder: Jason,
+    formatter: LoggerJSON.Formatters.BasicLogger
+
+  # override Elixir's Logger with logger_json:
+  config :logger, backends: [LoggerJSON]
+end
+
 config :qrstorage, QrstorageWeb.Endpoint,
   url: [
     scheme: System.get_env("URL_SCHEME", "https"),
@@ -20,6 +31,9 @@ config :qrstorage, QrstorageWeb.Endpoint,
 # from mix phx.gen.release
 maybe_ipv6 = if System.get_env("ECTO_IPV6"), do: [:inet6], else: []
 
+# disable on prod, because logger_json will take care of this. set to :debug for test and dev
+ecto_log_level = if config_env() == :prod, do: false, else: :debug
+
 config :qrstorage, Qrstorage.Repo,
   url: System.get_env("DATABASE_URL"),
   username: System.get_env("DATABASE_USER"),
@@ -29,6 +43,7 @@ config :qrstorage, Qrstorage.Repo,
   port: String.to_integer(System.get_env("DATABASE_PORT", "5432")),
   pool_size: String.to_integer(System.get_env("POOL_SIZE", "15")),
   socket_options: maybe_ipv6,
+  log: ecto_log_level,
   ssl: System.get_env("DATABASE_SSL", "true") == "true",
   ssl_opts: [
     verify: :verify_peer,

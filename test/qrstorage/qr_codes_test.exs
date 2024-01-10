@@ -171,9 +171,10 @@ defmodule Qrstorage.QrCodesTest do
       overdue_qr_code = overdue_qr_code()
       active_qr_code = active_qr_code()
 
-      QrCodes.delete_old_qr_codes()
+      deleted_count = QrCodes.delete_old_qr_codes()
 
       # only the overdue qr code is deleted:
+      assert deleted_count == 1
       assert Repo.get(QrCode, infinity_qr_code.id) != nil
       assert Repo.get(QrCode, overdue_qr_code.id) == nil
       assert Repo.get(QrCode, active_qr_code.id) != nil

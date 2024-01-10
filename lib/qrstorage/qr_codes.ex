@@ -71,7 +71,8 @@ defmodule Qrstorage.QrCodes do
   """
   def delete_old_qr_codes() do
     now = Timex.now()
-    Repo.delete_all(from q in QrCode, where: ^now > q.delete_after)
+    {count, _codes} = Repo.delete_all(from q in QrCode, where: ^now > q.delete_after)
+    count
   end
 
   def delete_qr_code(%QrCode{} = qr_code) do
