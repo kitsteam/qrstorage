@@ -15,6 +15,7 @@ on:
   push:
     branches: 
       - main
+      - 166-chore-catch-exceptions-for-google-translate-voice
   release:
     types: [published]
   
