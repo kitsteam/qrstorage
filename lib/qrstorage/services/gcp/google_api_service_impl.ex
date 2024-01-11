@@ -4,32 +4,49 @@ defmodule Qrstorage.Services.Gcp.GoogleApiServiceImpl do
 
   @behaviour GoogleApiService
 
+  require Logger
+
   @impl GoogleApiService
   def text_to_audio(text, language, voice) do
     request = build_synthesize_speech_request(text, language, voice)
+    response_body = ""
 
-    {:ok, response} =
-      GoogleApi.TextToSpeech.V1.Api.Text.texttospeech_text_synthesize(authenticated_connection(),
-        body: request
-      )
+    # ::TODO:: refactor - this isn't really the elixir way
+    try do
+      {:ok, response} =
+        GoogleApi.TextToSpeech.V1.Api.Text.texttospeech_text_synthesize(authenticated_connection(),
+          body: request
+        )
 
-    decoded_file = Base.decode64!(response.audioContent)
+      ^response_body = response.audioContent
+    rescue
+      _e -> Logger.info("Exception caught while getting audio")
+    end
+
+    decoded_file = Base.decode64!(response_body)
     {:ok, decoded_file}
   end
 
   @impl GoogleApiService
   def translate(text, target_language) do
     # https://hexdocs.pm/google_api_translate/GoogleApi.Translate.V2.Api.Translations.html#language_translations_list/5
+    translated_text = ""
 
-    {:ok, response} =
-      GoogleApi.Translate.V2.Api.Translations.language_translations_list(
-        authenticated_connection(),
-        [text],
-        target_language,
-        format: "text"
-      )
+    # ::TODO:: refactor - this isn't really the elixir way
+    try do
+      {:ok, response} =
+        GoogleApi.Translate.V2.Api.Translations.language_translations_list(
+          authenticated_connection(),
+          [text],
+          target_language,
+          format: "text"
+        )
 
-    translated_text = List.first(response.translations).translatedText
+      ^translated_text = List.first(response.translations).translatedText
+    rescue
+      _e -> Logger.info("Exception caught while translating text")
+    end
+
     {:ok, translated_text}
   end
 
