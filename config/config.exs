@@ -28,10 +28,6 @@ config :qrstorage, QrstorageWeb.Endpoint,
     layout: false
   ]
 
-# This is what will be used for the calculation on the client side. We add a buffer to account for deltas
-# and overhead in the endpoint configuration, so the server actually allows for a bit more:
-config :qrstorage, max_upload_length: System.get_env("QR_CODE_MAX_UPLOAD_LENGTH", "2666666")
-
 # Configures Elixir's Logger
 config :logger, :console,
   format: "$time $metadata[$level] $message\n",
