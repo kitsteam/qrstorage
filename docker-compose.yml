@@ -9,7 +9,7 @@ services:
     environment:
       DATABASE_USER: ${POSTGRES_USER:-qrstorage-user}
       DATABASE_USER_PASSWORD: ${POSTGRES_PASSWORD:-qrstorage-password}
-      DATABASE_NAME: ${POSTGRES_DB:-qrstorage_dev}
+      DATABASE_NAME: ${POSTGRES_DB:-qrstorage-dev}
       DATABASE_PORT: 5432
       DATABASE_HOST: postgres
       DATABASE_SSL: "false"
