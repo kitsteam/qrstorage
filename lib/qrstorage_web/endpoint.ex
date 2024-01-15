@@ -39,7 +39,7 @@ defmodule QrstorageWeb.Endpoint do
   # account for deltas and overhead for the upload length. deltas are roughly the same size as the actual input,
   # so * 2 for deltas, plus 0.2 buffer for overhead and text characters:
   upload_length_buffer = 2.2
-  max_upload_length = String.to_integer(Application.compile_env(:qrstorage, :max_upload_length))
+  max_upload_length = String.to_integer(Application.get_env(:qrstorage, :max_upload_length))
 
   plug Plug.Parsers,
     parsers: [:urlencoded, :multipart, :json],
