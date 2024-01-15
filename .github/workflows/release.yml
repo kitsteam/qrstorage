@@ -15,6 +15,7 @@ on:
   push:
     branches: 
       - main
+      - 170-move-env-QR_CODE_MAX_UPLOAD_LENGTH-to-runtime
   release:
     types: [published]
 
