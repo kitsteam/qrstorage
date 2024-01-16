@@ -87,6 +87,12 @@ defmodule Qrstorage.QrCodesTest do
       assert {:error, %Ecto.Changeset{}} = QrCodes.create_qr_code(invalid_link_attrs)
     end
 
+    test "create_qr_code/1 with type link and invalid url with line break returns error changeset" do
+      invalid_link_attrs = %{@valid_attrs | content_type: "link", text: "https://kits.blog\n\r"}
+
+      assert {:error, %Ecto.Changeset{}} = QrCodes.create_qr_code(invalid_link_attrs)
+    end
+
     test "create_qr_code/1 with type link and valid url returns ok" do
       valid_link_attrs = %{@valid_attrs | content_type: "link", text: "https://kits.blog"}
 

@@ -181,9 +181,17 @@ defmodule Qrstorage.QrCodes.QrCode do
   # This is a very simple check - it just verifies host/scheme.
   defp valid_url?(url) when is_binary(url) do
     case URI.parse(url) do
-      %URI{host: nil} -> false
-      %URI{scheme: nil} -> false
-      %URI{} -> true
+      %URI{host: nil} ->
+        false
+
+      %URI{scheme: nil} ->
+        false
+
+      %URI{host: host} ->
+        case :inet.gethostbyname(Kernel.to_charlist(host)) do
+          {:ok, _} -> true
+          {:error, _} -> false
+        end
     end
   end
 
