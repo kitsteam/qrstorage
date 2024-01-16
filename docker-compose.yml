@@ -19,7 +19,7 @@ services:
       # - Use `mix phx.gen.secret` if you have elixir and phoenix installed
       # - Use `openssl rand -base64 64 | head -c 64` on a normal unix system
       # You can override this in `docker-compose.override.yml`
-      SECRET_KEY_BASE: "vg2ibc71kJUfWtTAa6lejS+lvR5JDr/wzvVpMAWeYkHQoxlgtApu0sSoe1RpPgYC%"
+      SECRET_KEY_BASE: "this_secret_key_base_needs_to_have_a_length_of_at_least_64_characters_like_this_one!"
       URL_HOST: localhost
       URL_SCHEME: http
       URL_PORT: "4000"
