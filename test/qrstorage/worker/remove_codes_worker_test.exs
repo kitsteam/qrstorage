@@ -1,5 +1,5 @@
 defmodule QrstorageRemoveCodesWorkerTest do
-  use ExUnit.Case, async: true
+  use Qrstorage.DataCase
   use Oban.Testing, repo: Qrstorage.Repo
 
   alias Qrstorage.QrCodes.QrCode

@@ -1,5 +1,5 @@
 defmodule Qrstorage.Services.TranslationServiceTest do
-  use ExUnit.Case, async: true
+  use Qrstorage.DataCase
 
   alias Qrstorage.Services.TranslationService
   alias Qrstorage.QrCodes
