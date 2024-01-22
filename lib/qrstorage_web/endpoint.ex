@@ -1,5 +1,6 @@
 defmodule QrstorageWeb.Endpoint do
   use Phoenix.Endpoint, otp_app: :qrstorage
+  require Logger
 
   # The session will be stored in the cookie and signed,
   # this means its contents can be read but not tampered with.
@@ -36,9 +37,15 @@ defmodule QrstorageWeb.Endpoint do
   plug Plug.RequestId
   plug Plug.Telemetry, event_prefix: [:phoenix, :endpoint]
 
+  upload_length_buffer = 2.2
+  max_upload_length = String.to_integer(System.get_env("QR_CODE_MAX_UPLOAD_LENGTH", "2666666"))
+
+  Logger.info("Reading QR_CODE_MAX_UPLOAD_LENGTH as: #{max_upload_length}")
+
   plug Plug.Parsers,
     parsers: [:urlencoded, :multipart, :json],
     pass: ["*/*"],
+    length: ceil(max_upload_length * upload_length_buffer),
     json_decoder: Phoenix.json_library()
 
   plug Plug.MethodOverride
