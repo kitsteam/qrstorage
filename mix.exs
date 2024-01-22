@@ -50,7 +50,7 @@ defmodule Qrstorage.MixProject do
       {:plug_cowboy, "2.6.1"},
       {:google_api_text_to_speech, "0.15.0"},
       {:google_api_translate, "0.15.0"},
-      {:goth, "1.4.2"},
+      {:goth, "1.4.3"},
       {:oban, "2.17.1"},
       {:json, "1.4.1"},
       {:fast_sanitize, "0.2.3"},
