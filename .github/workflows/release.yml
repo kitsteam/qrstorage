@@ -17,7 +17,8 @@ on:
       - main
   release:
     types: [published]
-
+  pull_request:
+  
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}

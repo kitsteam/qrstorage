@@ -138,7 +138,7 @@ defmodule Qrstorage.QrCodes.QrCode do
       # We can't pass :language or :voice as a field since validate_change doesnt run on attributes that are nil
       case content_type do
         :audio ->
-          [] ++ check_language(changeset) ++ check_voice(changeset)
+          [] ++ check_language(changeset) ++ check_voice(changeset) ++ check_block_list(changeset)
 
         _ ->
           []
@@ -195,5 +195,14 @@ defmodule Qrstorage.QrCodes.QrCode do
     if Enum.member?(@voices, get_field(changeset, :voice)),
       do: [],
       else: [{:voice, "Audio type requires voice"}]
+  end
+
+  defp check_block_list(changeset) do
+    text = get_field(changeset, :text)
+    block_list = ["https", "http", "www"]
+
+    if String.contains?(text, block_list),
+      do: [{:text, "Text contains content that is not allowed"}],
+      else: []
   end
 end
