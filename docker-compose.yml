@@ -7,9 +7,9 @@ services:
       target: development
     tty: true
     environment:
-      DATABASE_USER: ${POSTGRES_USER:-postgres}
-      DATABASE_USER_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
-      DATABASE_NAME: ${POSTGRES_DB:-qrstorage_dev}
+      DATABASE_USER: ${POSTGRES_USER:-qrstorage-user}
+      DATABASE_USER_PASSWORD: ${POSTGRES_PASSWORD:-qrstorage-password}
+      DATABASE_NAME: ${POSTGRES_DB:-qrstorage-dev}
       DATABASE_PORT: 5432
       DATABASE_HOST: postgres
       DATABASE_SSL: "false"
@@ -80,9 +80,9 @@ services:
   postgres:
     image: postgres:15
     environment:
-      POSTGRES_USER: ${POSTGRES_USER:-postgres}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
-      POSTGRES_DB: ${POSTGRES_DB:-qrstorage_dev}
+      POSTGRES_USER: ${POSTGRES_USER:-qrstorage-user}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-qrstorage-password}
+      POSTGRES_DB: ${POSTGRES_DB:-qrstorage-dev}
       PGDATA: /var/lib/postgresql/data/pgdata
     restart: always
     # Exposing the port is not needed unless you want to access this database instance from the host.
