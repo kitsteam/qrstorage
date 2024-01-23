@@ -161,6 +161,14 @@ defmodule Qrstorage.QrCodesTest do
       assert {:ok, %QrCode{} = _qr_code} = QrCodes.create_qr_code(valid_text_attrs)
     end
 
+    test "create_qr_code/1 with audio that has content on blocklist returns error changeset" do
+      invalid_audio_attrs = %{@valid_audio_attrs | text: "We dont allow https"}
+      assert {:error, %Ecto.Changeset{}} = QrCodes.create_qr_code(invalid_audio_attrs)
+
+      invalid_audio_attrs = %{@valid_audio_attrs | text: "We dont allow http"}
+      assert {:error, %Ecto.Changeset{}} = QrCodes.create_qr_code(invalid_audio_attrs)
+    end
+
     test "qrcodes have an admin url id after creation" do
       assert {:ok, %QrCode{} = qr_code} = QrCodes.create_qr_code(@valid_attrs)
       assert qr_code.admin_url_id != nil
