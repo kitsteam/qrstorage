@@ -4,16 +4,26 @@ defmodule Qrstorage.Services.Gcp.GoogleApiServiceImpl do
 
   @behaviour GoogleApiService
 
+  require Logger
+
   @impl GoogleApiService
   def text_to_audio(text, language, voice) do
     request = build_synthesize_speech_request(text, language, voice)
 
-    {:ok, response} =
-      GoogleApi.TextToSpeech.V1.Api.Text.texttospeech_text_synthesize(authenticated_connection(),
-        body: request
-      )
+    response_body =
+      case GoogleApi.TextToSpeech.V1.Api.Text.texttospeech_text_synthesize(authenticated_connection(),
+             body: request
+           ) do
+        {:ok, response} ->
+          response.audioContent
 
-    decoded_file = Base.decode64!(response.audioContent)
+        _ ->
+          Logger.warning("Exception caught while transforming text to audio.")
+          # Return empty string:
+          ""
+      end
+
+    decoded_file = Base.decode64!(response_body)
     {:ok, decoded_file}
   end
 
@@ -21,15 +31,22 @@ defmodule Qrstorage.Services.Gcp.GoogleApiServiceImpl do
   def translate(text, target_language) do
     # https://hexdocs.pm/google_api_translate/GoogleApi.Translate.V2.Api.Translations.html#language_translations_list/5
 
-    {:ok, response} =
-      GoogleApi.Translate.V2.Api.Translations.language_translations_list(
-        authenticated_connection(),
-        [text],
-        target_language,
-        format: "text"
-      )
+    translated_text =
+      case GoogleApi.Translate.V2.Api.Translations.language_translations_list(
+             authenticated_connection(),
+             [text],
+             target_language,
+             format: "text"
+           ) do
+        {:ok, response} ->
+          List.first(response.translations).translatedText
 
-    translated_text = List.first(response.translations).translatedText
+        _ ->
+          Logger.info("Exception caught while translating text")
+          # return an empty string:
+          ""
+      end
+
     {:ok, translated_text}
   end
 
