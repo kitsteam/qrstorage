@@ -46,3 +46,6 @@ docker-compose-kits.override.yml
 
 # dev containers uses this:
 tmp 
+
+# ignore vs devcontainer:
+.devcontainer
