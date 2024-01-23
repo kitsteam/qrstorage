@@ -9,19 +9,19 @@ defmodule Qrstorage.Services.Gcp.GoogleApiServiceImpl do
   @impl GoogleApiService
   def text_to_audio(text, language, voice) do
     request = build_synthesize_speech_request(text, language, voice)
-    response_body = ""
 
-    # ::TODO:: refactor - this isn't really the elixir way
-    try do
-      {:ok, response} =
-        GoogleApi.TextToSpeech.V1.Api.Text.texttospeech_text_synthesize(authenticated_connection(),
-          body: request
-        )
+    response_body =
+      case GoogleApi.TextToSpeech.V1.Api.Text.texttospeech_text_synthesize(authenticated_connection(),
+             body: request
+           ) do
+        {:ok, response} ->
+          response.audioContent
 
-      ^response_body = response.audioContent
-    rescue
-      _e -> Logger.info("Exception caught while getting audio")
-    end
+        _ ->
+          Logger.warning("Exception caught while transforming text to audio.")
+          # Return empty string:
+          ""
+      end
 
     decoded_file = Base.decode64!(response_body)
     {:ok, decoded_file}
@@ -30,22 +30,22 @@ defmodule Qrstorage.Services.Gcp.GoogleApiServiceImpl do
   @impl GoogleApiService
   def translate(text, target_language) do
     # https://hexdocs.pm/google_api_translate/GoogleApi.Translate.V2.Api.Translations.html#language_translations_list/5
-    translated_text = ""
 
-    # ::TODO:: refactor - this isn't really the elixir way
-    try do
-      {:ok, response} =
-        GoogleApi.Translate.V2.Api.Translations.language_translations_list(
-          authenticated_connection(),
-          [text],
-          target_language,
-          format: "text"
-        )
+    translated_text =
+      case GoogleApi.Translate.V2.Api.Translations.language_translations_list(
+             authenticated_connection(),
+             [text],
+             target_language,
+             format: "text"
+           ) do
+        {:ok, response} ->
+          List.first(response.translations).translatedText
 
-      ^translated_text = List.first(response.translations).translatedText
-    rescue
-      _e -> Logger.info("Exception caught while translating text")
-    end
+        _ ->
+          Logger.info("Exception caught while translating text")
+          # return an empty string:
+          ""
+      end
 
     {:ok, translated_text}
   end
