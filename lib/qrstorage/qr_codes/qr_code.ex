@@ -7,6 +7,7 @@ defmodule Qrstorage.QrCodes.QrCode do
   alias Qrstorage.Scrubber.TextScrubber
 
   @languages ~w[de en fr es tr pl ar ru it pt nl uk]a
+  @block_list ~w[https http www]
 
   @voices ~w[male female]a
 
@@ -199,9 +200,8 @@ defmodule Qrstorage.QrCodes.QrCode do
 
   defp check_block_list(changeset) do
     text = get_field(changeset, :text)
-    block_list = ["https", "http", "www"]
 
-    if String.contains?(text, block_list),
+    if String.contains?(text, @block_list),
       do: [{:text, "Text contains content that is not allowed"}],
       else: []
   end

@@ -11,211 +11,212 @@ msgstr ""
 "Language: de\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
+#: lib/qrstorage_web/templates/qr_code/download.html.heex:58
+#: lib/qrstorage_web/templates/qr_code/show.html.heex:57
 #, elixir-autogen, elixir-format
-#: lib/qrstorage_web/templates/qr_code/download.html.heex:22
-#: lib/qrstorage_web/templates/qr_code/show.html.heex:48
 msgid "Download"
 msgstr ""
 
+#: lib/qrstorage_web/templates/qr_code/form_audio.html.heex:12
+#: lib/qrstorage_web/templates/qr_code/form_link.html.heex:12
+#: lib/qrstorage_web/templates/qr_code/form_text.html.heex:19
 #, elixir-autogen, elixir-format
-#: lib/qrstorage_web/templates/qr_code/form_audio.html.heex:9
-#: lib/qrstorage_web/templates/qr_code/form_link.html.heex:10
-#: lib/qrstorage_web/templates/qr_code/form_text.html.heex:11
 msgid "Oops, something went wrong! Please check the errors below."
 msgstr "Oops, da ist etwas schiefgelaufen. Bitte korrigiere die folgenden Fehler."
 
+#: lib/qrstorage_web/templates/qr_code/form_audio.html.heex:56
+#: lib/qrstorage_web/templates/qr_code/form_link.html.heex:45
+#: lib/qrstorage_web/templates/qr_code/form_text.html.heex:55
 #, elixir-autogen, elixir-format
-#: lib/qrstorage_web/templates/qr_code/form_audio.html.heex:46
-#: lib/qrstorage_web/templates/qr_code/form_link.html.heex:36
-#: lib/qrstorage_web/templates/qr_code/form_text.html.heex:42
 msgid "Save"
 msgstr "Erstellen"
 
+#: lib/qrstorage_web/templates/qr_code/show.html.heex:39
+#: lib/qrstorage_web/templates/qr_code/show.html.heex:48
 #, elixir-autogen, elixir-format
-#: lib/qrstorage_web/templates/qr_code/show.html.heex:18
 msgid "Deletion Date"
 msgstr "Löschdatum"
 
+#: lib/qrstorage_web/templates/qr_code/show.html.heex:43
 #, elixir-autogen, elixir-format
-#: lib/qrstorage_web/templates/qr_code/show.html.heex:22
 msgid "Audio Language"
 msgstr "Sprachausgabe"
 
+#: lib/qrstorage_web/templates/qr_code/form_audio.html.heex:36
 #, elixir-autogen, elixir-format
-#: lib/qrstorage_web/templates/qr_code/form_audio.html.heex:26
 msgid "audio language"
 msgstr "Sprachausgabe"
 
-#, elixir-autogen, elixir-format
 #: lib/qrstorage_web/templates/qr_code/settings/_settings_delete_after.html.heex:3
+#, elixir-autogen, elixir-format
 msgid "delete after"
 msgstr "Speicherdauer in Monaten"
 
+#: lib/qrstorage_web/templates/qr_code/form_audio.html.heex:39
 #, elixir-autogen, elixir-format
-#: lib/qrstorage_web/templates/qr_code/form_audio.html.heex:29
 msgid "Audio Text to Speech via Google"
 msgstr "Für die Sprachausgabe kommunizieren wir mit Google. Du bleibst für Google unsichtbar."
 
+#: lib/qrstorage_web/templates/qr_code/form_audio.html.heex:22
 #, elixir-autogen, elixir-format
-#: lib/qrstorage_web/templates/qr_code/form_audio.html.heex:15
 msgid "Type your text here"
 msgstr "Gib deinen Text hier ein!"
 
-#, elixir-autogen, elixir-format
 #: lib/qrstorage_web/templates/qr_code/settings/_settings_hide_text.html.heex:3
+#, elixir-autogen, elixir-format
 msgid "hide text"
 msgstr "Text in Ausgabe verstecken"
 
+#: lib/qrstorage_web/templates/qr_code/download.html.heex:65
 #, elixir-autogen, elixir-format
-#: lib/qrstorage_web/templates/qr_code/download.html.heex:29
 msgid "Show"
 msgstr "Vorschau"
 
+#: lib/qrstorage_web/templates/qr_code/preview.html.heex:4
 #, elixir-autogen, elixir-format
-#: lib/qrstorage_web/templates/qr_code/preview.html.heex:2
 msgid "Back to code"
 msgstr "Zurück zum QR-Code"
 
+#: lib/qrstorage_web/templates/qr_code/form_link.html.heex:21
 #, elixir-autogen, elixir-format
-#: lib/qrstorage_web/templates/qr_code/form_link.html.heex:15
 msgid "Type your link here"
 msgstr "https://..."
 
+#: lib/qrstorage_web/templates/qr_code/form_character_counter.html.heex:2
+#: lib/qrstorage_web/templates/qr_code/form_text.html.heex:31
 #, elixir-autogen, elixir-format
-#: lib/qrstorage_web/templates/qr_code/form_character_counter.html.heex:1
-#: lib/qrstorage_web/templates/qr_code/form_text.html.heex:20
 msgid "character(s) left"
 msgstr "Zeichen übrig"
 
+#: lib/qrstorage_web/templates/qr_code/download.html.heex:17
 #, elixir-autogen, elixir-format
-#: lib/qrstorage_web/templates/qr_code/download.html.heex:9
 msgid "Admin Link"
 msgstr "Admin Link"
 
+#: lib/qrstorage_web/templates/qr_code/admin.html.heex:10
 #, elixir-autogen, elixir-format
-#: lib/qrstorage_web/templates/qr_code/admin.html.heex:7
 msgid "Delete"
 msgstr "Löschen"
 
+#: lib/qrstorage_web/templates/qr_code/admin.html.heex:4
 #, elixir-autogen, elixir-format
-#: lib/qrstorage_web/templates/qr_code/admin.html.heex:3
 msgid "Delete QR code"
 msgstr "QR-Code löschen"
 
+#: lib/qrstorage_web/templates/qr_code/admin.html.heex:13
 #, elixir-autogen, elixir-format
-#: lib/qrstorage_web/templates/qr_code/admin.html.heex:7
 msgid "Do you really want to delete this QR code?"
 msgstr "Möchtest Du diesen QR-Code wirklich löschen?"
 
+#: lib/qrstorage_web/templates/qr_code/admin.html.heex:5
 #, elixir-autogen, elixir-format
-#: lib/qrstorage_web/templates/qr_code/admin.html.heex:4
 msgid "Do you really want to delete this QR code? This action cannot be undone:"
 msgstr "Möchtest Du diesen QR-Code wirklich löschen? Diese Handlung kann nicht rückgängig gemacht werden."
 
-#, elixir-autogen, elixir-format
 #: lib/qrstorage_web/controllers/qr_code_controller.ex:79
+#, elixir-autogen, elixir-format
 msgid "Successfully deleted QR code."
 msgstr "QR-Code erfolgreich gelöscht."
 
-#, elixir-autogen, elixir-format
 #: lib/qrstorage_web/templates/qr_code/show.html.heex:2
+#, elixir-autogen, elixir-format
 msgid "Text"
 msgstr "Text"
 
-#, elixir-autogen, elixir-format
 #: lib/qrstorage_web/views/qr_code_view.ex:47
+#, elixir-autogen, elixir-format
 msgid "This qr code will be stored indefinitely."
 msgstr "Dieser QR-Code wird nicht automatisch gelöscht."
 
+#: lib/qrstorage_web/templates/qr_code/download.html.heex:20
 #, elixir-autogen, elixir-format
-#: lib/qrstorage_web/templates/qr_code/download.html.heex:10
 msgid "Using this admin link you can delete the QR Code later on manually. Save this carefully, it is not possible to retrieve it later:"
 msgstr "Mit diesem Admin-Link kannst Du den QR-Code zukünftig manuell löschen. Speicher den Link ab. Es ist nicht möglich, den Link später wiederherzustellen."
 
+#: lib/qrstorage_web/templates/qr_code/settings/_settings_button.html.heex:15
 #, elixir-autogen, elixir-format
-#: lib/qrstorage_web/templates/qr_code/settings/_settings_button.html.heex:8
 msgid "settings"
 msgstr "Einstellungen"
 
-#, elixir-autogen, elixir-format
 #: lib/qrstorage_web/templates/qr_code/settings/_settings_colorpicker.html.heex:2
+#, elixir-autogen, elixir-format
 msgid "color"
 msgstr "Farbe"
 
-#, elixir-autogen, elixir-format
 #: lib/qrstorage_web/templates/qr_code/settings/_settings_dots_types.html.heex:3
+#, elixir-autogen, elixir-format
 msgid "classic design"
 msgstr "Klassisches Design verwenden"
 
+#: lib/qrstorage_web/templates/qr_code/download.html.heex:62
 #, elixir-autogen, elixir-format
-#: lib/qrstorage_web/templates/qr_code/download.html.heex:26
 msgid "PNG"
 msgstr ""
 
+#: lib/qrstorage_web/templates/qr_code/download.html.heex:61
 #, elixir-autogen, elixir-format
-#: lib/qrstorage_web/templates/qr_code/download.html.heex:25
 msgid "SVG"
 msgstr ""
 
-#, elixir-autogen, elixir-format
 #: lib/qrstorage_web/views/qr_code_view.ex:71
+#, elixir-autogen, elixir-format
 msgid "The maximum upload size is %{max_length} MB."
 msgstr "Der Inhalt ist zu groß. Die maximale Größe beträgt %{max_length} MB."
 
+#: lib/qrstorage_web/templates/qr_code/download.html.heex:31
+#: lib/qrstorage_web/templates/qr_code/download.html.heex:42
 #, elixir-autogen, elixir-format
-#: lib/qrstorage_web/templates/qr_code/download.html.heex:12
-#: lib/qrstorage_web/templates/qr_code/download.html.heex:13
 msgid "Copy"
 msgstr "Kopieren"
 
+#: lib/qrstorage_web/templates/qr_code/download.html.heex:38
 #, elixir-autogen, elixir-format
-#: lib/qrstorage_web/templates/qr_code/download.html.heex:13
 msgid "Copy to clipboard"
 msgstr "In Zwischenablage kopieren"
 
+#: lib/qrstorage_web/templates/qr_code/settings/_settings_voice.html.heex:18
 #, elixir-autogen, elixir-format
-#: lib/qrstorage_web/templates/qr_code/settings/_settings_voice.html.heex:14
 msgid "This language supports only a female voice."
 msgstr "Diese Sprache unterstützt nur eine weibliche Stimme."
 
-#, elixir-autogen, elixir-format
 #: lib/qrstorage_web/templates/qr_code/settings/_settings_voice.html.heex:3
+#, elixir-autogen, elixir-format
 msgid "Voice"
 msgstr "Männliche statt weiblicher Stimme verwenden"
 
-#, elixir-autogen, elixir-format
 #: lib/qrstorage_web/controllers/qr_code_controller.ex:141
+#, elixir-autogen, elixir-format
 msgid "Qr code audio transcription failed."
 msgstr "Audio-Transkription ist fehlgeschlagen."
 
-#, elixir-autogen, elixir-format
 #: lib/qrstorage_web/controllers/qr_code_controller.ex:130
+#, elixir-autogen, elixir-format
 msgid "Qr code translation failed."
 msgstr "Übersetzung ist fehlgeschlagen."
 
+#: lib/qrstorage_web/templates/qr_code/show.html.heex:30
 #, elixir-autogen, elixir-format
-#: lib/qrstorage_web/templates/qr_code/show.html.heex:41
 msgid "Text was automatically translated."
 msgstr "Der Text wurde automatisch übersetzt."
 
+#: lib/qrstorage_web/templates/qr_code/form_audio.html.heex:26
+#: lib/qrstorage_web/templates/qr_code/form_link.html.heex:25
+#: lib/qrstorage_web/templates/qr_code/form_text.html.heex:33
 #, elixir-autogen, elixir-format
-#: lib/qrstorage_web/templates/qr_code/form_audio.html.heex:18
-#: lib/qrstorage_web/templates/qr_code/form_link.html.heex:18
-#: lib/qrstorage_web/templates/qr_code/form_text.html.heex:22
 msgid "This tool may only be used in Teaching/Learning situations. It is not permitted to enter personal information."
 msgstr "Dieses Tool darf nur in Bildungskontexten genutzt werden. Die Eingabe personenbezogener Daten ist nicht gestattet."
 
+#: lib/qrstorage_web/templates/qr_code/new.html.heex:2
 #, elixir-autogen, elixir-format
-#: lib/qrstorage_web/templates/qr_code/new.html.heex:3
 msgid "Create speaking QR-Codes!"
 msgstr "Erstelle sprechende QR-Codes!"
 
+#: lib/qrstorage_web/templates/qr_code/new.html.heex:4
 #, elixir-autogen, elixir-format
-#: lib/qrstorage_web/templates/qr_code/new.html.heex:5
 msgid "Customize your text!"
 msgstr "Gestalte deinen Text!"
 
+#: lib/qrstorage_web/templates/qr_code/new.html.heex:3
 #, elixir-autogen, elixir-format
-#: lib/qrstorage_web/templates/qr_code/new.html.heex:4
 msgid "Link images and videos!"
 msgstr "Verlinke Bilder und Videos!"
