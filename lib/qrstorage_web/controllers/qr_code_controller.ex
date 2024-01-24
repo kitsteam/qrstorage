@@ -45,6 +45,7 @@ defmodule QrstorageWeb.QrCodeController do
     qr_code = QrCodes.get_qr_code!(id)
 
     if qr_code.content_type == :link do
+      # we don't want to redirect to external links:
       redirect(conn, to: "/")
     else
       render(conn, "show.html", qr_code: qr_code)
