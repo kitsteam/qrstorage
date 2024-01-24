@@ -36,6 +36,7 @@ defmodule Qrstorage.QrCodes.QrCode do
     field :admin_url_id, :binary_id, read_after_writes: true
     field :dots_type, Ecto.Enum, values: @dots_types
     field :voice, Ecto.Enum, values: @voices
+    field :hp, :string, virtual: true
 
     timestamps()
   end
@@ -52,8 +53,10 @@ defmodule Qrstorage.QrCodes.QrCode do
       :content_type,
       :deltas,
       :dots_type,
-      :voice
+      :voice,
+      :hp
     ])
+    |> validate_length(:hp, is: 0)
     |> scrub_text
     |> validate_text_length(:text)
     |> validate_inclusion(:color, @colors)

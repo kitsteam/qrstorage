@@ -14,7 +14,8 @@ defmodule QrstorageWeb.QrCodeControllerTest do
     language: nil,
     content_type: "text",
     dots_type: "dots",
-    voice: nil
+    voice: nil,
+    hp: nil
   }
 
   @invalid_attrs %{delete_after: "10", text: nil, language: nil, content_type: "text"}
@@ -87,6 +88,14 @@ defmodule QrstorageWeb.QrCodeControllerTest do
       link_attrs = %{@create_attrs | delete_after: "1"}
       conn = post(conn, Routes.qr_code_path(conn, :create), qr_code: link_attrs)
       assert Phoenix.Flash.get(conn.assigns.flash, :admin_url_id) == nil
+    end
+  end
+
+  describe "honeypot create qr_code" do
+    test "does not create qr_code when honeypot is set", %{conn: conn} do
+      honeypot_set_attrs = %{@create_attrs | hp: "set"}
+      conn = post(conn, Routes.qr_code_path(conn, :create), qr_code: honeypot_set_attrs)
+      assert html_response(conn, 200) =~ "Oops, something went wrong"
     end
   end
 

@@ -12,6 +12,7 @@ defmodule Qrstorage.QrCodesTest do
       hide_text: false,
       content_type: "text",
       language: nil,
+      hp: nil,
       deltas: %{"id" => "test"},
       dots_type: "dots"
     }
@@ -22,6 +23,7 @@ defmodule Qrstorage.QrCodesTest do
       hide_text: false,
       content_type: "audio",
       language: "de",
+      hp: nil,
       voice: "female",
       dots_type: "dots"
     }
@@ -189,13 +191,30 @@ defmodule Qrstorage.QrCodesTest do
     end
 
     test "create_qr_code/1 with invalid dots_type returns error changeset" do
-      invalid_link_attrs = %{@valid_attrs | dots_type: "invalid"}
-      assert {:error, %Ecto.Changeset{}} = QrCodes.create_qr_code(invalid_link_attrs)
+      invalid_attrs = %{@valid_attrs | dots_type: "invalid"}
+      assert {:error, %Ecto.Changeset{}} = QrCodes.create_qr_code(invalid_attrs)
     end
 
     test "create_qr_code/1 without dots_type returns error changeset" do
-      invalid_link_attrs = %{@valid_attrs | dots_type: ""}
+      invalid_attrs = %{@valid_attrs | dots_type: ""}
+      assert {:error, %Ecto.Changeset{}} = QrCodes.create_qr_code(invalid_attrs)
+    end
+  end
+
+  describe "honeypot" do
+    test "create_qr_code/1 with audio type and honeypot set returns error changeset" do
+      invalid_audio_attrs = %{@valid_audio_attrs | hp: "set"}
+      assert {:error, %Ecto.Changeset{}} = QrCodes.create_qr_code(invalid_audio_attrs)
+    end
+
+    test "create_qr_code/1 with link type and honeypot set returns error changeset" do
+      invalid_link_attrs = %{@valid_attrs | content_type: "link", hp: "set"}
       assert {:error, %Ecto.Changeset{}} = QrCodes.create_qr_code(invalid_link_attrs)
+    end
+
+    test "create_qr_code/1 with text type and honeypot set returns error changeset" do
+      invalid_text_attrs = %{@valid_attrs | hp: "set"}
+      assert {:error, %Ecto.Changeset{}} = QrCodes.create_qr_code(invalid_text_attrs)
     end
   end
 end

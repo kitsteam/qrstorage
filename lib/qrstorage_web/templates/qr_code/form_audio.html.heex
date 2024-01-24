@@ -6,6 +6,7 @@
     checked: true
   ) %>
   <%= select(f, :color, translated_colors_for_select(), class: "visually-hidden") %>
+  <%= render("partials/_honeypot.html", f: f) %>
 
   <%= if @changeset.action do %>
     <div class="alert alert-danger">
