@@ -178,21 +178,27 @@ defmodule Qrstorage.QrCodes.QrCode do
     String.length(text)
   end
 
-  # This is a very simple check - it just verifies host/scheme.
   defp valid_url?(url) when is_binary(url) do
-    case URI.parse(url) do
-      %URI{host: nil} ->
-        false
+    # links should have a host and a scheme - this is not covered by uri_new:
+    uri_parse =
+      case URI.parse(url) do
+        %URI{host: nil} ->
+          false
 
-      %URI{scheme: nil} ->
-        false
+        %URI{scheme: nil} ->
+          false
 
-      %URI{host: host} ->
-        case :inet.gethostbyname(Kernel.to_charlist(host)) do
-          {:ok, _} -> true
-          {:error, _} -> false
-        end
-    end
+        %URI{} ->
+          true
+      end
+
+    uri_new =
+      case URI.new(url) do
+        {:ok, _} -> true
+        {:error, _} -> false
+      end
+
+    uri_parse && uri_new
   end
 
   defp valid_url?(_), do: false

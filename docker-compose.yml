@@ -7,8 +7,8 @@ services:
       target: development
     tty: true
     environment:
-      DATABASE_USER: ${POSTGRES_USER:-postgres}
-      DATABASE_USER_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
+      DATABASE_USER: ${POSTGRES_USER:-qrstorage-user}
+      DATABASE_USER_PASSWORD: ${POSTGRES_PASSWORD:-qrstorage-password}
       DATABASE_NAME: ${POSTGRES_DB:-qrstorage_dev}
       DATABASE_PORT: 5432
       DATABASE_HOST: postgres
@@ -80,8 +80,8 @@ services:
   postgres:
     image: postgres:15
     environment:
-      POSTGRES_USER: ${POSTGRES_USER:-postgres}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
+      POSTGRES_USER: ${POSTGRES_USER:-qrstorage-user}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-qrstorage-password}
       POSTGRES_DB: ${POSTGRES_DB:-qrstorage_dev}
       PGDATA: /var/lib/postgresql/data/pgdata
     restart: always

@@ -194,12 +194,12 @@ defmodule QrstorageWeb.QrCodeControllerTest do
       assert html_response(conn, 200) =~ audio_qr_code.text
     end
 
-    test "that links redirect to the link", %{
+    test "that links redirect to the default page", %{
       conn: conn,
       link_qr_code: link_qr_code
     } do
       conn = get(conn, Routes.qr_code_path(conn, :show, link_qr_code.id))
-      assert html_response(conn, 302) =~ link_qr_code.text
+      assert html_response(conn, 302) =~ "<a href=\"/\">"
     end
 
     test "that codes with translated text prefer the translation", %{
@@ -263,12 +263,12 @@ defmodule QrstorageWeb.QrCodeControllerTest do
       assert html_response(conn, 200) =~ text_qr_code.text
     end
 
-    test "that links redirect to the link", %{
+    test "that links redirect to the default page", %{
       conn: conn,
       link_qr_code: link_qr_code
     } do
       conn = get(conn, Routes.qr_code_path(conn, :preview, link_qr_code.id))
-      assert html_response(conn, 302) =~ link_qr_code.text
+      assert html_response(conn, 302) =~ "<a href=\"/\">"
     end
   end
 
