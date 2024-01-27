@@ -82,7 +82,7 @@ services:
     environment:
       POSTGRES_USER: ${POSTGRES_USER:-qrstorage-user}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-qrstorage-password}
-      POSTGRES_DB: ${POSTGRES_DB:-qrstorage_dev}
+      POSTGRES_DB: ${POSTGRES_DB:-qrstorage-dev}
       PGDATA: /var/lib/postgresql/data/pgdata
     restart: always
     # Exposing the port is not needed unless you want to access this database instance from the host.
