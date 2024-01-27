@@ -7,6 +7,7 @@ defmodule QrstorageWeb.Endpoint do
   # Set :encryption_salt if you would also like to encrypt it.
   @session_options [
     store: :cookie,
+    secure: true,
     key: "_qrstorage_key",
     signing_salt: "w4G2Qpx/"
   ]
