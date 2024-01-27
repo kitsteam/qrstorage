@@ -15,13 +15,12 @@
   <% end %>
 
   <div class="form-group">
-    <%= textarea(f, :text,
+    <%= text_input(f, :text,
       class: "form-control",
       required: true,
       maxlength: QrCode.text_length_limits()[:link],
       placeholder: gettext("Type your link here")
     ) %>
-    <%= render("form_character_counter.html", max_length: QrCode.text_length_limits()[:link]) %>
     <p class="form-text text-muted">
       <%= gettext(
         "This tool may only be used in Teaching/Learning situations. It is not permitted to enter personal information."
