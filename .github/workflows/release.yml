@@ -15,7 +15,6 @@ on:
   push:
     branches: 
       - main
-      - 172-fix-error-link-line-break
   release:
     types: [published]
   
