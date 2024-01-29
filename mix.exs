@@ -47,7 +47,7 @@ defmodule Qrstorage.MixProject do
       {:gettext, "0.24.0"},
       {:timex, "3.7.11"},
       {:jason, "1.4.1"},
-      {:plug_cowboy, "2.6.1"},
+      {:plug_cowboy, "2.6.2"},
       {:google_api_text_to_speech, "0.15.0"},
       {:google_api_translate, "0.15.0"},
       {:goth, "1.4.3"},
