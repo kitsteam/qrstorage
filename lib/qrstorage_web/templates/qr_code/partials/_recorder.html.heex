@@ -1,0 +1,46 @@
+<div id="recorder" class="row m-3">
+  <div id="play-button-wrapper" class="col">
+    <div class="position-relative mb-4">
+      <div class="position-absolute top-0 start-0"></div>
+      <div id="progressbar"></div>
+      <div class="position-absolute top-50 start-50 translate-middle">
+        <div class="position-absolute top-50 start-50  translate-middle">
+          <div id="play" class="amplitude-play-pause d-none">
+            <span id="play-icon" class="d-none">
+              <svg class="feather">
+                <use href={Routes.static_path(@conn, "/images/feather-icons/feather-sprite.svg#play")} />
+              </svg>
+            </span>
+            <span id="pause-icon" class="d-none">
+              <svg class="feather">
+                <use href={Routes.static_path(@conn, "/images/feather-icons/feather-sprite.svg#pause")} />
+              </svg>
+            </span>
+          </div>
+
+          <button class="" type="button" id="recorder-button-start-stop">
+            <svg class="feather microphone">
+              <use href="/images/feather-icons/feather-sprite.svg#mic"></use>
+            </svg>
+            <svg class="feather microphone-off">
+              <use href="/images/feather-icons/feather-sprite.svg#mic-off"></use>
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <span
+        id="recorder-button-delete"
+        class="position-absolute start-50 translate-middle badge border border-light rounded-circle bg-danger p-3 translate-middle-x d-none"
+      >
+        <svg class="feather microphone-off">
+          <use href="/images/feather-icons/feather-sprite.svg#trash-2"></use>
+        </svg>
+      </span>
+    </div>
+  </div>
+</div>
+
+<%= file_input(@f, :audio_file, accept: "audio/*", class: "d-none") %>
+<%= text_input(@f, :audio_file_type, class: "d-none") %>
+<%= text_input(@f, :text, value: "-", class: "d-none") %>

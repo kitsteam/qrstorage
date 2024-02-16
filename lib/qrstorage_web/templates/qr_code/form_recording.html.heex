@@ -1,0 +1,44 @@
+<%= form_for @changeset, @action, [id: "recording", autocomplete: "off", multipart: true], fn f -> %>
+  <!-- invisible fields -->
+  <%= radio_button(f, :content_type, "recording",
+    class: "visually-hidden",
+    autocomplete: "off",
+    checked: true
+  ) %>
+  <%= select(f, :color, translated_colors_for_select(), class: "visually-hidden") %>
+  <%= render("partials/_honeypot.html", f: f) %>
+
+  <%= if @changeset.action do %>
+    <div class="alert alert-danger">
+      <p><%= gettext("Oops, something went wrong! Please check the errors below.") %></p>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= render("partials/_recorder.html", f: f, conn: @conn) %>
+    <p class="form-text text-muted">
+      <%= gettext(
+        "This tool may only be used in Teaching/Learning situations. It is not permitted to enter personal information."
+      ) %>
+    </p>
+
+    <div class="invalid-feedback">
+      <%= error_tag(f, :text) %>
+    </div>
+  </div>
+
+  <%= render("settings/_settings_button.html", id: "collapse-settings-recording", conn: @conn) %>
+
+  <div class="collapse mb-3" id="collapse-settings-recording">
+    <div class="card card-body">
+      <%= render("settings/_settings_dots_types.html", f: f) %>
+      <%= render("settings/_settings_colorpicker.html", f: f) %>
+    </div>
+  </div>
+
+  <div class="row mb-4">
+    <div class="col">
+      <%= submit(gettext("Save"), class: "btn btn-primary") %>
+    </div>
+  </div>
+<% end %>
