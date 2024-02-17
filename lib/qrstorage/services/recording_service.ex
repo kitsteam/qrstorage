@@ -12,13 +12,21 @@ defmodule Qrstorage.Services.RecordingService do
   end
 
   defp extract_recording_from_plug_upload(%Plug.Upload{} = upload) do
-    case File.read(upload.path) do
-      {:ok, audio_file} ->
-        {:ok, audio_file, upload.content_type}
+    if upload.content_type == "audio/mp3" do
+      case File.read(upload.path) do
+        {:ok, audio_file} ->
+          {:ok, audio_file, upload.content_type}
 
-      {:error, _} ->
-        Logger.error("Error while extracting audio file from plug")
-        {:error, gettext("Error while extracting audio file from plug.")}
+        {:error, _} ->
+          Logger.error("Error while extracting audio file from plug")
+          {:error, gettext("Error while extracting audio file from plug.")}
+      end
+    else
+      Logger.error(
+        "Error while extracting audio file from plug: Tried to upload different audio format: #{upload.content_type}"
+      )
+
+      {:error, gettext("Error while extracting audio file from plug: Invalid content type")}
     end
   end
 

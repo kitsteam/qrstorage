@@ -2,7 +2,7 @@ import Amplitude from 'amplitudejs/dist/amplitude';
 import ProgressCircle from './progress_circle';
 import { MediaRecorder, register } from 'extendable-media-recorder';
 import { connect } from 'extendable-media-recorder-wav-encoder';
-import * as lamejs from 'lamejs/src/js/index';
+import { encodeWavAsMp3 } from './audio/mp3';
 
 const recorder = document.querySelector("#recorder");
 
@@ -87,29 +87,20 @@ if (recorder) {
 
     mediaRecorder.onstop = function (e) {
       const blob = new Blob(chunks, { type: mediaRecorder.mimeType });
-      const audioURL = URL.createObjectURL(blob);
       console.debug("File size: " + blob.size / 1024);
 
       chunks = [];
 
       blob.arrayBuffer().then((buffer) => {
+        const mp3Blob = encodeWavAsMp3(buffer);
 
-        var wav = lamejs.WavHeader.readHeader(new DataView(buffer));
-        var samples = new Int16Array(buffer, wav.dataOffset, wav.dataLen / 2);
-
-        const mp3Blob = encodeMono(wav.channels, wav.sampleRate, samples);
-
-        let file = new File([mp3Blob], "recording", { type: "audio/mp3", lastModified: new Date().getTime() });
-        let container = new DataTransfer();
-        container.items.add(file);
-        audioFileInput.files = container.files;
-        audioFileTypeInput.value = mediaRecorder.mimeType;
-
+        uploadMp3(mediaRecorder, mp3Blob);
+        enablePlayback(mp3Blob);
         // don't enable form submit until encoding is done:
         formSubmitButton.disabled = false;
       })
 
-      enablePlayback(audioURL);
+
 
       deleteButton.onclick = function (e) {
         deleteRecording();
@@ -136,7 +127,7 @@ if (recorder) {
       return wav
     }
     else {
-      // ::TODO:: error!
+      console.error('Audio format is not supported on this browser!');
       return ''
     }
   }
@@ -205,7 +196,7 @@ if (recorder) {
     });
   };
 
-  const enablePlayback = (dataUrl) => {
+  const enablePlayback = (mp3Blob) => {
     const updateProgressCircleFromPlayback = () => {
       let percentage = Amplitude.getSongPlayedPercentage();
 
@@ -220,12 +211,13 @@ if (recorder) {
     deleteButton.classList.remove('d-none');
     recordStartStopButton.classList.add('d-none');
 
+    const audioUrl = URL.createObjectURL(mp3Blob);
     // start amplitude player:
     Amplitude.init({
       "callbacks": {
         timeupdate: updateProgressCircleFromPlayback
       },
-      songs: [{ "url": dataUrl }],
+      songs: [{ "url": audioUrl }],
       playback_speed: 1.0
     });
   }
@@ -243,28 +235,12 @@ if (recorder) {
     microphone.connect(analyser);
     return analyser;
   }
-}
 
-function encodeMono(channels, sampleRate, samples) {
-  // from the following example: https://github.com/zhuker/lamejs/blob/582bbba6a12f981b984d8fb9e1874499fed85675/example.html#L6
-  var buffer = [];
-  var mp3enc = new lamejs.Mp3Encoder(channels, sampleRate, 128);
-  var remaining = samples.length;
-  var maxSamples = 1152;
-  for (var i = 0; remaining >= maxSamples; i += maxSamples) {
-    var mono = samples.subarray(i, i + maxSamples);
-    var mp3buf = mp3enc.encodeBuffer(mono);
-    if (mp3buf.length > 0) {
-      buffer.push(new Int8Array(mp3buf));
-    }
-    remaining -= maxSamples;
+  const uploadMp3 = (mediaRecorder, mp3Blob) => {
+    let file = new File([mp3Blob], "recording", { type: "audio/mp3", lastModified: new Date().getTime() });
+    let container = new DataTransfer();
+    container.items.add(file);
+    audioFileInput.files = container.files;
+    audioFileTypeInput.value = mediaRecorder.mimeType;
   }
-  var d = mp3enc.flush();
-  if (d.length > 0) {
-    buffer.push(new Int8Array(d));
-  }
-
-  var blob = new Blob(buffer, { type: 'audio/mp3' });
-
-  return blob
 }
