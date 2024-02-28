@@ -69,6 +69,7 @@ jobs:
       # This should only be used for the tests:
       SECRET_KEY_BASE: "DFvi5ZWW/Xc/yBgPOQ0w1wWZEGjy7NMl1/fRFyWf2EgbWNcXqtAOKUjh4bVps/eQ"
       MIX_ENV: "test"
+      OBJECT_STORAGE_BUCKET: "qrstorage-test"
 
     steps:
       # Downloads a copy of the code in your repository before running CI tests
