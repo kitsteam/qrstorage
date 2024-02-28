@@ -2,7 +2,6 @@ defmodule Qrstorage.QrCodes.QrCode do
   use Ecto.Schema
   import Ecto.Changeset
 
-  alias Qrstorage.Services.RecordingService
   alias FastSanitize
   alias FastSanitize.Sanitizer
   alias Qrstorage.Scrubber.TextScrubber
@@ -73,17 +72,6 @@ defmodule Qrstorage.QrCodes.QrCode do
   def store_audio_file(qr_code, attrs) do
     qr_code
     |> cast(attrs, [:audio_file, :audio_file_type])
-  end
-
-  def store_audio_file_from_upload(qr_code, attrs) do
-    case RecordingService.extract_recording_from_params(attrs) do
-      {:ok, audio_file, audio_file_type} ->
-        qr_code
-        |> cast(%{audio_file: audio_file, audio_file_type: audio_file_type}, [:audio_file, :audio_file_type])
-
-      :error ->
-        :error
-    end
   end
 
   @spec changeset_with_translated_text(

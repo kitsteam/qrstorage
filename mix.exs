@@ -55,8 +55,11 @@ defmodule Qrstorage.MixProject do
       {:oban, "2.17.3"},
       {:json, "1.4.1"},
       {:fast_sanitize, "0.2.3"},
+      {:fast_html, "2.3.0"},
       {:mox, "1.1.0", only: :test},
-      {:logger_json, "5.1.3"}
+      {:logger_json, "5.1.3"},
+      {:ex_aws, "2.5.1"},
+      {:ex_aws_s3, "2.5.3"}
     ]
   end
 

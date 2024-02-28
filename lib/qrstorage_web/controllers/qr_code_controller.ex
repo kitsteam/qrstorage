@@ -4,20 +4,31 @@ defmodule QrstorageWeb.QrCodeController do
   alias Qrstorage.QrCodes
   alias Qrstorage.QrCodes.QrCode
   alias Qrstorage.Repo
+  alias Qrstorage.Services.StorageService
 
   require Logger
 
   def audio_file(conn, %{"id" => id}) do
     qr_code = Repo.get!(QrCode, id)
 
-    # ::TODO::    audio_file_type = if qr_code.audio_file_type, do: qr_code.audio_file_type, else: "audio/mp3"
+    if qr_code.content_type == :recording do
+      case StorageService.get_recording(qr_code.id) do
+        {:ok, audio_file} ->
+          # For now, this is always audio/mp3. If we decide to add more file formats for recordings, we can change this in the future.
+          # However, we don't want this to be user configurable at the moment:
+          conn
+          |> put_resp_content_type("audio/mp3", "utf-8")
+          |> send_resp(200, audio_file)
 
-    Logger.info("file type:")
-    Logger.info(qr_code.audio_file_type)
-
-    conn
-    |> put_resp_content_type(qr_code.audio_file_type, "utf-8")
-    |> send_resp(200, qr_code.audio_file)
+        {:error, error_message} ->
+          conn
+          |> send_resp(404, error_message)
+      end
+    else
+      conn
+      |> put_resp_content_type(qr_code.audio_file_type, "utf-8")
+      |> send_resp(200, qr_code.audio_file)
+    end
   end
 
   def new(conn, _params) do

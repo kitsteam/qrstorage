@@ -2,6 +2,8 @@ defmodule Qrstorage.Services.QrCodeService do
   alias Qrstorage.QrCodes
   alias Qrstorage.QrCodes.QrCode
   alias Qrstorage.Repo
+  alias Qrstorage.Services.RecordingService
+  alias Qrstorage.Services.StorageService
 
   import QrstorageWeb.Gettext
 
@@ -76,8 +78,7 @@ defmodule Qrstorage.Services.QrCodeService do
   end
 
   defp handle_recording_qr_code(qr_code, qr_code_params) do
-    Logger.info("handling recording qr code!")
-    # always add translation and get audio:
+    # add recording to code:
     add_recording(qr_code, qr_code_params)
   end
 
@@ -98,18 +99,19 @@ defmodule Qrstorage.Services.QrCodeService do
   end
 
   defp add_recording(qr_code, qr_code_params) do
-    case QrCode.store_audio_file_from_upload(qr_code, qr_code_params) do
+    case RecordingService.extract_recording_from_params(qr_code_params) do
+      {:ok, audio_file, audio_file_type} ->
+        case StorageService.store_recording(qr_code.id, audio_file, audio_file_type) do
+          {:ok} ->
+            {:ok, qr_code}
+
+          {:error, _error_message} ->
+            Logger.error("Audio file not stored: #{qr_code.id}")
+            {:error, gettext("Qr code recording not extracted")}
+        end
+
       :error ->
         {:error, gettext("Qr code recording not extracted")}
-
-      qr_code_with_recording = %Ecto.Changeset{} ->
-        case Repo.update(qr_code_with_recording) do
-          {:ok, qr_code_with_stored_recording} ->
-            {:ok, qr_code_with_stored_recording}
-
-          {:error, _} ->
-            {:error, gettext("Qr code recording not saved.")}
-        end
     end
   end
 end

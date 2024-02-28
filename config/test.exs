@@ -26,4 +26,14 @@ config :logger, level: :warning
 config :goth,
   disabled: true
 
+# we configure ex_aws to localhost just to be sure that no test requests end up at aws:
+config(:ex_aws, :s3,
+  scheme: "https",
+  host: "localhost",
+  port: "443",
+  region: "eu01",
+  access_key_id: "access_key_id",
+  secret_access_key: "secret_access_key"
+)
+
 config :qrstorage, Oban, repo: Qrstorage.Repo, testing: :inline
