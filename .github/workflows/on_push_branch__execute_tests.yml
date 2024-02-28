@@ -22,7 +22,7 @@ jobs:
       # install hex:
       - run: mix local.hex --force && mix local.rebar --force
 
-      # See https://github.com/actions/checkout
+      # See https://github.com/actions/cache
       - uses: actions/cache@v4
         id: cache
         with:
