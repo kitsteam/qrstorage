@@ -8,11 +8,11 @@ const recorder = document.querySelector("#recorder");
 
 if (recorder) {
   const deleteButton = document.getElementById('recorder-button-delete');
-  const audioFileInput = document.getElementById('recording_audio_file')
-  const audioFileTypeInput = document.getElementById('recording_audio_file_type')
+  const audioFileInput = document.getElementById('recording_audio_file');
+  const audioFileTypeInput = document.getElementById('recording_audio_file_type');
   const recordStartStopButton = document.getElementById("recorder-button-start-stop");
   const playButton = document.getElementById('play');
-  const formSubmitButton = document.querySelector('.recording button[type=submit]')
+  const formSubmitButton = document.querySelector('.recording button[type=submit]');
 
   const maximumDuration = 120;
   let durationStartTime = new Date().getTime();
@@ -34,10 +34,10 @@ if (recorder) {
     const initialSetup = (event) => {
       if (navigator.mediaDevices.getUserMedia) {
         console.debug("navigator.mediaDevices.getUserMedia is supported.");
-        setupMediaDevice()
+        setupMediaDevice();
       } else {
         console.debug("navigator.mediaDevices.getUserMedia not supported on your browser!");
-        //::TODO:: show error, disable (or don't enable) recording buttons
+        disableRecordingForm();
       }
 
       tabBarRecordingButton.removeEventListener('click', initialSetup);
@@ -54,18 +54,19 @@ if (recorder) {
     const constraints = { audio: true };
 
     let onSuccess = function (stream) {
-      setupMediaRecorder(stream)
+      setupMediaRecorder(stream);
     };
 
     let onError = function (err) {
       console.error("Error occured while loading media device: " + err);
+      disableRecordingForm();
     };
 
     navigator.mediaDevices.getUserMedia(constraints).then(onSuccess, onError);
   }
 
   const setupMediaRecorder = (stream) => {
-    const options = { mimeType: selectMimeType() }
+    const options = { mimeType: selectMimeType() };
 
     const mediaRecorder = new MediaRecorder(stream, options);
 
@@ -114,7 +115,7 @@ if (recorder) {
 
   const deleteRecording = () => {
     // remove recorded content:
-    audioFileInput.value = ''
+    audioFileInput.value = '';
     audioFileTypeInput.value = '';
     durationStartTime = new Date().getTime();
     updateProgressCircle(0);
@@ -122,13 +123,13 @@ if (recorder) {
   }
 
   const selectMimeType = () => {
-    const wav = 'audio/wav'
+    const wav = 'audio/wav';
     if (MediaRecorder.isTypeSupported(wav)) {
-      return wav
+      return wav;
     }
     else {
       console.error('Audio format is not supported on this browser!');
-      return ''
+      return '';
     }
   }
 
@@ -242,5 +243,19 @@ if (recorder) {
     container.items.add(file);
     audioFileInput.files = container.files;
     audioFileTypeInput.value = mediaRecorder.mimeType;
+  }
+
+  const disableRecordingForm = () => {
+    // remove existing form:
+    const recordingForm = document.querySelector('#recording');
+    if (recordingForm) {
+      recordingForm.remove();
+    }
+
+    // show warning hint:
+    const recordingDisabled = document.querySelector('#recording-not-supported');
+    if (recordingDisabled) {
+      recordingDisabled.classList.remove('d-none');
+    }
   }
 }
