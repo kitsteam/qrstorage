@@ -38,7 +38,7 @@ defmodule Qrstorage.MixProject do
       {:postgrex, "0.17.4"},
       {:phoenix_html, "3.3.3"},
       {:phoenix_view, "2.0.3"},
-      {:phoenix_live_reload, "1.4.1", only: :dev},
+      {:phoenix_live_reload, "1.5.0", only: :dev},
       {:phoenix_live_dashboard, "0.8.3"},
       {:esbuild, "0.8.1", runtime: Mix.env() == :dev},
       {:dart_sass, "0.7.0", runtime: Mix.env() == :dev},
