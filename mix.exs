@@ -4,7 +4,7 @@ defmodule Qrstorage.MixProject do
   def project do
     [
       app: :qrstorage,
-      version: "0.1.0",
+      version: "0.2.0",
       elixir: "~> 1.7",
       elixirc_paths: elixirc_paths(Mix.env()),
       start_permanent: Mix.env() == :prod,
@@ -32,13 +32,13 @@ defmodule Qrstorage.MixProject do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
-      {:phoenix, "1.7.10"},
+      {:phoenix, "1.7.11"},
       {:phoenix_ecto, "4.4.3"},
       {:ecto_sql, "3.11.1"},
       {:postgrex, "0.17.4"},
       {:phoenix_html, "3.3.3"},
       {:phoenix_view, "2.0.3"},
-      {:phoenix_live_reload, "1.4.1", only: :dev},
+      {:phoenix_live_reload, "1.5.1", only: :dev},
       {:phoenix_live_dashboard, "0.8.3"},
       {:esbuild, "0.8.1", runtime: Mix.env() == :dev},
       {:dart_sass, "0.7.0", runtime: Mix.env() == :dev},
@@ -52,11 +52,14 @@ defmodule Qrstorage.MixProject do
       {:google_api_text_to_speech, "0.15.0"},
       {:google_api_translate, "0.15.0"},
       {:goth, "1.4.3"},
-      {:oban, "2.17.3"},
+      {:oban, "2.17.6"},
       {:json, "1.4.1"},
       {:fast_sanitize, "0.2.3"},
+      {:fast_html, "2.3.0"},
       {:mox, "1.1.0", only: :test},
-      {:logger_json, "5.1.4"}
+      {:logger_json, "5.1.4"},
+      {:ex_aws, "2.5.1"},
+      {:ex_aws_s3, "2.5.3"}
     ]
   end
 

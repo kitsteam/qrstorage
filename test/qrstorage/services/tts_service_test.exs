@@ -32,16 +32,22 @@ defmodule Qrstorage.Services.TtsServiceTest do
   end
 
   describe "text_to_audio/1 without audio code" do
-    test "text_to_audio/1 with a text code returns :no_audio_type" do
+    test "text_to_audio/1 with a text code returns :error" do
       qr_code = qr_code_fixture(%{content_type: "text"})
 
-      assert TtsService.text_to_audio(qr_code) == {:no_audio_type}
+      {result, _log} =
+        with_log(fn -> TtsService.text_to_audio(qr_code) end)
+
+      assert result == {:error, "Qr code audio transcription failed."}
     end
 
-    test "text_to_audio/1 with a link code returns :no_audio_type" do
+    test "text_to_audio/1 with a link code returns :error" do
       qr_code = qr_code_fixture(%{content_type: "link", text: "https://kits.blog"})
 
-      assert TtsService.text_to_audio(qr_code) == {:no_audio_type}
+      {result, _log} =
+        with_log(fn -> TtsService.text_to_audio(qr_code) end)
+
+      assert result == {:error, "Qr code audio transcription failed."}
     end
   end
 
@@ -115,7 +121,7 @@ defmodule Qrstorage.Services.TtsServiceTest do
           TtsService.text_to_audio(qr_code)
         end)
 
-      assert result == {:error, qr_code}
+      assert result == {:error, "Qr code audio transcription failed."}
       assert log =~ "Text not transcribed"
     end
   end

@@ -97,7 +97,3 @@ msgstr "Für Audio QR Codes muss eine Sprache ausgewählt werden."
 # Custom field from qr code.ex:
 msgid "Text is too long"
 msgstr "Text ist zu lang."
-
-# Custom field qr code.ex:
-msgid "Text contains content that is not allowed"
-msgstr "Der Text beinhaltet Wörter, die nicht in der Sprachausgabe genutzt werden können."

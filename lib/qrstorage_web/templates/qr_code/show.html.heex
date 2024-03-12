@@ -5,6 +5,14 @@
     <%= @qr_code.translated_text || @qr_code.text %>
   </div>
 <% end %>
+<%= if (@qr_code.content_type == :recording)  do %>
+  <div class="row">
+    <div class="col-md-12">
+      <%= render("partials/_player.html", conn: @conn, qr_code: @qr_code) %>
+    </div>
+  </div>
+<% end %>
+
 <%= if (@qr_code.content_type == :text) do %>
   <div class="text-box">
     <% # text should have been sanitized before storing it to db, but better be safe: %>

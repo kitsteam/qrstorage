@@ -5,6 +5,12 @@
     checked: content_group_checked(@changeset, "audio")
   ) %>
   <label class="btn btn-primary" for="qr_code_content_type_audio">Audio</label>
+  <%= radio_button(:qr_code, :content_type, "recording",
+    class: "btn-check content-type",
+    autocomplete: "off",
+    checked: content_group_checked(@changeset, "recording")
+  ) %>
+  <label class="btn btn-primary" for="qr_code_content_type_recording">Recording</label>
   <%= radio_button(:qr_code, :content_type, "text",
     class: "btn-check content-type",
     autocomplete: "off",
@@ -22,6 +28,13 @@
 <div class="content-type-group visually-hidden audio">
   <%= render("form_audio.html",
     changeset: changeset_for_content_type(@changeset, "audio"),
+    action: @action,
+    conn: @conn
+  ) %>
+</div>
+<div class="content-type-group visually-hidden recording">
+  <%= render("form_recording.html",
+    changeset: changeset_for_content_type(@changeset, "recording"),
     action: @action,
     conn: @conn
   ) %>

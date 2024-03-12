@@ -6,17 +6,19 @@ defmodule Qrstorage.QrCodes.QrCode do
   alias FastSanitize.Sanitizer
   alias Qrstorage.Scrubber.TextScrubber
 
+  require Logger
+
   @languages ~w[de en fr es tr pl ar ru it pt nl uk]a
   @block_list ~w[https http www]
 
   @voices ~w[male female]a
 
   @colors ~w[black gold darkgreen darkslateblue midnightblue crimson]a
-  @content_types ~w[link audio text]a
+  @content_types ~w[link audio text recording]a
 
   @dots_types ~w[dots square]a
 
-  @text_length_limits %{link: 1500, audio: 2000, text: 2000}
+  @text_length_limits %{link: 1500, audio: 2000, text: 2000, recording: 1}
 
   @max_delete_after_year 9999
 
@@ -72,6 +74,11 @@ defmodule Qrstorage.QrCodes.QrCode do
     |> cast(attrs, [:audio_file, :audio_file_type])
   end
 
+  @spec changeset_with_translated_text(
+          {map(), map()}
+          | %{:__struct__ => atom() | %{:__changeset__ => map(), optional(any()) => any()}, optional(atom()) => any()},
+          :invalid | %{optional(:__struct__) => none(), optional(atom() | binary()) => any()}
+        ) :: Ecto.Changeset.t()
   def changeset_with_translated_text(qr_code, attrs) do
     qr_code
     |> cast(attrs, [:translated_text])
@@ -138,7 +145,7 @@ defmodule Qrstorage.QrCodes.QrCode do
 
   def validate_audio_type(changeset, field) do
     validate_change(changeset, field, fn _field, content_type ->
-      # we only check the type audio, other types don't have to have a language and a voice
+      # we only check the type audio and recording, other types don't have to have a language and a voice
       # We can't pass :language or :voice as a field since validate_change doesnt run on attributes that are nil
       case content_type do
         :audio ->

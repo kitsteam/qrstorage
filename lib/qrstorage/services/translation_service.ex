@@ -3,16 +3,20 @@ defmodule Qrstorage.Services.TranslationService do
   alias Qrstorage.Repo
   alias Qrstorage.Services.Gcp.GoogleApiService
 
+  import QrstorageWeb.Gettext
+
   require Logger
 
   # we need a language, otherwise we don't know into which language to translate
   def add_translation(qr_code) when qr_code.language == :none do
-    {:no_language}
+    Logger.warning("Tried to translate a qr code without a target language")
+    {:error, gettext("Qr code translation failed.")}
   end
 
   # translation is only meant for audio qr codes:
   def add_translation(qr_code) when qr_code.content_type != :audio do
-    {:no_audio_type}
+    Logger.warning("Tried to translate a qr code without an audio type")
+    {:error, gettext("Qr code translation failed.")}
   end
 
   def add_translation(qr_code) do
@@ -20,9 +24,9 @@ defmodule Qrstorage.Services.TranslationService do
       {:ok, translated_text} ->
         save_translated_text(qr_code, translated_text)
 
-      {:error} ->
+      _ ->
         Logger.warning("Text not translated for qr_code id: #{qr_code.id}")
-        {:error, qr_code}
+        {:error, gettext("Qr code translation failed.")}
     end
   end
 
