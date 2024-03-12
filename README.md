@@ -28,7 +28,7 @@ Currently, there are two language files available, german ("de") and english ("e
 
 You can extract new strings to translate by running:
 
- mix gettext.extract --merge
+mix gettext.extract --merge
 
 ### Content Security Policy
 
@@ -44,7 +44,7 @@ Watch out that this content security policy will block live reload in developmen
 
 ### Image upload
 
-It is possible to store images base 64 encoded in the database. Since this is not very efficient, this should not be used for large imsage sizes or for qr codes with a lot of traffic. The default limit for a text qr code is 2MB. To change this, change ```QR_CODE_MAX_UPLOAD_LENGTH```. We automatically add a buffer to account for deltas as well as overhead.
+It is possible to store images base 64 encoded in the database. Since this is not very efficient, this should not be used for large imsage sizes or for qr codes with a lot of traffic. The default limit for a text qr code is 2MB. To change this, change `QR_CODE_MAX_UPLOAD_LENGTH`. We automatically add a buffer to account for deltas as well as overhead.
 
 ### Additonal licence
 
@@ -54,3 +54,5 @@ The qrstorage [logo](https://thenounproject.com/icon/860830/) in this repo – c
 <img src="https://kits.blog/wp-content/uploads/2021/03/kits_logo.svg" width=100px align="left" style="margin-right:20px">
 
 [kits](https://kits.blog/) is a project platform hosted by a public institution for quality development in schools (Lower Saxony, Germany) and focusses on digital tools and media in language teaching.
+
+This project uses [LAME](https://lame.sourceforge.net) and [lamejs](https://github.com/zhuker/lamejs/) to convert audio recordings in the browser to mp3.
