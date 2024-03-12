@@ -93,15 +93,29 @@ if config_env() == :test do
 end
 
 if config_env() == :prod || config_env() == :dev do
+  schedule = if config_env() == :prod, do: "@midnight", else: "* * * * *"
+
   config :qrstorage, Oban,
     repo: Qrstorage.Repo,
     plugins: [
       {Oban.Plugins.Cron,
        crontab: [
-         {"@midnight", Qrstorage.Worker.RemoveCodesWorker}
+         {schedule, Qrstorage.Worker.RemoveCodesWorker}
        ]}
     ],
     queues: [default: 1]
+end
+
+# check all object storage system envs at once:
+if config_env() == :prod || config_env() == :dev do
+  config(:ex_aws, :s3,
+    scheme: System.fetch_env!("OBJECT_STORAGE_SCHEME"),
+    host: System.fetch_env!("OBJECT_STORAGE_HOST"),
+    port: System.fetch_env!("OBJECT_STORAGE_PORT"),
+    region: System.fetch_env!("OBJECT_STORAGE_REGION"),
+    access_key_id: System.fetch_env!("OBJECT_STORAGE_USER"),
+    secret_access_key: System.fetch_env!("OBJECT_STORAGE_PASSWORD")
+  )
 end
 
 # from mix phx.gen.release

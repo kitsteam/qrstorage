@@ -4,7 +4,7 @@ defmodule Qrstorage.MixProject do
   def project do
     [
       app: :qrstorage,
-      version: "0.1.0",
+      version: "0.2.0",
       elixir: "~> 1.7",
       elixirc_paths: elixirc_paths(Mix.env()),
       start_permanent: Mix.env() == :prod,
@@ -32,7 +32,7 @@ defmodule Qrstorage.MixProject do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
-      {:phoenix, "1.7.10"},
+      {:phoenix, "1.7.11"},
       {:phoenix_ecto, "4.4.3"},
       {:ecto_sql, "3.11.1"},
       {:postgrex, "0.17.4"},
@@ -55,8 +55,11 @@ defmodule Qrstorage.MixProject do
       {:oban, "2.17.3"},
       {:json, "1.4.1"},
       {:fast_sanitize, "0.2.3"},
+      {:fast_html, "2.3.0"},
       {:mox, "1.1.0", only: :test},
-      {:logger_json, "5.1.3"}
+      {:logger_json, "5.1.3"},
+      {:ex_aws, "2.5.1"},
+      {:ex_aws_s3, "2.5.3"}
     ]
   end
 

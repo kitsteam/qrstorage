@@ -35,7 +35,7 @@ You can extract new strings to translate by running:
 You can use a content security policy to restrict which resources are being loaded. The app is completely self contained, so you can use quite strict policies. For nginx, this would look like this:
 
 ```
- add_header Content-Security-Policy "default-src 'self'; script-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline';" always;
+ add_header Content-Security-Policy "default-src 'self'; script-src 'self' blob:; img-src 'self' data:; style-src 'self' 'unsafe-inline'; media-src 'self' blob:; connect-src blob:" always;
 ```
 
 `unsafe-inline` is required for quilljs to work properly.

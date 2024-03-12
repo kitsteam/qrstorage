@@ -10,11 +10,11 @@ jobs:
     # Currently, this need to be synced manually with the Dockerfile. In the future, the workflow should be changed,
     # so that a development container is built from the Dockerfile, pushed, and then re-used in the following steps.
     # This would also remove the need to install cmake manually in each step:
-    container: hexpm/elixir:1.15.2-erlang-26.0.2-debian-bullseye-20230612-slim
+    container: hexpm/elixir:1.15.7-erlang-26.2.2-debian-bullseye-20240130-slim
 
     steps:
       # See https://github.com/actions/checkout
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       # we need cmake for fast_sanitize:
       - run: apt-get -y update && apt-get -y install build-essential cmake
@@ -22,8 +22,8 @@ jobs:
       # install hex:
       - run: mix local.hex --force && mix local.rebar --force
 
-      # See https://github.com/actions/checkout
-      - uses: actions/cache@v3
+      # See https://github.com/actions/cache
+      - uses: actions/cache@v4
         id: cache
         with:
           path: deps
@@ -69,12 +69,13 @@ jobs:
       # This should only be used for the tests:
       SECRET_KEY_BASE: "DFvi5ZWW/Xc/yBgPOQ0w1wWZEGjy7NMl1/fRFyWf2EgbWNcXqtAOKUjh4bVps/eQ"
       MIX_ENV: "test"
+      OBJECT_STORAGE_BUCKET: "qrstorage-test"
 
     steps:
       # Downloads a copy of the code in your repository before running CI tests
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
-      - uses: actions/cache@v3
+      - uses: actions/cache@v4
         with:
           path: deps
           key: ${{ runner.os }}-mix-v4-${{ hashFiles('**/mix.lock') }}
@@ -98,7 +99,7 @@ jobs:
 
     steps:
       - name: Check out repository code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       
       # install hex:
       - run: mix local.hex --force && mix local.rebar --force
@@ -106,7 +107,7 @@ jobs:
       # we need cmake for fast_sanitize:
       - run: apt-get -y update && apt-get -y install build-essential cmake
 
-      - uses: actions/cache@v3
+      - uses: actions/cache@v4
         with:
           path: deps
           key: ${{ runner.os }}-mix-v4-${{ hashFiles('**/mix.lock') }}

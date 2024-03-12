@@ -4,13 +4,31 @@ defmodule QrstorageWeb.QrCodeController do
   alias Qrstorage.QrCodes
   alias Qrstorage.QrCodes.QrCode
   alias Qrstorage.Repo
+  alias Qrstorage.Services.StorageService
+
+  require Logger
 
   def audio_file(conn, %{"id" => id}) do
     qr_code = Repo.get!(QrCode, id)
 
-    conn
-    |> put_resp_content_type(qr_code.audio_file_type, "utf-8")
-    |> send_resp(200, qr_code.audio_file)
+    if qr_code.content_type == :recording do
+      case StorageService.get_recording(qr_code.id) do
+        {:ok, audio_file} ->
+          # For now, this is always audio/mp3. If we decide to add more file formats for recordings, we can change this in the future.
+          # However, we don't want this to be user configurable at the moment:
+          conn
+          |> put_resp_content_type("audio/mp3", "utf-8")
+          |> send_resp(200, audio_file)
+
+        {:error, error_message} ->
+          conn
+          |> send_resp(404, error_message)
+      end
+    else
+      conn
+      |> put_resp_content_type(qr_code.audio_file_type, "utf-8")
+      |> send_resp(200, qr_code.audio_file)
+    end
   end
 
   def new(conn, _params) do
@@ -19,22 +37,19 @@ defmodule QrstorageWeb.QrCodeController do
   end
 
   def create(conn, %{"qr_code" => qr_code_params}) do
-    qr_code_params = qr_code_params |> convert_delete_after() |> convert_deltas()
-
-    case QrCodes.create_qr_code(qr_code_params) do
+    case Qrstorage.Services.QrCodeService.create_qr_code(qr_code_params) do
       {:ok, qr_code} ->
-        {qr_code, conn} =
-          if qr_code.content_type == :audio,
-            do: handle_audio_qr_code(qr_code, conn),
-            else: {qr_code, conn}
-
         conn =
           if QrCode.stored_indefinitely?(qr_code),
-            do: conn |> put_flash(:admin_url_id, qr_code.admin_url_id),
+            do: put_flash(conn, :admin_url_id, qr_code.admin_url_id),
             else: conn
 
         conn
         |> redirect(to: Routes.qr_code_path(conn, :download, qr_code))
+
+      {:error, %Ecto.Changeset{} = changeset, error_message} ->
+        conn = put_flash(conn, :error, error_message)
+        render(conn, "new.html", changeset: changeset)
 
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "new.html", changeset: changeset)
@@ -80,68 +95,5 @@ defmodule QrstorageWeb.QrCodeController do
     conn
     |> put_flash(:info, gettext("Successfully deleted QR code."))
     |> redirect(to: "/")
-  end
-
-  defp convert_delete_after(qr_code_params) do
-    # delete links after one day. We only need them to display the qr code properly and for preview purposes.
-    delete_after =
-      if Map.get(qr_code_params, "content_type") == "link" do
-        Timex.shift(Timex.now(), hours: 1)
-      else
-        months = Map.get(qr_code_params, "delete_after") |> Integer.parse() |> elem(0)
-
-        if months == 0 do
-          # Unfortunately, postgrex doesnt support postgres infinity type,
-          # so we have to fall back to date far away in the future:
-          # https://elixirforum.com/t/support-infinity-values-for-date-type/20713/17
-          Timex.end_of_year(QrCode.max_delete_after_year())
-        else
-          Timex.shift(Timex.now(), months: months)
-        end
-      end
-
-    qr_code_params = Map.put(qr_code_params, "delete_after", delete_after)
-    qr_code_params
-  end
-
-  defp convert_deltas(qr_code_params) do
-    # we need to convert the deltas to json:
-    deltas_json =
-      case JSON.decode(Map.get(qr_code_params, "deltas", "")) do
-        {:ok, deltas_json} -> deltas_json
-        {:error, _} -> %{}
-      end
-
-    qr_code_params = Map.put(qr_code_params, "deltas", deltas_json)
-    qr_code_params
-  end
-
-  defp handle_audio_qr_code(qr_code, conn) do
-    # always add translation and get audio:
-    {qr_code, conn}
-    |> add_translation
-    |> add_audio
-  end
-
-  defp add_translation({qr_code, conn}) do
-    case Qrstorage.Services.TranslationService.add_translation(qr_code) do
-      {:ok, translated_qr_code} ->
-        {translated_qr_code, conn}
-
-      {:error, _} ->
-        conn = conn |> put_flash(:error, gettext("Qr code translation failed."))
-        {qr_code, conn}
-    end
-  end
-
-  defp add_audio({qr_code, conn}) do
-    case Qrstorage.Services.TtsService.text_to_audio(qr_code) do
-      {:ok, audio_qr_code} ->
-        {audio_qr_code, conn}
-
-      {:error, _} ->
-        conn = conn |> put_flash(:error, gettext("Qr code audio transcription failed."))
-        {qr_code, conn}
-    end
   end
 end
