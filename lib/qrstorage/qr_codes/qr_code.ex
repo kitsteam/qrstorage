@@ -18,7 +18,7 @@ defmodule Qrstorage.QrCodes.QrCode do
 
   @dots_types ~w[dots square]a
 
-  @text_length_limits %{link: 1500, audio: 2000, text: 2000, recording: 1}
+  @text_length_limits %{link: 1500, audio: 2000, text: 4000, recording: 1}
 
   @max_delete_after_year 9999
 

@@ -171,15 +171,15 @@ defmodule Qrstorage.QrCodesTest do
       assert {:ok, %QrCode{} = _qr_code} = QrCodes.create_qr_code(valid_audio_attrs)
     end
 
-    test "create_qr_code/1 with text longer than 2000 returns error changeset" do
-      too_long = String.duplicate("a", 2001)
+    test "create_qr_code/1 with text longer than 4000 returns error changeset" do
+      too_long = String.duplicate("a", 4001)
       invalid_text_attrs = %{@valid_attrs | content_type: "text", text: too_long}
 
       assert {:error, %Ecto.Changeset{}} = QrCodes.create_qr_code(invalid_text_attrs)
     end
 
-    test "create_qr_code/1 with text equal 2000 characters excluding tags returns ok" do
-      correct_length = String.duplicate("<a>a</a>", 2000)
+    test "create_qr_code/1 with text equal 4000 characters excluding tags returns ok" do
+      correct_length = String.duplicate("<a>a</a>", 4000)
       valid_text_attrs = %{@valid_attrs | content_type: "text", text: correct_length}
 
       assert {:ok, %QrCode{} = _qr_code} = QrCodes.create_qr_code(valid_text_attrs)
