@@ -63,6 +63,17 @@ defmodule Qrstorage.Services.TtsServiceTest do
       assert TtsService.text_to_audio(qr_code) |> elem(0) == :ok
     end
 
+    test "text_to_audio/1 without language returns :error", %{qr_code: qr_code} do
+      qr_code = %{qr_code | language: nil}
+
+      {status, _log} =
+        with_log(fn ->
+          TtsService.text_to_audio(qr_code) |> elem(0)
+        end)
+
+      assert status == :error
+    end
+
     test "text_to_audio/1 with an audio code passes correct values", %{qr_code: qr_code} do
       Qrstorage.Services.Gcp.GoogleApiServiceMock
       |> expect(:text_to_audio, fn text, language, voice ->
@@ -74,15 +85,15 @@ defmodule Qrstorage.Services.TtsServiceTest do
       end)
     end
 
-    test "text_to_audio/1 saves response from api", %{qr_code: qr_code} do
+    test "text_to_audio/1 returns audio file from api", %{qr_code: qr_code} do
       Qrstorage.Services.Gcp.GoogleApiServiceMock
       |> expect(:text_to_audio, fn _text, _language, _voice ->
         {:ok, "string"}
       end)
 
-      {:ok, updated_qr_code} = TtsService.text_to_audio(qr_code)
-      assert updated_qr_code.audio_file == "string"
-      assert updated_qr_code.audio_file_type == "audio/mp3"
+      {:ok, audio_file, audio_file_type} = TtsService.text_to_audio(qr_code)
+      assert audio_file == "string"
+      assert audio_file_type == "audio/mp3"
     end
 
     test "text_to_audio/1 with translated text uses translated text for audio", %{
@@ -106,8 +117,9 @@ defmodule Qrstorage.Services.TtsServiceTest do
         {:ok, "string"}
       end)
 
-      {:ok, updated_qr_code} = TtsService.text_to_audio(qr_code)
-      assert updated_qr_code.audio_file == "string"
+      {:ok, audio_file, audio_file_type} = TtsService.text_to_audio(qr_code)
+      assert audio_file == "string"
+      assert audio_file_type == "audio/mp3"
     end
 
     test "text_to_audio/1 with broken GoogleApiServiceMock returns :error", %{qr_code: qr_code} do

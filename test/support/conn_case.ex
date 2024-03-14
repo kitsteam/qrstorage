@@ -40,4 +40,13 @@ defmodule QrstorageWeb.ConnCase do
 
     {:ok, conn: Phoenix.ConnTest.build_conn()}
   end
+
+  def get_content_type(headers) do
+    headers
+    |> Enum.find(fn {key, _} -> key == "content-type" end)
+    |> case do
+      nil -> nil
+      {_, value} -> value
+    end
+  end
 end

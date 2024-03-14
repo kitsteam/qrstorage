@@ -8,7 +8,7 @@ defmodule Qrstorage.Services.TranslationService do
   require Logger
 
   # we need a language, otherwise we don't know into which language to translate
-  def add_translation(qr_code) when qr_code.language == :none do
+  def add_translation(qr_code) when qr_code.language == :none or qr_code.language == nil do
     Logger.warning("Tried to translate a qr code without a target language")
     {:error, gettext("Qr code translation failed.")}
   end

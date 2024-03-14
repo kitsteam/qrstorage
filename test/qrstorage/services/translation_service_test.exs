@@ -63,6 +63,17 @@ defmodule Qrstorage.Services.TranslationServiceTest do
       assert translated_qr_code.translated_text == "translated text"
     end
 
+    test "add_translation/1 without language returns :error", %{qr_code: qr_code} do
+      qr_code = %{qr_code | language: nil}
+
+      {status, _log} =
+        with_log(fn ->
+          TranslationService.add_translation(qr_code) |> elem(0)
+        end)
+
+      assert status == :error
+    end
+
     test "add_translation/1 with broken GoogleApiServiceMock returns :error", %{qr_code: qr_code} do
       Qrstorage.Services.Gcp.GoogleApiServiceMock
       |> expect(:translate, fn _text, _language ->

@@ -2,21 +2,44 @@ defmodule Qrstorage.Services.StorageService do
   alias Qrstorage.Services.ObjectStorage.ObjectStorageService
   require Logger
 
+  def get_file_by_type(id, :recording) do
+    get_recording(id)
+  end
+
+  def get_file_by_type(id, :audio) do
+    get_tts(id)
+  end
+
+  # methods for recordings:
   def get_recording(id) do
-    get_file(recording_filename(id), "recording")
+    get_file(audio_filename(id), "recording")
   end
 
   def store_recording(id, audio_file, audio_file_type) when audio_file_type == "audio/mp3" do
-    store_file(recording_filename(id), audio_file, "recording")
+    store_file(audio_filename(id), audio_file, "recording")
   end
 
   def store_recording(_id, _audio_file, _audio_file_type),
     do: {:error, "Audio file type is not mp3"}
 
   def delete_recordings(ids) do
-    files_to_delete = Enum.map(ids, fn id -> bucket_path(recording_filename(id), "recording") end)
+    delete_audio_files(ids, "recording")
+  end
 
-    delete_files(files_to_delete)
+  # methods for tts:
+  def get_tts(id) do
+    get_file(audio_filename(id), "tts")
+  end
+
+  def store_tts(id, audio_file, audio_file_type) when audio_file_type == "audio/mp3" do
+    store_file(audio_filename(id), audio_file, "tts")
+  end
+
+  def store_tts(_id, _audio_file, _audio_file_type),
+    do: {:error, "Audio file type is not mp3"}
+
+  def delete_tts(ids) do
+    delete_audio_files(ids, "tts")
   end
 
   defp get_file(filename, type) do
@@ -57,7 +80,9 @@ defmodule Qrstorage.Services.StorageService do
     end
   end
 
-  defp delete_files(files_to_delete) do
+  defp delete_audio_files(ids, path) do
+    files_to_delete = Enum.map(ids, fn id -> bucket_path(audio_filename(id), path) end)
+
     # If this request fails, we currently need to manually delete the old files. We could also implement a lifecyle policy, so that this cleanup happens automatically:
     case ObjectStorageService.delete_all_objects(bucket_name(), files_to_delete) do
       {:ok, []} ->
@@ -75,7 +100,7 @@ defmodule Qrstorage.Services.StorageService do
     end
   end
 
-  defp recording_filename(id) do
+  defp audio_filename(id) do
     id <> ".mp3"
   end
 

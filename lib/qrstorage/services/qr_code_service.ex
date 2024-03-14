@@ -4,6 +4,7 @@ defmodule Qrstorage.Services.QrCodeService do
   alias Qrstorage.Repo
   alias Qrstorage.Services.RecordingService
   alias Qrstorage.Services.StorageService
+  alias Qrstorage.Services.TtsService
 
   import QrstorageWeb.Gettext
 
@@ -73,7 +74,7 @@ defmodule Qrstorage.Services.QrCodeService do
     # always add translation and get audio:
     case add_translation(qr_code) do
       {:error, error_message} -> {:error, error_message}
-      {:ok, qr_code_with_translation} -> add_audio(qr_code_with_translation)
+      {:ok, qr_code_with_translation} -> add_tts(qr_code_with_translation)
     end
   end
 
@@ -84,10 +85,6 @@ defmodule Qrstorage.Services.QrCodeService do
 
   defp add_translation(%QrCode{} = qr_code) do
     Qrstorage.Services.TranslationService.add_translation(qr_code)
-  end
-
-  defp add_audio(%QrCode{} = qr_code) do
-    Qrstorage.Services.TtsService.text_to_audio(qr_code)
   end
 
   defp handle_audio_types(qr_code, qr_code_params) do
@@ -110,8 +107,25 @@ defmodule Qrstorage.Services.QrCodeService do
             {:error, gettext("Qr code recording not extracted")}
         end
 
-      :error ->
+      _ ->
         {:error, gettext("Qr code recording not extracted")}
+    end
+  end
+
+  defp add_tts(qr_code) do
+    case TtsService.text_to_audio(qr_code) do
+      {:ok, audio_file, audio_file_type} ->
+        case StorageService.store_tts(qr_code.id, audio_file, audio_file_type) do
+          {:ok} ->
+            {:ok, qr_code}
+
+          {:error, _error_message} ->
+            Logger.error("Audio file not stored: #{qr_code.id}")
+            {:error, gettext("Qr code tts not stored")}
+        end
+
+      {:error, _} ->
+        {:error, gettext("Qr code tts not stored")}
     end
   end
 end

@@ -4,7 +4,18 @@ Qr Codes that link to your server with sound and text information.
 
 ### Development
 
-- **Important**: Before you start setting up the container, register an account on [Google Cloud Platform](https://console.cloud.google.com). Create a new project and create a Service Account credential with access to the `Cloud Text-to-Speech API` and `Cloud Translation API`. You will be able to download a json file that contains all necessary credentials, e.g. `project_id`, `client_id`, `private_key`, etc. Put this json file the project root directory and name the file `.gcp-config.json`.
+- **Important**: Before you start setting up the container, register an account on [Google Cloud Platform](https://console.cloud.google.com). Create a new project and create a Service Account credential with access to the `Cloud Text-to-Speech API` and `Cloud Translation API`. You will be able to download a json file that contains all necessary credentials, e.g. `project_id`, `client_id`, `private_key`, etc. Create a file called `docker-compose.override.yml`and create an override that mounts this credentials into the container. Example:
+
+```
+services:
+ app:
+  environment:
+   SECRET_KEY_BASE: "your secret key base"
+  volumes:
+   - /<path-to-file>/.gcp-config.json:/app/.gcp-config.json
+```
+
+Use this only for development and make sure not to commit the file to the repository or build a container with the file.
 
 - Start the development environment with `docker compose up -d app`
 

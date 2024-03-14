@@ -131,4 +131,55 @@ defmodule Qrstorage.Services.StorageServiceTest do
       assert log =~ "Error type"
     end
   end
+
+  describe "get_tts/1" do
+    test "get_tts/1 with a 200 result from the object storage service returns :ok" do
+      mock_file_content = "binary file content"
+
+      Qrstorage.Services.ObjectStorage.ObjectStorageServiceMock
+      |> expect(:get_object, fn _bucket_name, _bucket_path ->
+        {:ok, %{status_code: 200, body: mock_file_content}}
+      end)
+
+      {status, file_content} = StorageService.get_tts("1")
+      assert status == :ok
+      assert file_content == mock_file_content
+    end
+  end
+
+  describe "store_tts/3" do
+    test "store_tts/3 with a 200 result from the object storage service returns :ok" do
+      mock_file = "binary file content"
+      audio_file_type = "audio/mp3"
+
+      Qrstorage.Services.ObjectStorage.ObjectStorageServiceMock
+      |> expect(:put_object, fn _bucket_name, bucket_path, _file ->
+        assert bucket_path == "audio/tts/1.mp3"
+        {:ok, %{}}
+      end)
+
+      assert StorageService.store_tts("1", mock_file, audio_file_type) == {:ok}
+    end
+
+    test "store_tts/3 with wrong file type returns :error" do
+      mock_file = "binary file content"
+      audio_file_type = "wrong"
+
+      assert StorageService.store_tts("1", mock_file, audio_file_type) == {:error, "Audio file type is not mp3"}
+    end
+  end
+
+  describe "delete_tts/1" do
+    test "delete_tts/1 returns :ok when files have been deleted" do
+      Qrstorage.Services.ObjectStorage.ObjectStorageServiceMock
+      |> expect(:delete_all_objects, fn _bucket_name, ids_to_delete ->
+        assert ids_to_delete == ["audio/tts/1.mp3", "audio/tts/2.mp3"]
+
+        {:ok, [%{body: "1, 2"}]}
+      end)
+
+      ids = ["1", "2"]
+      assert StorageService.delete_tts(ids) == {:ok}
+    end
+  end
 end
