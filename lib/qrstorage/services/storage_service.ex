@@ -16,7 +16,7 @@ defmodule Qrstorage.Services.StorageService do
   end
 
   def store_recording(id, audio_file, audio_file_type) when audio_file_type == "audio/mp3" do
-    store_file(audio_filename(id), audio_file, "recording")
+    store_file(audio_filename(id), audio_file, "recording", audio_file_type)
   end
 
   def store_recording(_id, _audio_file, _audio_file_type),
@@ -32,7 +32,7 @@ defmodule Qrstorage.Services.StorageService do
   end
 
   def store_tts(id, audio_file, audio_file_type) when audio_file_type == "audio/mp3" do
-    store_file(audio_filename(id), audio_file, "tts")
+    store_file(audio_filename(id), audio_file, "tts", audio_file_type)
   end
 
   def store_tts(_id, _audio_file, _audio_file_type),
@@ -66,14 +66,17 @@ defmodule Qrstorage.Services.StorageService do
     end
   end
 
-  defp store_file(filename, file, type) do
-    case ObjectStorageService.put_object(bucket_name(), bucket_path(filename, type), file) do
+  defp store_file(filename, file, qr_code_content_type, content_type) do
+    case ObjectStorageService.put_object(bucket_name(), bucket_path(filename, qr_code_content_type), file, %{
+           meta: %{"qr-code-content-type" => qr_code_content_type},
+           content_type: content_type
+         }) do
       {:ok, _} ->
         {:ok}
 
       {:error, {error_type, http_status_code, response}} ->
         Logger.error(
-          "Error storing file in bucket: #{filename} Type: #{type}. Error type: #{error_type} Response code: #{http_status_code} Response Body: #{response.body}"
+          "Error storing file in bucket: #{filename} Type: #{qr_code_content_type}. Error type: #{error_type} Response code: #{http_status_code} Response Body: #{response.body}"
         )
 
         {:error, "Issue while storing file."}

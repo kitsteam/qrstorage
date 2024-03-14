@@ -57,8 +57,22 @@ defmodule Qrstorage.Services.StorageServiceTest do
       audio_file_type = "audio/mp3"
 
       Qrstorage.Services.ObjectStorage.ObjectStorageServiceMock
-      |> expect(:put_object, fn _bucket_name, bucket_path, _file ->
+      |> expect(:put_object, fn _bucket_name, bucket_path, _file, _opts ->
         assert bucket_path == "audio/recording/1.mp3"
+        {:ok, %{}}
+      end)
+
+      assert StorageService.store_recording("1", mock_file, audio_file_type) == {:ok}
+    end
+
+    test "store_recording/3 uses correct meta data" do
+      mock_file = "binary file content"
+      audio_file_type = "audio/mp3"
+
+      Qrstorage.Services.ObjectStorage.ObjectStorageServiceMock
+      |> expect(:put_object, fn _bucket_name, _bucket_path, _file, opts ->
+        assert opts[:content_type] == "audio/mp3"
+        assert opts[:meta]["qr-code-content-type"] == "recording"
         {:ok, %{}}
       end)
 
@@ -70,7 +84,7 @@ defmodule Qrstorage.Services.StorageServiceTest do
       audio_file_type = "audio/mp3"
 
       Qrstorage.Services.ObjectStorage.ObjectStorageServiceMock
-      |> expect(:put_object, fn _bucket_name, _bucket_path, _file ->
+      |> expect(:put_object, fn _bucket_name, _bucket_path, _file, _opts ->
         {:error, {"http error", 500, %{body: "response"}}}
       end)
 
@@ -153,8 +167,22 @@ defmodule Qrstorage.Services.StorageServiceTest do
       audio_file_type = "audio/mp3"
 
       Qrstorage.Services.ObjectStorage.ObjectStorageServiceMock
-      |> expect(:put_object, fn _bucket_name, bucket_path, _file ->
+      |> expect(:put_object, fn _bucket_name, bucket_path, _file, _opts ->
         assert bucket_path == "audio/tts/1.mp3"
+        {:ok, %{}}
+      end)
+
+      assert StorageService.store_tts("1", mock_file, audio_file_type) == {:ok}
+    end
+
+    test "store_tts/3 uses correct meta data" do
+      mock_file = "binary file content"
+      audio_file_type = "audio/mp3"
+
+      Qrstorage.Services.ObjectStorage.ObjectStorageServiceMock
+      |> expect(:put_object, fn _bucket_name, _bucket_path, _file, opts ->
+        assert opts[:content_type] == "audio/mp3"
+        assert opts[:meta]["qr-code-content-type"] == "tts"
         {:ok, %{}}
       end)
 

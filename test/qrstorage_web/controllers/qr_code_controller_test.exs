@@ -113,7 +113,7 @@ defmodule QrstorageWeb.QrCodeControllerTest do
       end)
 
       Qrstorage.Services.ObjectStorage.ObjectStorageServiceMock
-      |> expect(:put_object, fn _bucket_name, bucket_path, _file ->
+      |> expect(:put_object, fn _bucket_name, bucket_path, _file, _opts ->
         assert bucket_path =~
                  ~r/^audio\/tts\/[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}\.mp3$/
 
@@ -144,7 +144,7 @@ defmodule QrstorageWeb.QrCodeControllerTest do
       end)
 
       Qrstorage.Services.ObjectStorage.ObjectStorageServiceMock
-      |> expect(:put_object, fn _bucket_name, _bucket_path, file ->
+      |> expect(:put_object, fn _bucket_name, _bucket_path, file, _opts ->
         assert file == audio_binary
         {:ok, %{status_code: 200, body: audio_binary}}
       end)
@@ -182,7 +182,7 @@ defmodule QrstorageWeb.QrCodeControllerTest do
       end)
 
       Qrstorage.Services.ObjectStorage.ObjectStorageServiceMock
-      |> expect(:put_object, fn _bucket_name, _bucket_path, file ->
+      |> expect(:put_object, fn _bucket_name, _bucket_path, file, _opts ->
         assert file == audio_binary
         {:ok, %{status_code: 200, body: audio_binary}}
       end)

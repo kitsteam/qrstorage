@@ -15,14 +15,14 @@ defmodule Qrstorage.StorageCase do
 
   def mockStorageServicePutObjectSuccess(mock_file_content \\ "mock http body") do
     Qrstorage.Services.ObjectStorage.ObjectStorageServiceMock
-    |> expect(:put_object, fn _bucket_name, _bucket_path, _file ->
+    |> expect(:put_object, fn _bucket_name, _bucket_path, _file, _opts ->
       {:ok, %{status_code: 200, body: mock_file_content}}
     end)
   end
 
   def mockStorageServicePutObjectError() do
     Qrstorage.Services.ObjectStorage.ObjectStorageServiceMock
-    |> expect(:put_object, fn _bucket_name, _bucket_path, _file ->
+    |> expect(:put_object, fn _bucket_name, _bucket_path, _file, _opts ->
       {:error, {"http error", 500, %{body: "response"}}}
     end)
   end
