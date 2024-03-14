@@ -15,6 +15,7 @@ on:
   push:
     branches: 
       - main
+      - 207-feature-move-storage-of-text-to-speech-qr-codes-to-object-storage-instead-of-database
   release:
     types: [published]
   
