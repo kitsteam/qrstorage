@@ -11,23 +11,23 @@ defmodule QrstorageWeb.QrCodeController do
   def audio_file(conn, %{"id" => id}) do
     qr_code = Repo.get!(QrCode, id)
 
-    if qr_code.content_type == :recording do
-      case StorageService.get_recording(qr_code.id) do
-        {:ok, audio_file} ->
-          # For now, this is always audio/mp3. If we decide to add more file formats for recordings, we can change this in the future.
-          # However, we don't want this to be user configurable at the moment:
-          conn
-          |> put_resp_content_type("audio/mp3", "utf-8")
-          |> send_resp(200, audio_file)
+    case qr_code.content_type do
+      :recording ->
+        send_file(conn, qr_code)
 
-        {:error, error_message} ->
+      :audio ->
+        if qr_code.audio_file != nil do
+          # old qr_codes will have the file stored in the database, so the field is populated. newer codes will need to access the object storage:
           conn
-          |> send_resp(404, error_message)
-      end
-    else
-      conn
-      |> put_resp_content_type(qr_code.audio_file_type, "utf-8")
-      |> send_resp(200, qr_code.audio_file)
+          |> put_resp_content_type(qr_code.audio_file_type, nil)
+          |> send_resp(200, qr_code.audio_file)
+        else
+          send_file(conn, qr_code)
+        end
+
+      _ ->
+        conn
+        |> send_resp(404, "qr code type does not have a audio file")
     end
   end
 
@@ -95,5 +95,20 @@ defmodule QrstorageWeb.QrCodeController do
     conn
     |> put_flash(:info, gettext("Successfully deleted QR code."))
     |> redirect(to: "/")
+  end
+
+  defp send_file(conn, qr_code) do
+    case StorageService.get_file_by_type(qr_code.id, qr_code.content_type) do
+      {:ok, audio_file} ->
+        # For now, this is always audio/mp3. If we decide to add more file formats for recordings, we can change this in the future.
+        # However, we don't want this to be user configurable at the moment:
+        conn
+        |> put_resp_content_type("audio/mp3", nil)
+        |> send_resp(200, audio_file)
+
+      {:error, error_message} ->
+        conn
+        |> send_resp(404, error_message)
+    end
   end
 end

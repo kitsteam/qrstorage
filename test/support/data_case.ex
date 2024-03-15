@@ -24,6 +24,10 @@ defmodule Qrstorage.DataCase do
       import Ecto.Changeset
       import Ecto.Query
       import Qrstorage.DataCase
+
+      def qr_code_count() do
+        Qrstorage.Repo.one(from code in Qrstorage.QrCodes.QrCode, select: count("1"))
+      end
     end
   end
 

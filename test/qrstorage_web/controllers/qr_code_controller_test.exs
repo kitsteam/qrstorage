@@ -6,6 +6,8 @@ defmodule QrstorageWeb.QrCodeControllerTest do
   alias Qrstorage.Repo
 
   import Mox
+  setup :verify_on_exit!
+  import ExUnit.CaptureLog
 
   @create_attrs %{
     delete_after: "10",
@@ -101,12 +103,23 @@ defmodule QrstorageWeb.QrCodeControllerTest do
 
   describe "create audio qr_code" do
     test "audio code is successfully created", %{conn: conn} do
+      mock_file_content = "audio binary"
+
       Qrstorage.Services.Gcp.GoogleApiServiceMock
       |> expect(:text_to_audio, fn _text, _language, _voice ->
-        {:ok, "audio binary"}
+        {:ok, mock_file_content}
       end)
       |> expect(:translate, fn _text, _language ->
         {:ok, "translated text"}
+      end)
+
+      Qrstorage.Services.ObjectStorage.ObjectStorageServiceMock
+      |> expect(:put_object, fn _bucket_name, bucket_path, _file, _opts ->
+        assert bucket_path =~
+                 ~r/^audio\/tts\/[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}\.mp3$/
+
+        # this regex matches audio/tts/<uuid>.mp3
+        {:ok, %{status_code: 200, body: mock_file_content}}
       end)
 
       audio_attrs = %{@create_attrs | content_type: "audio", language: "de", voice: "male"}
@@ -114,16 +127,27 @@ defmodule QrstorageWeb.QrCodeControllerTest do
       conn = post(conn, Routes.qr_code_path(conn, :create), qr_code: audio_attrs)
       assert %{id: id} = redirected_params(conn)
       qr_code = QrCode |> Repo.get!(id)
-      assert qr_code.audio_file == "audio binary"
+      # this field has been used in the past, but is no longer used
+      assert qr_code.audio_file == nil
     end
 
     test "audio qr codes are always translated to different language", %{conn: conn} do
+      audio_binary = "audio_binary"
+      translated_file_content = "translated text"
+
       Qrstorage.Services.Gcp.GoogleApiServiceMock
-      |> expect(:text_to_audio, fn _text, _language, _voice ->
-        {:ok, "audio binary"}
+      |> expect(:text_to_audio, fn text, _language, _voice ->
+        assert text == translated_file_content
+        {:ok, audio_binary}
       end)
       |> expect(:translate, fn _text, _language ->
-        {:ok, "translated text"}
+        {:ok, translated_file_content}
+      end)
+
+      Qrstorage.Services.ObjectStorage.ObjectStorageServiceMock
+      |> expect(:put_object, fn _bucket_name, _bucket_path, file, _opts ->
+        assert file == audio_binary
+        {:ok, %{status_code: 200, body: audio_binary}}
       end)
 
       audio_attrs = %{
@@ -134,10 +158,7 @@ defmodule QrstorageWeb.QrCodeControllerTest do
       }
 
       conn = post(conn, Routes.qr_code_path(conn, :create), qr_code: audio_attrs)
-      assert %{id: id} = redirected_params(conn)
-      qr_code = QrCode |> Repo.get!(id)
-      assert qr_code.translated_text == "translated text"
-      assert qr_code.audio_file == "audio binary"
+      assert %{id: _id} = redirected_params(conn)
     end
 
     test "text qr codes are never translated to different language", %{conn: conn} do
@@ -148,15 +169,23 @@ defmodule QrstorageWeb.QrCodeControllerTest do
       assert qr_code.audio_file == nil
     end
 
-    test "translates is able to handle text longer than 255 chars", %{conn: conn} do
+    test "translate is able to handle text longer than 255 chars", %{conn: conn} do
       translated_text = String.duplicate("a", 260)
+      audio_binary = "audio binary"
 
       Qrstorage.Services.Gcp.GoogleApiServiceMock
-      |> expect(:text_to_audio, fn _text, _language, _voice ->
+      |> expect(:text_to_audio, fn text, _language, _voice ->
+        assert text == translated_text
         {:ok, "audio binary"}
       end)
       |> expect(:translate, fn _text, _language ->
         {:ok, translated_text}
+      end)
+
+      Qrstorage.Services.ObjectStorage.ObjectStorageServiceMock
+      |> expect(:put_object, fn _bucket_name, _bucket_path, file, _opts ->
+        assert file == audio_binary
+        {:ok, %{status_code: 200, body: audio_binary}}
       end)
 
       audio_attrs = %{
@@ -167,10 +196,7 @@ defmodule QrstorageWeb.QrCodeControllerTest do
       }
 
       conn = post(conn, Routes.qr_code_path(conn, :create), qr_code: audio_attrs)
-      assert %{id: id} = redirected_params(conn)
-      qr_code = QrCode |> Repo.get!(id)
-      assert qr_code.translated_text == translated_text
-      assert qr_code.audio_file == "audio binary"
+      assert %{id: _id} = redirected_params(conn)
     end
   end
 
@@ -343,20 +369,99 @@ defmodule QrstorageWeb.QrCodeControllerTest do
     end
   end
 
+  describe "audio_file with audio code" do
+    setup [:create_audio_qr_code]
+
+    test "that audio codes can be downloaded when a file is present", %{conn: conn, audio_qr_code: audio_qr_code} do
+      Qrstorage.Services.ObjectStorage.ObjectStorageServiceMock
+      |> expect(:get_object, fn _bucket_name, _bucket_path ->
+        {:ok, %{status_code: 200, body: "file content"}}
+      end)
+
+      conn = get(conn, Routes.qr_code_path(conn, :audio_file, audio_qr_code.id))
+
+      assert conn.resp_body == "file content"
+      assert conn.resp_headers |> get_content_type == "audio/mp3"
+    end
+
+    test "that old audio codes do not use the object storage, but return the file from the database", %{
+      conn: conn,
+      audio_qr_code: audio_qr_code
+    } do
+      audio_qr_code =
+        audio_qr_code
+        |> QrCode.store_audio_file(%{audio_file: "file from database", audio_file_type: "audio/mp3"})
+        |> Repo.update!()
+
+      conn = get(conn, Routes.qr_code_path(conn, :audio_file, audio_qr_code.id))
+
+      assert conn.resp_body == "file from database"
+      assert conn.resp_headers |> get_content_type == "audio/mp3"
+    end
+
+    test "that the response is 404 when no file is found", %{conn: conn, audio_qr_code: audio_qr_code} do
+      Qrstorage.Services.ObjectStorage.ObjectStorageServiceMock
+      |> expect(:get_object, fn _bucket_name, _bucket_path ->
+        {:error, {"file not found", 404, %{body: "response"}}}
+      end)
+
+      {result, _logs} =
+        with_log(fn ->
+          get(conn, Routes.qr_code_path(conn, :audio_file, audio_qr_code.id))
+        end)
+
+      assert result.status == 404
+    end
+  end
+
+  describe "audio_file with recording" do
+    setup [:create_recording_qr_code]
+
+    test "that recording codes can be downloaded when a file is present", %{
+      conn: conn,
+      recording_qr_code: recording_qr_code
+    } do
+      Qrstorage.Services.ObjectStorage.ObjectStorageServiceMock
+      |> expect(:get_object, fn _bucket_name, _bucket_path ->
+        {:ok, %{status_code: 200, body: "file content"}}
+      end)
+
+      conn = get(conn, Routes.qr_code_path(conn, :audio_file, recording_qr_code.id))
+
+      assert conn.resp_body == "file content"
+      assert conn.resp_headers |> get_content_type == "audio/mp3"
+    end
+  end
+
+  describe "audio_file with text code" do
+    setup [:create_text_qr_code]
+
+    test "that the response is 404 when the content type is not audio or recording", %{
+      conn: conn,
+      text_qr_code: text_qr_code
+    } do
+      conn = get(conn, Routes.qr_code_path(conn, :audio_file, text_qr_code.id))
+
+      assert conn.status == 404
+    end
+  end
+
+  defp create_recording_qr_code(_) do
+    attrs = %{@fixture_attrs | content_type: "recording", text: "a"}
+    recording_qr_code = fixture(attrs)
+
+    %{recording_qr_code: recording_qr_code}
+  end
+
   defp create_audio_qr_code(_) do
     attrs = %{@fixture_attrs | content_type: "audio", language: "de", voice: "female"}
     audio_qr_code = fixture(attrs)
 
     # we set translated_text to text, since this is what happens when google detects no difference between source and target language
-    # we also add a fake audio file
     audio_qr_code =
       audio_qr_code
       |> QrCode.changeset(%{hide_text: audio_qr_code.hide_text})
       |> QrCode.changeset_with_translated_text(%{translated_text: audio_qr_code.text})
-      |> QrCode.store_audio_file(%{
-        "audio_file" => "some binary text",
-        "audio_file_type" => "audio/mp3"
-      })
       |> Repo.update!()
 
     %{audio_qr_code: audio_qr_code}

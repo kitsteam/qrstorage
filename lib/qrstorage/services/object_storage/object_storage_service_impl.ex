@@ -15,8 +15,8 @@ defmodule Qrstorage.Services.ObjectStorage.ObjectStorageServiceImpl do
   end
 
   @impl ObjectStorageService
-  def put_object(bucket_name, bucket_path, file) do
-    S3.put_object(bucket_name, bucket_path, file) |> ExAws.request()
+  def put_object(bucket_name, bucket_path, file, opts) do
+    S3.put_object(bucket_name, bucket_path, file, opts) |> ExAws.request()
   end
 
   @impl ObjectStorageService
