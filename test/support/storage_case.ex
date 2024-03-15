@@ -4,12 +4,13 @@ defmodule Qrstorage.StorageCase do
   access to the Object Storage
   """
   import Mox
-
   use ExUnit.CaseTemplate
 
   using do
     quote do
       import Qrstorage.StorageCase
+      import Mox
+      setup :verify_on_exit!
     end
   end
 

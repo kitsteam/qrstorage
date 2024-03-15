@@ -7,6 +7,7 @@ defmodule Qrstorage.Services.TtsServiceTest do
   alias Qrstorage.Repo
 
   import Mox
+  setup :verify_on_exit!
   import ExUnit.CaptureLog
 
   @valid_attrs %{
@@ -83,6 +84,10 @@ defmodule Qrstorage.Services.TtsServiceTest do
 
         {:ok, "string"}
       end)
+
+      {:ok, audio_file, audio_file_type} = TtsService.text_to_audio(qr_code)
+      assert audio_file == "string"
+      assert audio_file_type == "audio/mp3"
     end
 
     test "text_to_audio/1 returns audio file from api", %{qr_code: qr_code} do

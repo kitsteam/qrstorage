@@ -10,6 +10,9 @@ defmodule Qrstorage.TtsCase do
   using do
     quote do
       import Qrstorage.TtsCase
+
+      import Mox
+      setup :verify_on_exit!
     end
   end
 

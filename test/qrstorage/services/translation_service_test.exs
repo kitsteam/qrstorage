@@ -5,6 +5,7 @@ defmodule Qrstorage.Services.TranslationServiceTest do
   alias Qrstorage.QrCodes
 
   import Mox
+  setup :verify_on_exit!
   import ExUnit.CaptureLog
 
   @valid_attrs %{

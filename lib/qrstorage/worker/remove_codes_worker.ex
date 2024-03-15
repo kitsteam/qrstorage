@@ -18,12 +18,7 @@ defmodule Qrstorage.Worker.RemoveCodesWorker do
 
   defp delete_recordings(deleted_codes) do
     # filter for recording codes, we need to delete the content from the object storage:
-    recording_ids_to_delete =
-      deleted_codes
-      |> Enum.filter(fn code -> code.content_type == :recording end)
-      |> Enum.map(fn code ->
-        code.id
-      end)
+    recording_ids_to_delete = ids_by_filtered_codes(deleted_codes, :recording)
 
     if Enum.empty?(recording_ids_to_delete) do
       Logger.info("No recording codes to delete from object storage.")
@@ -35,12 +30,7 @@ defmodule Qrstorage.Worker.RemoveCodesWorker do
 
   defp delete_tts(deleted_codes) do
     # filter for recording codes, we need to delete the content from the object storage:
-    tts_ids_to_delete =
-      deleted_codes
-      |> Enum.filter(fn code -> code.content_type == :audio end)
-      |> Enum.map(fn code ->
-        code.id
-      end)
+    tts_ids_to_delete = ids_by_filtered_codes(deleted_codes, :audio)
 
     if Enum.empty?(tts_ids_to_delete) do
       Logger.info("No tts codes to delete from object storage.")
@@ -48,5 +38,13 @@ defmodule Qrstorage.Worker.RemoveCodesWorker do
       Logger.info("Deleting tts codes with id from object storage: #{tts_ids_to_delete}")
       StorageService.delete_tts(tts_ids_to_delete)
     end
+  end
+
+  defp ids_by_filtered_codes(codes, filter) do
+    codes
+    |> Enum.filter(fn code -> code.content_type == filter end)
+    |> Enum.map(fn code ->
+      code.id
+    end)
   end
 end

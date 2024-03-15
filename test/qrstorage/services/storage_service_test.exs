@@ -4,6 +4,7 @@ defmodule Qrstorage.Services.StorageServiceTest do
   alias Qrstorage.Services.StorageService
 
   import Mox
+  setup :verify_on_exit!
   import ExUnit.CaptureLog
 
   describe "get_recording/1" do

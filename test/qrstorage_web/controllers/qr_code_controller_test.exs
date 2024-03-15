@@ -6,6 +6,7 @@ defmodule QrstorageWeb.QrCodeControllerTest do
   alias Qrstorage.Repo
 
   import Mox
+  setup :verify_on_exit!
   import ExUnit.CaptureLog
 
   @create_attrs %{
