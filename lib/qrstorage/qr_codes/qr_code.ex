@@ -39,6 +39,7 @@ defmodule Qrstorage.QrCodes.QrCode do
     field :dots_type, Ecto.Enum, values: @dots_types
     field :voice, Ecto.Enum, values: @voices
     field :hp, :string, virtual: true
+    field :last_accessed_at, :utc_datetime
 
     timestamps()
   end
@@ -74,14 +75,14 @@ defmodule Qrstorage.QrCodes.QrCode do
     |> cast(attrs, [:audio_file, :audio_file_type])
   end
 
-  @spec changeset_with_translated_text(
-          {map(), map()}
-          | %{:__struct__ => atom() | %{:__changeset__ => map(), optional(any()) => any()}, optional(atom()) => any()},
-          :invalid | %{optional(:__struct__) => none(), optional(atom() | binary()) => any()}
-        ) :: Ecto.Changeset.t()
-  def changeset_with_translated_text(qr_code, attrs) do
+  def changeset_with_translated_text(qr_code, translated_text) do
     qr_code
-    |> cast(attrs, [:translated_text])
+    |> change(%{translated_text: translated_text})
+  end
+
+  def changeset_with_upated_last_accessed_at(qr_code) do
+    qr_code
+    |> change(%{last_accessed_at: DateTime.truncate(DateTime.utc_now(), :second)})
   end
 
   def languages do

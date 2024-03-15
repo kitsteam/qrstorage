@@ -32,10 +32,7 @@ defmodule Qrstorage.Services.TranslationService do
 
   defp save_translated_text(qr_code, translated_text) do
     qr_code_with_translation =
-      QrCode.changeset_with_translated_text(
-        qr_code,
-        %{"translated_text" => translated_text}
-      )
+      QrCode.changeset_with_translated_text(qr_code, translated_text)
       |> Repo.update!()
 
     {:ok, qr_code_with_translation}

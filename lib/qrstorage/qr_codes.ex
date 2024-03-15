@@ -77,4 +77,8 @@ defmodule Qrstorage.QrCodes do
   def delete_qr_code(%QrCode{} = qr_code) do
     Repo.delete(qr_code)
   end
+
+  def update_last_accessed_at(qr_code) do
+    Repo.update!(QrCode.changeset_with_upated_last_accessed_at(qr_code))
+  end
 end
