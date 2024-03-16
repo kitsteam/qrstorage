@@ -108,10 +108,7 @@ defmodule Qrstorage.Services.TtsServiceTest do
       translated_text = "some translated text"
 
       qr_code =
-        QrCode.changeset_with_translated_text(
-          qr_code,
-          %{"translated_text" => translated_text}
-        )
+        QrCode.changeset_with_translated_text(qr_code, translated_text)
         |> Repo.update!()
 
       Qrstorage.Services.Gcp.GoogleApiServiceMock

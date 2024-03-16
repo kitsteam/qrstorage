@@ -253,6 +253,19 @@ defmodule QrstorageWeb.QrCodeControllerTest do
       conn = get(conn, Routes.qr_code_path(conn, :show, audio_qr_code.id))
       assert !(html_response(conn, 200) =~ "Text was automatically translated")
     end
+
+    test "updates last_accessed_at date every time show is called", %{conn: conn, audio_qr_code: audio_qr_code} do
+      # overwrite last_access_data, otherwise the precision (seconds) is not fine enough to measure the change
+      last_access_date = DateTime.truncate(Timex.shift(Timex.now(), seconds: -1), :second)
+      Repo.update!(Ecto.Changeset.change(audio_qr_code, %{last_accessed_at: last_access_date}))
+
+      # this should update last_accessed_at
+      get(conn, Routes.qr_code_path(conn, :show, audio_qr_code.id))
+
+      audio_qr_code = QrCodes.get_qr_code!(audio_qr_code.id)
+
+      assert last_access_date < audio_qr_code.last_accessed_at
+    end
   end
 
   describe "preview qr_code" do
@@ -461,7 +474,7 @@ defmodule QrstorageWeb.QrCodeControllerTest do
     audio_qr_code =
       audio_qr_code
       |> QrCode.changeset(%{hide_text: audio_qr_code.hide_text})
-      |> QrCode.changeset_with_translated_text(%{translated_text: audio_qr_code.text})
+      |> QrCode.changeset_with_translated_text(audio_qr_code.text)
       |> Repo.update!()
 
     %{audio_qr_code: audio_qr_code}
@@ -474,7 +487,7 @@ defmodule QrstorageWeb.QrCodeControllerTest do
     translated_audio_qr_code =
       audio_qr_code
       |> QrCode.changeset(%{hide_text: false})
-      |> QrCode.changeset_with_translated_text(%{translated_text: "translated text"})
+      |> QrCode.changeset_with_translated_text("translated text")
       |> Repo.update!()
 
     %{translated_audio_qr_code: translated_audio_qr_code}

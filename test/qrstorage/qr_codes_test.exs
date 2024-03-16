@@ -72,7 +72,9 @@ defmodule Qrstorage.QrCodesTest do
 
     test "get_qr_code!/1 returns the qr_code with given id" do
       qr_code = qr_code_fixture()
-      assert QrCodes.get_qr_code!(qr_code.id) == qr_code
+      qr_code_from_database = QrCodes.get_qr_code!(qr_code.id)
+      assert qr_code.id == qr_code_from_database.id
+      assert qr_code.text == qr_code_from_database.text
     end
 
     test "create_qr_code/1 with valid data creates a qr_code" do

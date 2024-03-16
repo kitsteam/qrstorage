@@ -63,6 +63,9 @@ defmodule QrstorageWeb.QrCodeController do
       # we don't want to redirect to external links:
       redirect(conn, to: "/")
     else
+      # update timestamp - every time we show the code, we want the last accessed date to be updated:
+      QrCodes.update_last_accessed_at(qr_code)
+
       render(conn, "show.html", qr_code: qr_code)
     end
   end
