@@ -8,26 +8,8 @@ defmodule Qrstorage.Services.TranslationServiceTest do
   setup :verify_on_exit!
   import ExUnit.CaptureLog
 
-  @valid_attrs %{
-    delete_after: ~D[2010-04-17],
-    text: "text",
-    content_type: "audio",
-    language: "de",
-    dots_type: "dots",
-    voice: "female"
-  }
-
-  def qr_code_fixture(attrs \\ %{}) do
-    {:ok, qr_code} =
-      attrs
-      |> Enum.into(@valid_attrs)
-      |> QrCodes.create_qr_code()
-
-    qr_code
-  end
-
   defp create_audio_qr_code(_) do
-    %{qr_code: qr_code_fixture()}
+    %{qr_code: audio_qr_code_fixture()}
   end
 
   describe "add_translation/1 without audio code" do

@@ -12,6 +12,7 @@ defmodule Qrstorage.Worker.RemoveCodesWorker do
     delete_recordings(deleted_codes)
     delete_tts(deleted_codes)
     Logger.info("Finished deleting old qr codes: #{deleted_count}")
+    print_frequencies(deleted_codes)
 
     :ok
   end
@@ -46,5 +47,15 @@ defmodule Qrstorage.Worker.RemoveCodesWorker do
     |> Enum.map(fn code ->
       code.id
     end)
+  end
+
+  defp print_frequencies(deleted_codes) do
+    deleted_frequencies =
+      deleted_codes
+      |> Enum.frequencies_by(fn code ->
+        code.content_type
+      end)
+
+    Logger.info("Codes deleted by type: #{inspect(deleted_frequencies)}")
   end
 end

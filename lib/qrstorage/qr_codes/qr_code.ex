@@ -21,11 +21,13 @@ defmodule Qrstorage.QrCodes.QrCode do
   @text_length_limits %{link: 1500, audio: 2000, text: 4000, recording: 1}
 
   @max_delete_after_year 9999
+  @valid_delete_after_months [0, 1, 6, 12, 36]
 
   @primary_key {:id, :binary_id, autogenerate: true}
   @foreign_key_type :binary_id
   schema "qrcodes" do
     field :delete_after, :date
+    field :delete_after_months, :integer, default: 1
     field :text, :string
     field :translated_text, :string
     field :audio_file, :binary
@@ -49,7 +51,7 @@ defmodule Qrstorage.QrCodes.QrCode do
     qr_code
     |> cast(attrs, [
       :text,
-      :delete_after,
+      :delete_after_months,
       :color,
       :language,
       :hide_text,
@@ -63,11 +65,12 @@ defmodule Qrstorage.QrCodes.QrCode do
     |> scrub_text
     |> validate_text_length(:text)
     |> validate_inclusion(:color, @colors)
+    |> validate_inclusion(:delete_after_months, @valid_delete_after_months)
     |> validate_inclusion(:content_type, @content_types)
     |> validate_inclusion(:dots_type, @dots_types)
     |> validate_audio_type(:content_type)
     |> validate_link(:text)
-    |> validate_required([:text, :delete_after, :content_type, :dots_type])
+    |> validate_required([:text, :delete_after_months, :content_type, :dots_type])
   end
 
   def store_audio_file(qr_code, attrs) do

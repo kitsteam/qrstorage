@@ -70,8 +70,12 @@ defmodule Qrstorage.QrCodes do
       :ok
   """
   def delete_old_qr_codes() do
-    now = Timex.now()
-    Repo.delete_all(from q in QrCode, where: ^now > q.delete_after, select: [:id, :content_type])
+    # delete all codes that are older than last access date + delete_after_months
+    Repo.delete_all(
+      from q in QrCode,
+        where: fragment("NOW() > ? + INTERVAL '1 month' * ?", q.last_accessed_at, q.delete_after_months),
+        select: [:id, :content_type]
+    )
   end
 
   def delete_qr_code(%QrCode{} = qr_code) do

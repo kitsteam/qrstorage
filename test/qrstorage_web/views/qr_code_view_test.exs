@@ -17,16 +17,10 @@ defmodule QrstorageWeb.QrCodeViewTest do
   end
 
   describe "show_delete_after_text/1" do
-    test "shows indefinitely for qr codes that should not be automatically deleted" do
-      delete_after = Timex.end_of_year(QrCode.max_delete_after_year())
-      text = show_delete_after_text(delete_after)
-      assert text =~ "indefinitely"
-    end
-
     test "shows relative deletion date for qr codes that should be deleted automatically" do
       # we add one hour, since Timex seems to round down - e.g. 5 months, minus a few milliseconds results in "in 4 months"
-      delete_after = Timex.shift(Timex.now(), months: 5, hours: 1)
-      text = show_delete_after_text(delete_after)
+      delete_after_code = %QrCode{delete_after_months: 5, last_accessed_at: Timex.now()}
+      text = show_delete_after_text(delete_after_code)
       assert text =~ "in 5 months"
     end
   end

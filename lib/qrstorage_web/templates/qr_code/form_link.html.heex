@@ -40,6 +40,8 @@
     </div>
   </div>
 
+  <%= radio_button(f, :delete_after_months, 0, class: "visually-hidden", autocomplete: "off", checked: true) %>
+
   <div class="row mb-4">
     <div class="col">
       <%= submit(gettext("Save"), class: "btn btn-primary") %>
