@@ -66,6 +66,7 @@ defmodule Qrstorage.QrCodes.QrCode do
     |> validate_text_length(:text)
     |> validate_inclusion(:color, @colors)
     |> validate_inclusion(:delete_after_months, @valid_delete_after_months)
+    |> validate_delete_after_months_by_type(:delete_after_months)
     |> validate_inclusion(:content_type, @content_types)
     |> validate_inclusion(:dots_type, @dots_types)
     |> validate_audio_type(:content_type)
@@ -154,6 +155,22 @@ defmodule Qrstorage.QrCodes.QrCode do
       case content_type do
         :audio ->
           [] ++ check_language(changeset) ++ check_voice(changeset) ++ check_block_list(changeset)
+
+        _ ->
+          []
+      end
+    end)
+  end
+
+  def validate_delete_after_months_by_type(changeset, field) do
+    # We want to make sure that links and recordings are stored for 0 months and 1 month
+    validate_change(changeset, field, fn field, value ->
+      case get_field(changeset, :content_type) do
+        :recording ->
+          if value == 1, do: [], else: [{field, "Storage duration is invalid"}]
+
+        :link ->
+          if value == 0, do: [], else: [{field, "Storage duration is invalid"}]
 
         _ ->
           []
