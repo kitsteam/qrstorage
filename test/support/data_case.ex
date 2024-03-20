@@ -19,6 +19,7 @@ defmodule Qrstorage.DataCase do
   using do
     quote do
       alias Qrstorage.Repo
+      alias Qrstorage.QrCodes
 
       import Ecto
       import Ecto.Changeset
@@ -27,6 +28,52 @@ defmodule Qrstorage.DataCase do
 
       def qr_code_count() do
         Qrstorage.Repo.one(from code in Qrstorage.QrCodes.QrCode, select: count("1"))
+      end
+
+      @valid_attrs %{
+        delete_after_months: 1,
+        text: "some text",
+        hide_text: false,
+        content_type: "text",
+        language: nil,
+        hp: nil,
+        deltas: %{"id" => "test"},
+        dots_type: "dots"
+      }
+
+      @valid_audio_attrs %{
+        delete_after_months: 1,
+        text: "text",
+        content_type: "audio",
+        language: "de",
+        dots_type: "dots",
+        voice: "female"
+      }
+
+      def qr_code_fixture(attrs \\ %{}) do
+        {:ok, qr_code} =
+          attrs
+          |> Enum.into(@valid_attrs)
+          |> QrCodes.create_qr_code()
+
+        qr_code
+      end
+
+      def audio_qr_code_fixture(attrs \\ %{}) do
+        {:ok, qr_code} =
+          attrs
+          |> Enum.into(@valid_audio_attrs)
+          |> QrCodes.create_qr_code()
+
+        qr_code
+      end
+
+      def overdue_qr_code(attrs \\ %{}) do
+        attrs = Map.merge(@valid_attrs, attrs)
+        qr_code = qr_code_fixture(attrs)
+        last_access_date = Timex.shift(Timex.now(), months: -7)
+        Repo.update!(Ecto.Changeset.cast(qr_code, %{last_accessed_at: last_access_date}, [:last_accessed_at]))
+        qr_code
       end
     end
   end

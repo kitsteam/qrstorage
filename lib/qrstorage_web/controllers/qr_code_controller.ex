@@ -39,11 +39,6 @@ defmodule QrstorageWeb.QrCodeController do
   def create(conn, %{"qr_code" => qr_code_params}) do
     case Qrstorage.Services.QrCodeService.create_qr_code(qr_code_params) do
       {:ok, qr_code} ->
-        conn =
-          if QrCode.stored_indefinitely?(qr_code),
-            do: put_flash(conn, :admin_url_id, qr_code.admin_url_id),
-            else: conn
-
         conn
         |> redirect(to: Routes.qr_code_path(conn, :download, qr_code))
 

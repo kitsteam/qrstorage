@@ -10,8 +10,8 @@ defmodule QrstorageWeb.QrCodeControllerTest do
   import ExUnit.CaptureLog
 
   @create_attrs %{
-    delete_after: "10",
     text: "some text",
+    delete_after_months: 1,
     deltas: "{\"ops\":[{\"insert\":\"Assad\\n\"}]}",
     language: nil,
     content_type: "text",
@@ -20,9 +20,8 @@ defmodule QrstorageWeb.QrCodeControllerTest do
     hp: nil
   }
 
-  @invalid_attrs %{delete_after: "10", text: nil, language: nil, content_type: "text"}
+  @invalid_attrs %{text: nil, language: nil, content_type: "text"}
   @fixture_attrs %{
-    delete_after: ~D[2011-05-18],
     text: "some text",
     language: nil,
     content_type: "text",
@@ -59,37 +58,14 @@ defmodule QrstorageWeb.QrCodeControllerTest do
       assert html_response(conn, 200) =~ "Oops, something went wrong"
     end
 
-    test "uses 1 hour as the delete after date for links", %{conn: conn} do
-      link_attrs = %{@create_attrs | content_type: "link", text: "https://kits.blog"}
+    test "uses 0 months as the delete after months date for links", %{conn: conn} do
+      link_attrs = %{@create_attrs | delete_after_months: 0, content_type: "link", text: "https://kits.blog"}
 
       conn = post(conn, Routes.qr_code_path(conn, :create), qr_code: link_attrs)
       assert %{id: id} = redirected_params(conn)
 
       qr_code = QrCode |> Repo.get!(id)
-      assert qr_code.delete_after <= Timex.shift(Timex.now(), hours: 1)
-    end
-
-    test "uses QrCode max year as deletion date for infinity", %{conn: conn} do
-      link_attrs = %{@create_attrs | delete_after: "0"}
-      conn = post(conn, Routes.qr_code_path(conn, :create), qr_code: link_attrs)
-      assert %{id: id} = redirected_params(conn)
-
-      qr_code = QrCode |> Repo.get!(id)
-      assert qr_code.delete_after.year == QrCode.max_delete_after_year()
-    end
-
-    test "adds the admin_url_id to the flash message for QR codes that are stored indefinitely",
-         %{conn: conn} do
-      link_attrs = %{@create_attrs | delete_after: "0"}
-      conn = post(conn, Routes.qr_code_path(conn, :create), qr_code: link_attrs)
-      assert Phoenix.Flash.get(conn.assigns.flash, :admin_url_id) != nil
-    end
-
-    test "does not add the admin_url_id to the flash message for QR codes that are not stored indefinitely",
-         %{conn: conn} do
-      link_attrs = %{@create_attrs | delete_after: "1"}
-      conn = post(conn, Routes.qr_code_path(conn, :create), qr_code: link_attrs)
-      assert Phoenix.Flash.get(conn.assigns.flash, :admin_url_id) == nil
+      assert qr_code.delete_after_months == 0
     end
   end
 

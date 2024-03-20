@@ -42,19 +42,14 @@
 <% end %>
 
 <div class="row mt-2">
+  <div class="col-6 col-md-4">
+    <strong><%= gettext("Deletion Date") %></strong> <br />
+    <%= show_delete_after_text(@qr_code) %>
+  </div>
   <%= if @qr_code.content_type == :audio do %>
-    <div class="col-6 col-md-4">
-      <strong><%= gettext("Deletion Date") %></strong> <br />
-      <%= show_delete_after_text(@qr_code.delete_after) %>
-    </div>
     <div class="col-6">
       <strong><%= gettext("Audio Language") %></strong> <br />
       <%= Gettext.dgettext(QrstorageWeb.Gettext, "languages", Atom.to_string(@qr_code.language)) %>
-    </div>
-  <% else %>
-    <div class="col">
-      <strong><%= gettext("Deletion Date") %></strong> <br />
-      <%= show_delete_after_text(@qr_code.delete_after) %>
     </div>
   <% end %>
 </div>
