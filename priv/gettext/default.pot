@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 
 #: lib/qrstorage_web/templates/qr_code/download.html.heex:59
-#: lib/qrstorage_web/templates/qr_code/show.html.heex:65
+#: lib/qrstorage_web/templates/qr_code/show.html.heex:60
 #, elixir-autogen, elixir-format
 msgid "Download"
 msgstr ""
@@ -25,15 +25,14 @@ msgid "Oops, something went wrong! Please check the errors below."
 msgstr ""
 
 #: lib/qrstorage_web/templates/qr_code/form_audio.html.heex:57
-#: lib/qrstorage_web/templates/qr_code/form_link.html.heex:45
+#: lib/qrstorage_web/templates/qr_code/form_link.html.heex:47
 #: lib/qrstorage_web/templates/qr_code/form_recording.html.heex:41
 #: lib/qrstorage_web/templates/qr_code/form_text.html.heex:56
 #, elixir-autogen, elixir-format
 msgid "Save"
 msgstr ""
 
-#: lib/qrstorage_web/templates/qr_code/show.html.heex:47
-#: lib/qrstorage_web/templates/qr_code/show.html.heex:56
+#: lib/qrstorage_web/templates/qr_code/show.html.heex:46
 #, elixir-autogen, elixir-format
 msgid "Deletion Date"
 msgstr ""
@@ -114,7 +113,7 @@ msgstr ""
 msgid "Do you really want to delete this QR code? This action cannot be undone:"
 msgstr ""
 
-#: lib/qrstorage_web/controllers/qr_code_controller.ex:96
+#: lib/qrstorage_web/controllers/qr_code_controller.ex:94
 #, elixir-autogen, elixir-format
 msgid "Successfully deleted QR code."
 msgstr ""
@@ -122,11 +121,6 @@ msgstr ""
 #: lib/qrstorage_web/templates/qr_code/show.html.heex:2
 #, elixir-autogen, elixir-format
 msgid "Text"
-msgstr ""
-
-#: lib/qrstorage_web/views/qr_code_view.ex:47
-#, elixir-autogen, elixir-format
-msgid "This qr code will be stored indefinitely."
 msgstr ""
 
 #: lib/qrstorage_web/templates/qr_code/download.html.heex:21
@@ -185,9 +179,9 @@ msgstr ""
 msgid "Voice"
 msgstr ""
 
-#: lib/qrstorage/services/tts_service.ex:12
-#: lib/qrstorage/services/tts_service.ex:17
-#: lib/qrstorage/services/tts_service.ex:33
+#: lib/qrstorage/services/tts_service.ex:11
+#: lib/qrstorage/services/tts_service.ex:16
+#: lib/qrstorage/services/tts_service.ex:32
 #, elixir-autogen, elixir-format
 msgid "Qr code audio transcription failed."
 msgstr ""
@@ -238,8 +232,8 @@ msgstr ""
 msgid "Error while extracting audio file from plug: Invalid content type"
 msgstr ""
 
-#: lib/qrstorage/services/qr_code_service.ex:110
-#: lib/qrstorage/services/qr_code_service.ex:114
+#: lib/qrstorage/services/qr_code_service.ex:80
+#: lib/qrstorage/services/qr_code_service.ex:84
 #, elixir-autogen, elixir-format
 msgid "Qr code recording not extracted"
 msgstr ""
@@ -252,4 +246,26 @@ msgstr ""
 #: lib/qrstorage_web/templates/qr_code/form_recording.html.heex:46
 #, elixir-autogen, elixir-format
 msgid "Recording is disabled or not supported."
+msgstr ""
+
+#: lib/qrstorage_web/templates/error/500.html.heex:1
+#, elixir-autogen, elixir-format
+msgid "Internal server error"
+msgstr ""
+
+#: lib/qrstorage_web/templates/error/400.html.heex:1
+#: lib/qrstorage_web/templates/error/404.html.heex:1
+#, elixir-autogen, elixir-format
+msgid "Not found"
+msgstr ""
+
+#: lib/qrstorage_web/templates/error/404.html.heex:3
+#, elixir-autogen, elixir-format
+msgid "QR-Code has been deleted?"
+msgstr ""
+
+#: lib/qrstorage/services/qr_code_service.ex:97
+#: lib/qrstorage/services/qr_code_service.ex:101
+#, elixir-autogen, elixir-format
+msgid "Qr code tts not stored"
 msgstr ""

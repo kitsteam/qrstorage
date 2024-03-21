@@ -24,8 +24,8 @@ config :qrstorage, QrstorageWeb.Endpoint,
   pubsub_server: Qrstorage.PubSub,
   render_errors: [
     view: QrstorageWeb.ErrorView,
-    accepts: ~w(html json),
-    layout: false
+    accepts: ~w(html),
+    layout: {QrstorageWeb.LayoutView, :root}
   ]
 
 # Configures Elixir's Logger

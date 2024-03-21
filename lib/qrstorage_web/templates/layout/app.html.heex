@@ -1,134 +1,15 @@
-<!DOCTYPE html>
-<!--[if lte 8]><html class="pre-ie9" lang="de"><![endif]-->
-<!--[if gte IE 9]><!-->
-<html lang="de">
-  <!--<![endif]-->
-  <head>
-    <title>QRStorage</title>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
-    <meta name="description" content="" />
-
-    <link rel="manifest" href={Routes.static_path(@conn, "/site.webmanifest")} />
-    <link rel="mask-icon" href={Routes.static_path(@conn, "/images/safari-pinned-tab.svg")} color="#5bbad5" />
-    <meta name="msapplication-TileColor" content="#da532c" />
-    <meta name="theme-color" content="#ffffff" />
-
-    <%= csrf_meta_tag() %>
-    <link phx-track-static rel="stylesheet" href={Routes.static_path(@conn, "/assets/app.css")} />
-    <link rel="apple-touch-icon" href={Routes.static_path(@conn, "/images/apple-touch-icon.png")} />
-    <link rel="icon" sizes="192x192" href={Routes.static_path(@conn, "/images/favicon-192x192.png")} />
-    <link rel="icon" sizes="96x96" href={Routes.static_path(@conn, "/images/favicon-96x96.png")} />
-    <script defer phx-track-static type="text/javascript" src={Routes.static_path(@conn, "/assets/app.js")}>
-    </script>
-  </head>
-  <body>
-    <div class="order-1">
-      <div class="">
-        <div class="d-lg-none">
-          <div id="static-footer" class="footer fixed-bottom bg-gradient bg-gradient-primary">
-            <div class="row">
-              <div class="d-flex align-items-center">
-                <div class="col-1 col-sm-2">
-                  <%= link to: "/", title: "QRStorage" do %>
-                    <img
-                      id="static-footer-logo"
-                      src={Routes.static_path(@conn, "/images/qrstorage_logo.svg")}
-                      class="img-fluid d-block"
-                      width="100%"
-                      alt="QRStorage Logo"
-                    />
-                  <% end %>
-                </div>
-                <div class="col-11 col-sm-10 d-flex justify-content-end">
-                  <a href="https://github.com/kitsteam/qrstorage" class="text-white px-lg-2 p-2 text-decoration-none">
-                    GitHub
-                  </a>
-                  <a href="https://kits.blog/impressum/" class="text-white px-lg-2 p-2 text-decoration-none">
-                    Impressum
-                  </a>
-                  <a href="https://kits.blog/datenschutzerklaerung/" class="text-white p-2 text-decoration-none">
-                    Datenschutz
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="d-none d-lg-block">
-          <!-- Left Block -->
-          <div
-            id="left-column"
-            class="order float-start position-fixed vh-100 bg-gradient bg-gradient-primary w-50 d-flex flex-column align-items-center justify-content-between"
-          >
-            <div></div>
-            <div>
-              <%= link to: "/", title: "QRStorage" do %>
-                <img
-                  src={Routes.static_path(@conn, "/images/qrstorage_logo.svg")}
-                  class="img-fluid d-block"
-                  alt="QRStorage Logo"
-                />
-              <% end %>
-            </div>
-            <div id="footer-links" class="d-flex align-items-center mb-1">
-              <a href="https://github.com/kitsteam/qrstorage" class="text-white px-lg-2 p-2 text-decoration-none">
-                GitHub
-              </a>
-              <a href="https://kits.blog/impressum/" class="text-white px-lg-2 p-2 text-decoration-none">
-                Impressum
-              </a>
-              <a href="https://kits.blog/datenschutzerklaerung/" class="text-white p-2 text-decoration-none">
-                Datenschutz
-              </a>
-            </div>
-          </div>
-          <!-- End Left Block -->
-        </div>
-      </div>
-      <!-- Right Block -->
-      <div class="w-50 float-end d-flex flex-column align-items-stretch justify-content-between vh-100">
-        <div class="g-0 d-flex justify-content-end px-3">
-          <div class="pt-3">
-            <a href="https://kits.blog/tools/">
-              <img src={Routes.static_path(@conn, "/images/kits-logo.svg")} class="img-fluid d-block" alt="Kits Logo" />
-            </a>
-          </div>
-        </div>
-        <div class="row g-0 h-100">
-          <div id="content" class="container w-90">
-            <h1 class="fw-bold">
-              <%= link("QRStorage", to: "/", title: "QRStorage", class: "text-decoration-none") %>
-            </h1>
-            <div class="row">
-              <div class="col-sm-12">
-                <%= if Phoenix.Flash.get(@flash, :info) do %>
-                  <p class="alert alert-info" role="alert">
-                    <%= Phoenix.Flash.get(@flash, :info) %>
-                  </p>
-                <% end %>
-                <%= if Phoenix.Flash.get(@flash, :error) do %>
-                  <p class="alert alert-danger" role="alert">
-                    <%= Phoenix.Flash.get(@flash, :error) %>
-                  </p>
-                <% end %>
-              </div>
-            </div>
-            <%= @inner_content %>
-          </div>
-        </div>
-      </div>
-      <!-- End Right Block -->
-    </div>
-    <!--[if IE
-      ]><div
-        class="w-100 text-center bg-dark text-white pt-3 px-4 pb-1 position-fixed"
-        style="z-index: 1000; bottom: 0"
-      >
-        <p onClick="parentNode.remove()">
-          Please use a modern browser for a better browsing experience. <span class="float-right">X</span>
-        </p>
-      </div><!
-    [endif]-->
-  </body>
-</html>
+<div class="row">
+  <div class="col-sm-12">
+    <%= if Phoenix.Flash.get(@flash, :info) do %>
+      <p class="alert alert-info" role="alert">
+        <%= Phoenix.Flash.get(@flash, :info) %>
+      </p>
+    <% end %>
+    <%= if Phoenix.Flash.get(@flash, :error) do %>
+      <p class="alert alert-danger" role="alert">
+        <%= Phoenix.Flash.get(@flash, :error) %>
+      </p>
+    <% end %>
+  </div>
+</div>
+<%= @inner_content %>
