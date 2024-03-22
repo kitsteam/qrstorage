@@ -132,11 +132,51 @@ defmodule QrstorageTextScrubberTest do
     assert sanitize(text) == {:ok, filtered_text}
   end
 
-  test "allow images with src data" do
+  test "allow images with src data:image/jpeg" do
     text = ~s"""
     <img src="data:image/jpeg;base64,abc"/>
     """
 
     assert sanitize(text) == {:ok, text}
+  end
+
+  test "allow images with src data:image/png" do
+    text = ~s"""
+    <img src="data:image/png;base64,abc"/>
+    """
+
+    assert sanitize(text) == {:ok, text}
+  end
+
+  test "allow images with src data:image/gif" do
+    text = ~s"""
+    <img src="data:image/gif;base64,abc"/>
+    """
+
+    assert sanitize(text) == {:ok, text}
+  end
+
+  test "disallow images with src data set to svg" do
+    text = ~s"""
+    <img src="data:image/svg;base64,abc"/>
+    """
+
+    filtered_text = ~s"""
+    <img src=\"\"/>
+    """
+
+    assert sanitize(text) == {:ok, filtered_text}
+  end
+
+  test "disallow images with src data set to anything else" do
+    text = ~s"""
+    <img src="data:something/else;base64,abc"/>
+    """
+
+    filtered_text = ~s"""
+    <img src=\"\"/>
+    """
+
+    assert sanitize(text) == {:ok, filtered_text}
   end
 end

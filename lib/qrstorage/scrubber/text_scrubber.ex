@@ -55,6 +55,15 @@ defmodule Qrstorage.Scrubber.TextScrubber do
     Enum.member?([:p, :strong, :em, :u, :s, :span, :a, :li], tag)
   end
 
+  def strip_src(src) do
+    cond do
+      String.starts_with?(src, "data:image/png") -> src
+      String.starts_with?(src, "data:image/jpeg") -> src
+      String.starts_with?(src, "data:image/gif") -> src
+      true -> ""
+    end
+  end
+
   def scrub_attribute(tag, {"class", classes}) do
     valid_classes =
       case is_tag_with_class(tag) do
@@ -69,6 +78,11 @@ defmodule Qrstorage.Scrubber.TextScrubber do
       end
 
     {"class", valid_classes}
+  end
+
+  def scrub_attribute(_tag, {"src", src}) do
+    # we'll fillter all tags for src and only allow pngs and jpegs, even though src is only allowed on img anyway:
+    {"src", strip_src(src)}
   end
 
   # allow tags:
