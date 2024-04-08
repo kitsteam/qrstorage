@@ -27,7 +27,7 @@ msgstr "Oops, da ist etwas schiefgelaufen. Bitte korrigiere die folgenden Fehler
 
 #: lib/qrstorage_web/templates/qr_code/form_audio.html.heex:57
 #: lib/qrstorage_web/templates/qr_code/form_link.html.heex:47
-#: lib/qrstorage_web/templates/qr_code/form_recording.html.heex:41
+#: lib/qrstorage_web/templates/qr_code/form_recording.html.heex:42
 #: lib/qrstorage_web/templates/qr_code/form_text.html.heex:56
 #, elixir-autogen, elixir-format
 msgid "Save"
@@ -51,7 +51,7 @@ msgstr "Sprachausgabe"
 #: lib/qrstorage_web/templates/qr_code/settings/_settings_delete_after.html.heex:3
 #, elixir-autogen, elixir-format
 msgid "delete after"
-msgstr "Speicherdauer in Monaten"
+msgstr "Löschung bei Inaktivität in Monaten"
 
 #: lib/qrstorage_web/templates/qr_code/form_audio.html.heex:40
 #, elixir-autogen, elixir-format
@@ -212,12 +212,12 @@ msgstr "Dieses Tool darf nur in Bildungskontexten genutzt werden. Die Eingabe pe
 msgid "Create speaking QR-Codes!"
 msgstr "Erstelle sprechende QR-Codes!"
 
-#: lib/qrstorage_web/templates/qr_code/new.html.heex:4
+#: lib/qrstorage_web/templates/qr_code/new.html.heex:5
 #, elixir-autogen, elixir-format
 msgid "Customize your text!"
 msgstr "Gestalte deinen Text!"
 
-#: lib/qrstorage_web/templates/qr_code/new.html.heex:3
+#: lib/qrstorage_web/templates/qr_code/new.html.heex:4
 #, elixir-autogen, elixir-format
 msgid "Link images and videos!"
 msgstr "Verlinke Bilder und Videos!"
@@ -244,7 +244,7 @@ msgstr "Fehler beim Upload der Audio-Datei."
 msgid "Record start/stop"
 msgstr "Aufnahme starten/stoppen"
 
-#: lib/qrstorage_web/templates/qr_code/form_recording.html.heex:46
+#: lib/qrstorage_web/templates/qr_code/form_recording.html.heex:47
 #, elixir-autogen, elixir-format
 msgid "Recording is disabled or not supported."
 msgstr "Die Aufnahmefunktion des Browsers ist deaktiviert oder wird nicht unterstützt."
@@ -270,3 +270,13 @@ msgstr "QR-Codes werden nach Inaktivität und Ablauf der ausgewählten Speicherd
 #, elixir-autogen, elixir-format
 msgid "Qr code tts not stored"
 msgstr ""
+
+#: lib/qrstorage_web/templates/qr_code/new.html.heex:3
+#, elixir-autogen, elixir-format
+msgid "Create recordings!"
+msgstr "Nimm Sprache auf!"
+
+#: lib/qrstorage_web/templates/qr_code/form_recording.html.heex:23
+#, elixir-autogen, elixir-format
+msgid "Recordings are deleted within 30 days of inactivity."
+msgstr "Aufnahmen werden nach 30 Tagen Inaktivität gelöscht."
