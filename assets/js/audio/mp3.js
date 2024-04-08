@@ -77,7 +77,7 @@ function encodeAsMp3(channels, sampleRate, samples) {
     buffer = encodeStereo(mp3enc, samples)
   }
   else {
-    console.error("Number of channels not supported.");
+    console.error("Number of channels " + channels + " not supported.");
     return undefined;
   }
 

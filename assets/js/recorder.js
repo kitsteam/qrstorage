@@ -51,7 +51,8 @@ if (recorder) {
     const port = await connect();
     await register(port);
 
-    const constraints = { audio: true };
+    // force stereo:
+    const constraints = {audio: {channelCount: 2}}
 
     let onSuccess = function (stream) {
       setupMediaRecorder(stream);
