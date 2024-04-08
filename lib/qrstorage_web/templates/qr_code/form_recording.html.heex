@@ -16,10 +16,14 @@
 
   <div class="form-group">
     <%= render("partials/_recorder.html", f: f, conn: @conn) %>
-    <p class="form-text text-muted">
+    <p class="form-text text-body-secondary">
       <%= gettext(
         "This tool may only be used in Teaching/Learning situations. It is not permitted to enter personal information."
       ) %>
+    </p>
+
+    <p class="form-text text-danger">
+      <%= gettext("Recordings are deleted within 30 days of inactivity.") %>
     </p>
 
     <div class="invalid-feedback">
