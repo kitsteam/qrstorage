@@ -32,7 +32,7 @@ defmodule Qrstorage.MixProject do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
-      {:phoenix, "1.7.11"},
+      {:phoenix, "1.7.12"},
       {:phoenix_ecto, "4.5.1"},
       {:ecto_sql, "3.11.1"},
       {:postgrex, "0.17.5"},
