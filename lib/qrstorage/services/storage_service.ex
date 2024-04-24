@@ -1,5 +1,6 @@
 defmodule Qrstorage.Services.StorageService do
   alias Qrstorage.Services.ObjectStorage.ObjectStorageService
+  alias Qrstorage.Services.Vault
   require Logger
 
   def get_file_by_type(id, :recording) do
@@ -47,7 +48,10 @@ defmodule Qrstorage.Services.StorageService do
       {:ok, response} ->
         case response.status_code do
           200 ->
-            {:ok, response.body}
+            case Vault.decrypt(response.body) do
+              {:ok, decrypted_file} -> {:ok, decrypted_file}
+              {:error, error_message} -> {:error, "Issue while decrypting file: #{inspect(error_message)}"}
+            end
 
           _ ->
             Logger.error(
@@ -67,7 +71,14 @@ defmodule Qrstorage.Services.StorageService do
   end
 
   defp store_file(filename, file, qr_code_content_type, content_type) do
-    case ObjectStorageService.put_object(bucket_name(), bucket_path(filename, qr_code_content_type), file, %{
+    case Vault.encrypt(file) do
+      {:ok, encrypted_file} -> store_encrypted_file(filename, encrypted_file, qr_code_content_type, content_type)
+      {:error, error_message} -> {:error, "Issue while encrypting file: #{inspect(error_message)}"}
+    end
+  end
+
+  defp store_encrypted_file(filename, encrypted_file, qr_code_content_type, content_type) do
+    case ObjectStorageService.put_object(bucket_name(), bucket_path(filename, qr_code_content_type), encrypted_file, %{
            meta: %{"qr-code-content-type" => qr_code_content_type},
            content_type: content_type
          }) do

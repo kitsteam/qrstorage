@@ -1,5 +1,6 @@
 defmodule QrstorageWeb.QrCodeControllerTest do
   use QrstorageWeb.ConnCase
+  use Qrstorage.StorageCase
 
   alias Qrstorage.QrCodes
   alias Qrstorage.QrCodes.QrCode
@@ -120,11 +121,7 @@ defmodule QrstorageWeb.QrCodeControllerTest do
         {:ok, translated_file_content}
       end)
 
-      Qrstorage.Services.ObjectStorage.ObjectStorageServiceMock
-      |> expect(:put_object, fn _bucket_name, _bucket_path, file, _opts ->
-        assert file == audio_binary
-        {:ok, %{status_code: 200, body: audio_binary}}
-      end)
+      mockStorageServicePutObjectSuccess(audio_binary)
 
       audio_attrs = %{
         @create_attrs
@@ -152,17 +149,13 @@ defmodule QrstorageWeb.QrCodeControllerTest do
       Qrstorage.Services.Gcp.GoogleApiServiceMock
       |> expect(:text_to_audio, fn text, _language, _voice ->
         assert text == translated_text
-        {:ok, "audio binary"}
+        {:ok, audio_binary}
       end)
       |> expect(:translate, fn _text, _language ->
         {:ok, translated_text}
       end)
 
-      Qrstorage.Services.ObjectStorage.ObjectStorageServiceMock
-      |> expect(:put_object, fn _bucket_name, _bucket_path, file, _opts ->
-        assert file == audio_binary
-        {:ok, %{status_code: 200, body: audio_binary}}
-      end)
+      mockStorageServicePutObjectSuccess(audio_binary)
 
       audio_attrs = %{
         @create_attrs
@@ -362,14 +355,12 @@ defmodule QrstorageWeb.QrCodeControllerTest do
     setup [:create_audio_qr_code]
 
     test "that audio codes can be downloaded when a file is present", %{conn: conn, audio_qr_code: audio_qr_code} do
-      Qrstorage.Services.ObjectStorage.ObjectStorageServiceMock
-      |> expect(:get_object, fn _bucket_name, _bucket_path ->
-        {:ok, %{status_code: 200, body: "file content"}}
-      end)
+      file = "file content"
+      mockStorageServiceGetFileSuccess(file)
 
       conn = get(conn, Routes.qr_code_path(conn, :audio_file, audio_qr_code.id))
 
-      assert conn.resp_body == "file content"
+      assert conn.resp_body == file
       assert conn.resp_headers |> get_content_type == "audio/mp3"
     end
 
@@ -410,14 +401,12 @@ defmodule QrstorageWeb.QrCodeControllerTest do
       conn: conn,
       recording_qr_code: recording_qr_code
     } do
-      Qrstorage.Services.ObjectStorage.ObjectStorageServiceMock
-      |> expect(:get_object, fn _bucket_name, _bucket_path ->
-        {:ok, %{status_code: 200, body: "file content"}}
-      end)
+      file = "file content"
+      mockStorageServiceGetFileSuccess(file)
 
       conn = get(conn, Routes.qr_code_path(conn, :audio_file, recording_qr_code.id))
 
-      assert conn.resp_body == "file content"
+      assert conn.resp_body == file
       assert conn.resp_headers |> get_content_type == "audio/mp3"
     end
   end

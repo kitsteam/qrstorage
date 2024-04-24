@@ -105,8 +105,10 @@ defmodule QrstorageWeb.QrCodeController do
         |> send_resp(200, audio_file)
 
       {:error, error_message} ->
+        Logger.error(error_message)
+
         conn
-        |> send_resp(404, error_message)
+        |> send_resp(404, "Error while retrieving file")
     end
   end
 end
