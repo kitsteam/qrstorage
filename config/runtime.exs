@@ -118,6 +118,14 @@ if config_env() == :prod || config_env() == :dev do
   )
 end
 
+# configure cloak:
+config :qrstorage, Qrstorage.Services.Vault,
+  ciphers: [
+    default:
+      {Cloak.Ciphers.AES.GCM,
+       tag: "AES.GCM.V1", key: Base.decode64!(System.fetch_env!("VAULT_ENCRYPTION_KEY_BASE64")), iv_length: 12}
+  ]
+
 # from mix phx.gen.release
 if System.get_env("PHX_SERVER") do
   config :qrstorage, QrstorageWeb.Endpoint, server: true

@@ -75,8 +75,8 @@ defmodule Qrstorage.Services.QrCodeService do
           {:ok} ->
             {:ok, qr_code}
 
-          {:error, _error_message} ->
-            Logger.error("Audio file not stored: #{qr_code.id}")
+          {:error, error_message} ->
+            Logger.error("Audio file not stored: #{qr_code.id} Error: #{error_message}")
             {:error, gettext("Qr code recording not extracted")}
         end
 
@@ -92,8 +92,8 @@ defmodule Qrstorage.Services.QrCodeService do
           {:ok} ->
             {:ok, qr_code}
 
-          {:error, _error_message} ->
-            Logger.error("Audio file not stored: #{qr_code.id}")
+          {:error, error_message} ->
+            Logger.error("Audio file not stored: #{qr_code.id} Error: #{error_message}")
             {:error, gettext("Qr code tts not stored")}
         end
 

@@ -60,7 +60,8 @@ defmodule Qrstorage.MixProject do
       {:mox, "1.1.0", only: :test},
       {:logger_json, "5.1.4"},
       {:ex_aws, "2.5.3"},
-      {:ex_aws_s3, "2.5.3"}
+      {:ex_aws_s3, "2.5.3"},
+      {:cloak, "1.1.4"}
     ]
   end
 

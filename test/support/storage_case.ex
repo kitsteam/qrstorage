@@ -5,6 +5,7 @@ defmodule Qrstorage.StorageCase do
   """
   import Mox
   use ExUnit.CaseTemplate
+  alias Qrstorage.Services.Vault
 
   using do
     quote do
@@ -14,10 +15,14 @@ defmodule Qrstorage.StorageCase do
     end
   end
 
-  def mockStorageServicePutObjectSuccess(mock_file_content \\ "mock http body") do
+  def mockStorageServicePutObjectSuccess(mock_file_content \\ "mock http body", assert_file_content \\ nil) do
     Qrstorage.Services.ObjectStorage.ObjectStorageServiceMock
     |> expect(:put_object, fn _bucket_name, _bucket_path, _file, _opts ->
-      {:ok, %{status_code: 200, body: mock_file_content}}
+      if assert_file_content != nil do
+        assert mock_file_content == assert_file_content
+      end
+
+      {:ok, %{status_code: 200, body: Vault.encrypt!(mock_file_content)}}
     end)
   end
 
@@ -36,6 +41,17 @@ defmodule Qrstorage.StorageCase do
       end
 
       {:ok, [%{body: ids_to_delete}]}
+    end)
+  end
+
+  def mockStorageServiceGetFileSuccess(file, assert_file_content \\ nil) do
+    Qrstorage.Services.ObjectStorage.ObjectStorageServiceMock
+    |> expect(:get_object, fn _bucket_name, _bucket_path ->
+      if assert_file_content do
+        assert file == assert_file_content
+      end
+
+      {:ok, %{status_code: 200, body: Vault.encrypt!(file)}}
     end)
   end
 

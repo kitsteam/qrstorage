@@ -55,7 +55,7 @@ Watch out that this content security policy will block live reload in developmen
 
 ### Image upload
 
-It is possible to store images base 64 encoded in the database. Since this is not very efficient, this should not be used for large imsage sizes or for qr codes with a lot of traffic. The default limit for a text qr code is 2MB. To change this, change `QR_CODE_MAX_UPLOAD_LENGTH`. We automatically add a buffer to account for deltas as well as overhead.
+It is possible to store images base 64 encoded in the database. Since this is not very efficient, this should not be used for large image sizes or for qr codes with a lot of traffic. The default limit for a text qr code is 2MB. To change this, change `QR_CODE_MAX_UPLOAD_LENGTH`. We automatically add a buffer to account for deltas as well as overhead.
 
 ### Additonal licence
 

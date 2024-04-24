@@ -21,6 +21,8 @@ services:
       OBJECT_STORAGE_HOST: ${MINIO_HOST:-minio}
       OBJECT_STORAGE_BUCKET: qrstorage-dev
       QR_CODE_DEFAULT_LOCALE: "de"
+      # Replace this in production with your own key!
+      VAULT_ENCRYPTION_KEY_BASE64: "t+OOnuWntk0vLcMqnF8nyKp+EuKAK+FnUU8OpdN9RoA="
       # GCP_CONFIG_PATH: ".gcp-config.json"
       # Please create a new secret for production runs:
       # - Use `mix phx.gen.secret` if you have elixir and phoenix installed

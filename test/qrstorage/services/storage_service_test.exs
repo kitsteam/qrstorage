@@ -1,5 +1,6 @@
 defmodule Qrstorage.Services.StorageServiceTest do
   use Qrstorage.DataCase
+  use Qrstorage.StorageCase
 
   alias Qrstorage.Services.StorageService
 
@@ -11,10 +12,7 @@ defmodule Qrstorage.Services.StorageServiceTest do
     test "get_recording/1 with a 200 result from the object storage service returns :ok" do
       mock_file_content = "binary file content"
 
-      Qrstorage.Services.ObjectStorage.ObjectStorageServiceMock
-      |> expect(:get_object, fn _bucket_name, _bucket_path ->
-        {:ok, %{status_code: 200, body: mock_file_content}}
-      end)
+      mockStorageServiceGetFileSuccess(mock_file_content)
 
       {status, file_content} = StorageService.get_recording("1")
       assert status == :ok
@@ -151,10 +149,7 @@ defmodule Qrstorage.Services.StorageServiceTest do
     test "get_tts/1 with a 200 result from the object storage service returns :ok" do
       mock_file_content = "binary file content"
 
-      Qrstorage.Services.ObjectStorage.ObjectStorageServiceMock
-      |> expect(:get_object, fn _bucket_name, _bucket_path ->
-        {:ok, %{status_code: 200, body: mock_file_content}}
-      end)
+      mockStorageServiceGetFileSuccess(mock_file_content)
 
       {status, file_content} = StorageService.get_tts("1")
       assert status == :ok

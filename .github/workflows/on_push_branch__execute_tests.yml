@@ -37,7 +37,7 @@ jobs:
     # Containers must run in Linux based operating systems
     runs-on: ubuntu-latest
     # Docker Hub image that `container-job` executes in
-    container: hexpm/elixir:1.15.2-erlang-26.0.2-debian-bullseye-20230612-slim
+    container: hexpm/elixir:1.15.7-erlang-26.2.2-debian-bullseye-20240130-slim
 
     needs: build_deps
 
@@ -68,6 +68,7 @@ jobs:
       DATABASE_SSL: false
       # This should only be used for the tests:
       SECRET_KEY_BASE: "DFvi5ZWW/Xc/yBgPOQ0w1wWZEGjy7NMl1/fRFyWf2EgbWNcXqtAOKUjh4bVps/eQ"
+      VAULT_ENCRYPTION_KEY_BASE64: "h3NKY+sEnQYSSoM7Qm0mNzHgwT99GD+TQVdz+q0sdEA="
       MIX_ENV: "test"
       OBJECT_STORAGE_BUCKET: "qrstorage-test"
 
@@ -93,7 +94,7 @@ jobs:
 
   check_mix_format:
     runs-on: ubuntu-latest
-    container: hexpm/elixir:1.15.2-erlang-26.0.2-debian-bullseye-20230612-slim
+    container: hexpm/elixir:1.15.7-erlang-26.2.2-debian-bullseye-20240130-slim
 
     needs: build_deps
 

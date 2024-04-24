@@ -18,6 +18,7 @@ defmodule Qrstorage.Application do
       {Phoenix.PubSub, name: Qrstorage.PubSub},
       # Start the Endpoint (http/https)
       QrstorageWeb.Endpoint,
+      Qrstorage.Services.Vault,
       {Oban, oban_config()}
     ]
 
