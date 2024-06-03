@@ -58,7 +58,7 @@ defmodule Qrstorage.MixProject do
       {:fast_sanitize, "0.2.3"},
       {:fast_html, "2.3.0"},
       {:mox, "1.1.0", only: :test},
-      {:logger_json, "5.1.4"},
+      {:logger_json, "6.0.3"},
       {:ex_aws, "2.5.3"},
       {:ex_aws_s3, "2.5.3"},
       {:cloak, "1.1.4"}
