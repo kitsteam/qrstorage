@@ -34,6 +34,8 @@ maybe_ipv6 = if System.get_env("ECTO_IPV6"), do: [:inet6], else: []
 # disable on prod, because logger_json will take care of this. set to :debug for test and dev
 ecto_log_level = if config_env() == :prod, do: false, else: :debug
 
+ssl_config = if System.get_env("DATABASE_SSL", "true") == "true", do: [cacerts: :public_key.cacerts_get()], else: nil
+
 config :qrstorage, Qrstorage.Repo,
   url: System.get_env("DATABASE_URL"),
   username: System.get_env("DATABASE_USER"),
@@ -44,15 +46,7 @@ config :qrstorage, Qrstorage.Repo,
   pool_size: String.to_integer(System.get_env("POOL_SIZE", "15")),
   socket_options: maybe_ipv6,
   log: ecto_log_level,
-  ssl: System.get_env("DATABASE_SSL", "true") == "true",
-  ssl_opts: [
-    verify: :verify_peer,
-    cacerts: :public_key.cacerts_get(),
-    server_name_indication: String.to_charlist(System.get_env("DATABASE_HOST")),
-    customize_hostname_check: [
-      match_fun: :public_key.pkix_verify_hostname_match_fun(:https)
-    ]
-  ]
+  ssl: ssl_config
 
 # This is what will be used for the calculation on the client side. We add a buffer to account for deltas
 # and overhead in the endpoint configuration, so the server actually allows for a bit more:
