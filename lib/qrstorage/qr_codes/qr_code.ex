@@ -21,7 +21,7 @@ defmodule Qrstorage.QrCodes.QrCode do
   @text_length_limits %{link: 1500, audio: 2000, text: 4000, recording: 1}
 
   @max_delete_after_year 9999
-  @valid_delete_after_months [0, 1, 6, 12, 36]
+  @valid_delete_after_months [0, 1, 24, 48]
 
   @primary_key {:id, :binary_id, autogenerate: true}
   @foreign_key_type :binary_id
