@@ -87,8 +87,6 @@ jobs:
       # install hex:
       - run: mix local.hex --force && mix local.rebar --force
 
-      # we need cmake for fast_sanitize:
-      - run: apt-get -y update && apt-get -y install build-essential cmake
       - run: mix compile
       - run: mix ecto.create
       - run: mix ecto.migrate
