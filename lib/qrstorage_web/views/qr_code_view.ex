@@ -36,7 +36,7 @@ defmodule QrstorageWeb.QrCodeView do
   def deltas_json_from_changeset(changeset) do
     deltas = Map.get(changeset.changes, :deltas, "")
 
-    case JSON.encode(deltas) do
+    case Jason.encode(deltas) do
       {:ok, json} -> json
       _ -> ""
     end

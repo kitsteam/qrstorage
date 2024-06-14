@@ -27,17 +27,6 @@ defmodule Qrstorage.Application do
         do: children,
         else: [{Goth, name: Qrstorage.Goth, source: goth_config()} | children]
 
-    # when logger_json is defined, we also want it to take care of ecto:
-    if Application.get_env(:qrstorage, :logger_json) do
-      :ok =
-        :telemetry.attach(
-          "logger-json-ecto",
-          [:qrstorage, :repo, :query],
-          &LoggerJSON.Ecto.telemetry_logging_handler/4,
-          Logger.level()
-        )
-    end
-
     # See https://hexdocs.pm/elixir/Supervisor.html
     # for other strategies and supported options
     opts = [strategy: :one_for_one, name: Qrstorage.Supervisor]

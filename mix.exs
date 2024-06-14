@@ -4,8 +4,8 @@ defmodule Qrstorage.MixProject do
   def project do
     [
       app: :qrstorage,
-      version: "0.2.0",
-      elixir: "~> 1.7",
+      version: "0.2.1",
+      elixir: "~> 1.11",
       elixirc_paths: elixirc_paths(Mix.env()),
       start_permanent: Mix.env() == :prod,
       aliases: aliases(),
@@ -54,11 +54,10 @@ defmodule Qrstorage.MixProject do
       {:google_api_translate, "0.18.0"},
       {:goth, "1.4.3"},
       {:oban, "2.17.10"},
-      {:json, "1.4.1"},
       {:fast_sanitize, "0.2.3"},
       {:fast_html, "2.3.0"},
       {:mox, "1.1.0", only: :test},
-      {:logger_json, "5.1.4"},
+      {:logger_json, "6.0.3"},
       {:ex_aws, "2.5.4"},
       {:ex_aws_s3, "2.5.3"},
       {:cloak, "1.1.4"}
