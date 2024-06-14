@@ -3,13 +3,29 @@ require Logger
 
 if config_env() == :prod do
   # configure logging:
-  config :logger_json, :backend,
-    metadata: [:request_id],
-    json_encoder: Jason,
-    formatter: LoggerJSON.Formatters.BasicLogger
+  config :logger,
+    handle_otp_reports: true,
+    handle_sasl_reports: true
 
-  # override Elixir's Logger with logger_json:
-  config :logger, backends: [LoggerJSON]
+  config :logger, :default_handler,
+    formatter: {
+      LoggerJSON.Formatters.Basic,
+      redactors: [
+        {LoggerJSON.Redactors.RedactKeys,
+         [
+           "password",
+           "gcp_credentials",
+           "secret_access_key",
+           "access_key_id",
+           "key",
+           "token",
+           "private_key",
+           "private_key_id",
+           "service_account"
+         ]}
+      ],
+      metadata: {:all_except, [:conn]}
+    }
 end
 
 config :qrstorage, QrstorageWeb.Endpoint,
@@ -37,6 +53,7 @@ ecto_log_level = if config_env() == :prod, do: false, else: :debug
 ssl_config = if System.get_env("DATABASE_SSL", "true") == "true", do: [cacerts: :public_key.cacerts_get()], else: nil
 
 config :qrstorage, Qrstorage.Repo,
+  start_apps_before_migration: [:logger_json],
   url: System.get_env("DATABASE_URL"),
   username: System.get_env("DATABASE_USER"),
   password: System.get_env("DATABASE_USER_PASSWORD"),

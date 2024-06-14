@@ -34,7 +34,7 @@ defmodule Qrstorage.Services.QrCodeService do
   defp convert_deltas(qr_code_params) do
     # we need to convert the deltas to json:
     deltas_json =
-      case JSON.decode(Map.get(qr_code_params, "deltas", "")) do
+      case Jason.decode(Map.get(qr_code_params, "deltas", "")) do
         {:ok, deltas_json} -> deltas_json
         {:error, _} -> %{}
       end
