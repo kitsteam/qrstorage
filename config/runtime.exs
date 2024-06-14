@@ -3,10 +3,6 @@ require Logger
 
 if config_env() == :prod do
   # configure logging:
-  config :logger,
-    handle_otp_reports: true,
-    handle_sasl_reports: true
-
   config :logger, :default_handler,
     formatter: {
       LoggerJSON.Formatters.Basic,
@@ -24,7 +20,7 @@ if config_env() == :prod do
            "service_account"
          ]}
       ],
-      metadata: {:all_except, [:conn]}
+      metadata: {:all_except, [:conn, :domain, :application]}
     }
 end
 
