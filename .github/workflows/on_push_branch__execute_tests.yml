@@ -1,10 +1,8 @@
 name: on_push_branch__execute_tests
 
-on:
-  [push, pull_request]
+on: [push, pull_request]
 
 jobs:
-
   build_deps:
     runs-on: ubuntu-latest
     # Currently, this need to be synced manually with the Dockerfile. In the future, the workflow should be changed,
@@ -18,7 +16,7 @@ jobs:
 
       # we need cmake for fast_sanitize:
       - run: apt-get -y update && apt-get -y install build-essential cmake
-      
+
       # install hex:
       - run: mix local.hex --force && mix local.rebar --force
 
@@ -26,11 +24,13 @@ jobs:
       - uses: actions/cache@v4
         id: cache
         with:
-          path: deps
+          path: |
+            deps
+            _build
           key: ${{ runner.os }}-mix-v4-${{ hashFiles('**/mix.lock') }}
           restore-keys: ${{ runner.os }}-mix-v4
 
-      - run: mix deps.get
+      - run: mix deps.get && mix deps.compile
         if: steps.cache.outputs.cache-hit != 'true'
 
   check_mix_test:
@@ -78,10 +78,12 @@ jobs:
 
       - uses: actions/cache@v4
         with:
-          path: deps
+          path: |
+            deps
+            _build
           key: ${{ runner.os }}-mix-v4-${{ hashFiles('**/mix.lock') }}
           restore-keys: ${{ runner.os }}-mix-v4
-      
+
       # install hex:
       - run: mix local.hex --force && mix local.rebar --force
 
@@ -101,7 +103,7 @@ jobs:
     steps:
       - name: Check out repository code
         uses: actions/checkout@v4
-      
+
       # install hex:
       - run: mix local.hex --force && mix local.rebar --force
 
@@ -110,7 +112,9 @@ jobs:
 
       - uses: actions/cache@v4
         with:
-          path: deps
+          path: |
+            deps
+            _build
           key: ${{ runner.os }}-mix-v4-${{ hashFiles('**/mix.lock') }}
           restore-keys: ${{ runner.os }}-mix-v4
 
