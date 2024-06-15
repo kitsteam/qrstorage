@@ -11,8 +11,11 @@ defmodule Qrstorage.Services.RecordingService do
     end
   end
 
+  # We get the path from %Plug.Upload{}, which is fine:
+  # sobelow_skip ["Traversal"]
   defp extract_recording_from_plug_upload(%Plug.Upload{} = upload) do
     if upload.content_type == "audio/mp3" do
+
       case File.read(upload.path) do
         {:ok, audio_file} ->
           {:ok, audio_file, upload.content_type}

@@ -107,9 +107,6 @@ jobs:
       # install hex:
       - run: mix local.hex --force && mix local.rebar --force
 
-      # we need cmake for fast_sanitize:
-      - run: apt-get -y update && apt-get -y install build-essential cmake
-
       - uses: actions/cache@v4
         with:
           path: |
@@ -119,3 +116,26 @@ jobs:
           restore-keys: ${{ runner.os }}-mix-v4
 
       - run: mix format --check-formatted
+
+  check_mix_sobelow:
+    runs-on: ubuntu-latest
+    container: hexpm/elixir:1.15.7-erlang-26.2.2-debian-bullseye-20240130-slim
+
+    needs: build_deps
+
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v4
+
+      # install hex:
+      - run: mix local.hex --force && mix local.rebar --force
+
+      - uses: actions/cache@v4
+        with:
+          path: |
+            deps
+            _build
+          key: ${{ runner.os }}-mix-v4-${{ hashFiles('**/mix.lock') }}
+          restore-keys: ${{ runner.os }}-mix-v4
+
+      - run: mix sobelow --config
