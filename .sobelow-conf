@@ -1,0 +1,5 @@
+[
+  exit: "low",
+  skip: true,
+  verbose: true
+]
