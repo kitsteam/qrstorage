@@ -54,7 +54,7 @@ msgstr ""
 
 #: lib/qrstorage_web/templates/qr_code/form_audio.html.heex:40
 #, elixir-autogen, elixir-format
-msgid "Audio Text to Speech via Google"
+msgid "Audio Text to Speech via 3rd party"
 msgstr ""
 
 #: lib/qrstorage_web/templates/qr_code/form_audio.html.heex:23

@@ -82,10 +82,12 @@ defmodule QrstorageWeb.QrCodeControllerTest do
     test "audio code is successfully created", %{conn: conn} do
       mock_file_content = "audio binary"
 
-      Qrstorage.Services.Gcp.GoogleApiServiceMock
+      Qrstorage.Services.Tts.TextToSpeechApiServiceMock
       |> expect(:text_to_audio, fn _text, _language, _voice ->
         {:ok, mock_file_content}
       end)
+
+      Qrstorage.Services.Translate.TranslateApiServiceMock
       |> expect(:translate, fn _text, _language ->
         {:ok, "translated text"}
       end)
@@ -112,11 +114,13 @@ defmodule QrstorageWeb.QrCodeControllerTest do
       audio_binary = "audio_binary"
       translated_file_content = "translated text"
 
-      Qrstorage.Services.Gcp.GoogleApiServiceMock
+      Qrstorage.Services.Tts.TextToSpeechApiServiceMock
       |> expect(:text_to_audio, fn text, _language, _voice ->
         assert text == translated_file_content
         {:ok, audio_binary}
       end)
+
+      Qrstorage.Services.Translate.TranslateApiServiceMock
       |> expect(:translate, fn _text, _language ->
         {:ok, translated_file_content}
       end)
@@ -146,11 +150,13 @@ defmodule QrstorageWeb.QrCodeControllerTest do
       translated_text = String.duplicate("a", 260)
       audio_binary = "audio binary"
 
-      Qrstorage.Services.Gcp.GoogleApiServiceMock
+      Qrstorage.Services.Tts.TextToSpeechApiServiceMock
       |> expect(:text_to_audio, fn text, _language, _voice ->
         assert text == translated_text
         {:ok, audio_binary}
       end)
+
+      Qrstorage.Services.Translate.TranslateApiServiceMock
       |> expect(:translate, fn _text, _language ->
         {:ok, translated_text}
       end)
@@ -435,7 +441,7 @@ defmodule QrstorageWeb.QrCodeControllerTest do
     attrs = %{@fixture_attrs | content_type: "audio", language: "de", voice: "female"}
     audio_qr_code = fixture(attrs)
 
-    # we set translated_text to text, since this is what happens when google detects no difference between source and target language
+    # we set translated_text to text, since this is what happens when deepl detects no difference between source and target language
     audio_qr_code =
       audio_qr_code
       |> QrCode.changeset(%{hide_text: audio_qr_code.hide_text})

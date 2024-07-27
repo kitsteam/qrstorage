@@ -14,6 +14,7 @@ if config_env() == :prod do
            "secret_access_key",
            "access_key_id",
            "key",
+           "api_key",
            "token",
            "private_key",
            "private_key_id",
@@ -75,23 +76,11 @@ default_locale =
 config :gettext, :default_locale, default_locale
 config :timex, :default_locale, default_locale
 
-cond do
-  gcp_config = System.get_env("GCP_CONFIG_PATH") ->
-    Logger.info("Loading GCP Config file: #{gcp_config}")
-    config :qrstorage, gcp_credentials: gcp_config |> File.read!() |> Jason.decode!()
+config :deepl_ex,
+  api_key: System.get_env("DEEPL_API_KEY")
 
-  gcp_config = System.get_env("GCP_CONFIG_BASE64") ->
-    Logger.info("Loading GCP Config from Base64.")
-    config :qrstorage, gcp_credentials: gcp_config |> Base.decode64!() |> Jason.decode!()
-
-  true ->
-    config :goth, disabled: true
-
-    Logger.warning("""
-    Environment variables GCP_CONFIG_PATH or GCP_CONFIG_BASE64 are missing or empty.
-    Either set a path to a GCP Config file with GCP_CONFIG_PATH or base64 encode the credentials and put them in GCP_CONFIG_BASE64
-    """)
-end
+config :qrstorage,
+  readspeaker_api_key: System.get_env("READSPEAKER_API_KEY")
 
 # Here some environment specific configurations
 if config_env() == :test do

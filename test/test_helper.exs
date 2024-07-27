@@ -1,12 +1,19 @@
 ExUnit.start()
 Ecto.Adapters.SQL.Sandbox.mode(Qrstorage.Repo, :auto)
 
-# Mock Google API Service:
-Mox.defmock(Qrstorage.Services.Gcp.GoogleApiServiceMock,
-  for: Qrstorage.Services.Gcp.GoogleApiService
+# Mock Translation API Service:
+Mox.defmock(Qrstorage.Services.Translate.TranslateApiServiceMock,
+  for: Qrstorage.Services.Translate.TranslateApiService
 )
 
-Application.put_env(:qrstorage, :google_api_service, Qrstorage.Services.Gcp.GoogleApiServiceMock)
+Application.put_env(:qrstorage, :translate_service, Qrstorage.Services.Translate.TranslateApiServiceMock)
+
+# Mock TTS API Service:
+Mox.defmock(Qrstorage.Services.Tts.TextToSpeechApiServiceMock,
+  for: Qrstorage.Services.Tts.TextToSpeechApiService
+)
+
+Application.put_env(:qrstorage, :text_to_speech_service, Qrstorage.Services.Tts.TextToSpeechApiServiceMock)
 
 # Mock Object Storage Service:
 Mox.defmock(Qrstorage.Services.ObjectStorage.ObjectStorageServiceMock,

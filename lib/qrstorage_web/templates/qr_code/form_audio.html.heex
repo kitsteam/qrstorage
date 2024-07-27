@@ -37,7 +37,7 @@
     <%= label(f, :language, gettext("audio language")) %>
     <%= select(f, :language, translated_languages_for_select(), class: "form-control") %>
     <%= error_tag(f, :language) %>
-    <p class="form-text text-muted"><%= gettext("Audio Text to Speech via Google") %></p>
+    <p class="form-text text-muted"><%= gettext("Audio Text to Speech via 3rd party") %></p>
   </div>
 
   <%= render("settings/_settings_button.html", id: "collapse-settings-audio", conn: @conn) %>

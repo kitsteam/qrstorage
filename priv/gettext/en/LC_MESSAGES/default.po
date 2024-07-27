@@ -55,8 +55,8 @@ msgstr ""
 
 #: lib/qrstorage_web/templates/qr_code/form_audio.html.heex:40
 #, elixir-autogen, elixir-format
-msgid "Audio Text to Speech via Google"
-msgstr "We use Google for text to speech and for translations. You'll remain invisible to Google, however you should not enter sensitive or personal information."
+msgid "Audio Text to Speech via 3rd party"
+msgstr "We use 3rd parties for text to speech and for translations. You'll remain invisible to them, however you should not enter sensitive or personal information."
 
 #: lib/qrstorage_web/templates/qr_code/form_audio.html.heex:23
 #, elixir-autogen, elixir-format

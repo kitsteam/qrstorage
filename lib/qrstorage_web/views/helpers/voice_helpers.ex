@@ -1,5 +1,5 @@
 defmodule QrstorageWeb.VoiceHelpers do
-  # google supports the following voices for the languages:
+  # ::TODO - check with voices in which combination are supported:
   @voice_mapping [
     %{language: :de, voices: [:male, :female]},
     %{language: :en, voices: [:male, :female]},
@@ -19,6 +19,6 @@ defmodule QrstorageWeb.VoiceHelpers do
     @voice_mapping
     |> Enum.filter(fn x -> Enum.member?(x.voices, :male) end)
     |> Enum.map(fn x -> Atom.to_string(x.language) end)
-    |> Poison.encode!()
+    |> Jason.encode!()
   end
 end

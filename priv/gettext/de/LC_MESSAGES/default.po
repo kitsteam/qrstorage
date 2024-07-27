@@ -55,8 +55,8 @@ msgstr "Löschung bei Inaktivität in Monaten"
 
 #: lib/qrstorage_web/templates/qr_code/form_audio.html.heex:40
 #, elixir-autogen, elixir-format
-msgid "Audio Text to Speech via Google"
-msgstr "Für die Sprachausgabe kommunizieren wir mit Google. Du bleibst für Google unsichtbar."
+msgid "Audio Text to Speech via 3rd party"
+msgstr "Für die Sprachausgabe und die Übersetzung kommunizieren wir mit Drittanbietern. Du bleibst für diese Anbieter unsichtbar, solltest aber trotzdem keine sensiblen Daten eingeben."
 
 #: lib/qrstorage_web/templates/qr_code/form_audio.html.heex:23
 #, elixir-autogen, elixir-format

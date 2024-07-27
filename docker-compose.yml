@@ -19,9 +19,10 @@ services:
       OBJECT_STORAGE_HOST: ${MINIO_HOST:-minio}
       OBJECT_STORAGE_BUCKET: qrstorage-dev
       QR_CODE_DEFAULT_LOCALE: "de"
+      DEEPL_API_KEY: ""
+      READSPEAKER_API_KEY: ""
       # Replace this in production with your own key!
       VAULT_ENCRYPTION_KEY_BASE64: "t+OOnuWntk0vLcMqnF8nyKp+EuKAK+FnUU8OpdN9RoA="
-      # GCP_CONFIG_PATH: ".gcp-config.json"
       # Please create a new secret for production runs:
       # - Use `mix phx.gen.secret` if you have elixir and phoenix installed
       # - Use `openssl rand -base64 64 | head -c 64` on a normal unix system
@@ -37,60 +38,10 @@ services:
       - minio
     # Mount the lib and test folder to increase development speed (do not use for prod setups!)
     volumes:
-      # Ensure that the file `gcp-config.json` is available in the container
       # You can override this in `docker-compose.override.yml`
       - ./:/app
       - /app/deps/
       - /app/assets/node_modules
-
-  app_prod:
-    build:
-      context: .
-      target: production
-    profiles:
-      - prod
-    environment:
-      DATABASE_USER: ${POSTGRES_USER:-postgres}
-      DATABASE_USER_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
-      DATABASE_NAME: ${POSTGRES_DB:-qrstorage_dev}
-      DATABASE_PORT: 5432
-      DATABASE_HOST: postgres
-      DATABASE_SSL: "false"
-      OBJECT_STORAGE_SCHEME: https
-      OBJECT_STORAGE_PORT: 443
-      OBJECT_STORAGE_REGION: eu01
-      OBJECT_STORAGE_USER: ${OBJECT_STORAGE_USER:-object-storage-user}
-      OBJECT_STORAGE_PASSWORD: ${OBJECT_STORAGE_USER_PASSWORD:-object-storage-user-password}
-      OBJECT_STORAGE_HOST: ${OBJECT_STORAGE_HOST:-object-storage-host}
-      QR_CODE_DEFAULT_LOCALE: "de"
-      GCP_CONFIG_PATH: "./.gcp-config.json"
-      # Please create a new secret for production runs:
-      # - Use `mix phx.gen.secret` if you have elixir and phoenix installed
-      # - Use `openssl rand -base64 64 | head -c 64` on a normal unix system
-      # You can override this in `docker-compose.override.yml`
-      SECRET_KEY_BASE: "generate_your_own_secret_key_base_and_save_it"
-      URL_HOST: localhost
-      URL_SCHEME: http
-      URL_PORT: "8000"
-    ports:
-      - "4100:8000"
-    depends_on:
-      - postgres
-      - minio
-    # volumes:
-    # Ensure that the file `gcp-config.json` is available in the container/
-    #
-    # How to get the fiel `docker-compose-kits.yml`?
-    # - Go to Coogle Cloud Platform dashboard
-    # - On the lefthand side, go to `APIs und Dienste` -> `Anmeldedaten`
-    # - In the upper section, click on `+ Anmeldedaten erstellen`
-    # - If not already existing, create a service account (Dienstkonto)
-    # - Afterwards, click on the newly created service account
-    # - In the details sectino of the service account, click on keys (Schlüssel)
-    # - In the key section of the service account click on `Schlüssel hinzufügen` -> `Neuen Schlüssel erstellen`
-    # - In the creatino dialog choose as key type `json` and finish creation of the .gcp-config.json
-    # - Please .gcp-config.json in the root of this project and let the following line inject this file into the docker container
-    # - ./.gcp-config.json:/app/.gcp-config.json
 
   postgres:
     image: postgres:15

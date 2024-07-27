@@ -1,7 +1,7 @@
 defmodule Qrstorage.Services.TranslationService do
+  alias Qrstorage.Services.Translate.TranslateApiService
   alias Qrstorage.QrCodes.QrCode
   alias Qrstorage.Repo
-  alias Qrstorage.Services.Gcp.GoogleApiService
 
   import QrstorageWeb.Gettext
 
@@ -20,7 +20,7 @@ defmodule Qrstorage.Services.TranslationService do
   end
 
   def add_translation(qr_code) do
-    case GoogleApiService.translate(qr_code.text, qr_code.language) do
+    case TranslateApiService.translate(qr_code.text, qr_code.language) do
       {:ok, translated_text} ->
         save_translated_text(qr_code, translated_text)
 

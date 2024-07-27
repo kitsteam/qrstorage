@@ -1,6 +1,6 @@
 defmodule Qrstorage.Services.TtsService do
   alias Qrstorage.QrCodes.QrCode
-  alias Qrstorage.Services.Gcp.GoogleApiService
+  alias Qrstorage.Services.Tts.TextToSpeechApiService
 
   import QrstorageWeb.Gettext
 
@@ -19,7 +19,7 @@ defmodule Qrstorage.Services.TtsService do
   def text_to_audio(%QrCode{} = qr_code) do
     text = text_for_audio_transcription(qr_code)
 
-    case GoogleApiService.text_to_audio(
+    case TextToSpeechApiService.text_to_audio(
            text,
            qr_code.language,
            Atom.to_string(qr_code.voice)
