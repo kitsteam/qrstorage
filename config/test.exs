@@ -34,3 +34,5 @@ config(:ex_aws, :s3,
 )
 
 config :qrstorage, Oban, repo: Qrstorage.Repo, testing: :inline
+
+config :tesla, adapter: Tesla.Mock

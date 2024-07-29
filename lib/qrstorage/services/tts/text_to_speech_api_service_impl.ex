@@ -6,6 +6,8 @@ defmodule Qrstorage.Services.Tts.TextToSpeechApiServiceImpl do
 
   use Tesla
 
+  require Logger
+
   @impl TextToSpeechApiService
   def text_to_audio(text, language, voice) do
     data = %{
@@ -15,11 +17,7 @@ defmodule Qrstorage.Services.Tts.TextToSpeechApiServiceImpl do
       text: text
     }
 
-    {:ok, response} = Tesla.post(client(), "/speak", data)
-
-    decoded_file = response.body
-
-    {:ok, decoded_file}
+    post_data(data)
   end
 
   # build dynamic client based on runtime arguments
@@ -35,7 +33,22 @@ defmodule Qrstorage.Services.Tts.TextToSpeechApiServiceImpl do
     Tesla.client(middleware)
   end
 
-  def api_key() do
+  defp post_data(data) do
+    case Tesla.post(client(), "/speak", data) do
+      {:ok, %Tesla.Env{status: status, body: response_body}} when status in 200..201 ->
+        {:ok, response_body}
+
+      {:ok, %Tesla.Env{status: status}} ->
+        Logger.error("http error: #{status}")
+        {:error, "Error while creating text to speech transformation"}
+
+      {:error, reason} ->
+        Logger.error("request failed: #{reason}")
+        {:error, "Error while creating text to speech transformation"}
+    end
+  end
+
+  defp api_key() do
     {:ok, api_key} = read_api_key()
     api_key
   end

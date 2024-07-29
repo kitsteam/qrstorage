@@ -19,6 +19,7 @@ services:
       OBJECT_STORAGE_HOST: ${MINIO_HOST:-minio}
       OBJECT_STORAGE_BUCKET: qrstorage-dev
       QR_CODE_DEFAULT_LOCALE: "de"
+      QR_CODE_TRANSLATION_TRANSITION_DATE: "2024-07-09 00:00:00"
       DEEPL_API_KEY: ""
       READSPEAKER_API_KEY: ""
       # Replace this in production with your own key!

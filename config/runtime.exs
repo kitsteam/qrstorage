@@ -76,12 +76,6 @@ default_locale =
 config :gettext, :default_locale, default_locale
 config :timex, :default_locale, default_locale
 
-config :deepl_ex,
-  api_key: System.get_env("DEEPL_API_KEY")
-
-config :qrstorage,
-  readspeaker_api_key: System.get_env("READSPEAKER_API_KEY")
-
 # Here some environment specific configurations
 if config_env() == :test do
   config :qrstorage, Qrstorage.Repo,
@@ -100,6 +94,21 @@ if config_env() == :prod || config_env() == :dev do
        ]}
     ],
     queues: [default: 1]
+end
+
+# configure tts and translation:
+if config_env() == :prod || config_env() == :dev do
+  config :deepl_ex,
+    api_key: System.get_env("DEEPL_API_KEY")
+
+  config :qrstorage,
+    readspeaker_api_key: System.get_env("READSPEAKER_API_KEY")
+else
+  config :deepl_ex,
+    api_key: "invalid"
+
+  config :qrstorage,
+    readspeaker_api_key: "invalid"
 end
 
 # check all object storage system envs at once:
@@ -121,6 +130,10 @@ config :qrstorage, Qrstorage.Services.Vault,
       {Cloak.Ciphers.AES.GCM,
        tag: "AES.GCM.V1", key: Base.decode64!(System.fetch_env!("VAULT_ENCRYPTION_KEY_BASE64")), iv_length: 12}
   ]
+
+# configure transition date from gcp to deepl:
+config :qrstorage,
+  translation_transition_date: System.get_env("QR_CODE_TRANSLATION_TRANSITION_DATE", "2024-07-09 00:00:00")
 
 # from mix phx.gen.release
 if System.get_env("PHX_SERVER") do

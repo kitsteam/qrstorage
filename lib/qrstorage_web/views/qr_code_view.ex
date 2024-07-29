@@ -70,4 +70,11 @@ defmodule QrstorageWeb.QrCodeView do
 
     gettext("The maximum upload size is %{max_length} MB.", max_length: max_upload_length_in_mb)
   end
+
+  def beforeTranslationTransition(qr_code) do
+    {:ok, translation_transition_date} =
+      NaiveDateTime.from_iso8601(Application.get_env(:qrstorage, :translation_transition_date))
+
+    NaiveDateTime.before?(qr_code.inserted_at, translation_transition_date)
+  end
 end

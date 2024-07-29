@@ -16,6 +16,7 @@ defmodule Qrstorage.Services.Translate.TranslateApiServiceImpl do
     end
   end
 
+  @spec map_target_language(atom()) :: atom()
   def map_target_language(qr_target_language) do
     deepl_target_language = String.to_atom(String.upcase(Atom.to_string(qr_target_language)))
     deepl_target_language

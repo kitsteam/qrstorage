@@ -1,8 +1,7 @@
-defmodule Qrstorage.TtsCase do
+defmodule Qrstorage.ApiCase do
   @moduledoc """
   This module defines the setup for tests requiring
   access to the API for TTS.
-  ::TODO:: rename TTS to more generic name, as this includes Translate as well
   """
   import Mox
 
@@ -10,7 +9,7 @@ defmodule Qrstorage.TtsCase do
 
   using do
     quote do
-      import Qrstorage.TtsCase
+      import Qrstorage.ApiCase
 
       import Mox
       setup :verify_on_exit!

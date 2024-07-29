@@ -12,7 +12,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: lib/qrstorage_web/templates/qr_code/download.html.heex:59
-#: lib/qrstorage_web/templates/qr_code/show.html.heex:60
+#: lib/qrstorage_web/templates/qr_code/show.html.heex:55
 #, elixir-autogen, elixir-format
 msgid "Download"
 msgstr ""
@@ -27,18 +27,18 @@ msgstr "Oops, da ist etwas schiefgelaufen. Bitte korrigiere die folgenden Fehler
 
 #: lib/qrstorage_web/templates/qr_code/form_audio.html.heex:57
 #: lib/qrstorage_web/templates/qr_code/form_link.html.heex:47
-#: lib/qrstorage_web/templates/qr_code/form_recording.html.heex:42
+#: lib/qrstorage_web/templates/qr_code/form_recording.html.heex:45
 #: lib/qrstorage_web/templates/qr_code/form_text.html.heex:56
 #, elixir-autogen, elixir-format
 msgid "Save"
 msgstr "Erstellen"
 
-#: lib/qrstorage_web/templates/qr_code/show.html.heex:46
+#: lib/qrstorage_web/templates/qr_code/show.html.heex:41
 #, elixir-autogen, elixir-format
 msgid "Deletion Date"
 msgstr "Löschdatum"
 
-#: lib/qrstorage_web/templates/qr_code/show.html.heex:51
+#: lib/qrstorage_web/templates/qr_code/show.html.heex:46
 #, elixir-autogen, elixir-format
 msgid "Audio Language"
 msgstr "Sprachausgabe"
@@ -56,7 +56,7 @@ msgstr "Löschung bei Inaktivität in Monaten"
 #: lib/qrstorage_web/templates/qr_code/form_audio.html.heex:40
 #, elixir-autogen, elixir-format
 msgid "Audio Text to Speech via 3rd party"
-msgstr "Für die Sprachausgabe und die Übersetzung kommunizieren wir mit Drittanbietern. Du bleibst für diese Anbieter unsichtbar, solltest aber trotzdem keine sensiblen Daten eingeben."
+msgstr "Für die Sprachausgabe und die Übersetzung kommunizieren wir mit DeepL und ReadSpeaker."
 
 #: lib/qrstorage_web/templates/qr_code/form_audio.html.heex:23
 #, elixir-autogen, elixir-format
@@ -194,11 +194,6 @@ msgstr "Audio-Transkription ist fehlgeschlagen."
 msgid "Qr code translation failed."
 msgstr "Übersetzung ist fehlgeschlagen."
 
-#: lib/qrstorage_web/templates/qr_code/show.html.heex:38
-#, elixir-autogen, elixir-format
-msgid "Text was automatically translated."
-msgstr "Der Text wurde automatisch übersetzt."
-
 #: lib/qrstorage_web/templates/qr_code/form_audio.html.heex:27
 #: lib/qrstorage_web/templates/qr_code/form_link.html.heex:25
 #: lib/qrstorage_web/templates/qr_code/form_recording.html.heex:20
@@ -222,13 +217,13 @@ msgstr "Gestalte deinen Text!"
 msgid "Link images and videos!"
 msgstr "Verlinke Bilder und Videos!"
 
-#: lib/qrstorage/services/recording_service.ex:22
-#: lib/qrstorage/services/recording_service.ex:35
+#: lib/qrstorage/services/recording_service.ex:24
+#: lib/qrstorage/services/recording_service.ex:37
 #, elixir-autogen, elixir-format
 msgid "Error while extracting audio file from plug."
 msgstr "Fehler beim Upload der Audio-Datei."
 
-#: lib/qrstorage/services/recording_service.ex:29
+#: lib/qrstorage/services/recording_service.ex:31
 #, elixir-autogen, elixir-format
 msgid "Error while extracting audio file from plug: Invalid content type"
 msgstr "Fehler beim Upload der Audio-Datei."
@@ -244,7 +239,7 @@ msgstr "Fehler beim Upload der Audio-Datei."
 msgid "Record start/stop"
 msgstr "Aufnahme starten/stoppen"
 
-#: lib/qrstorage_web/templates/qr_code/form_recording.html.heex:47
+#: lib/qrstorage_web/templates/qr_code/form_recording.html.heex:50
 #, elixir-autogen, elixir-format
 msgid "Recording is disabled or not supported."
 msgstr "Die Aufnahmefunktion des Browsers ist deaktiviert oder wird nicht unterstützt."
@@ -276,7 +271,12 @@ msgstr ""
 msgid "Create recordings!"
 msgstr "Nimm Sprache auf!"
 
-#: lib/qrstorage_web/templates/qr_code/form_recording.html.heex:23
+#: lib/qrstorage_web/templates/qr_code/form_recording.html.heex:26
 #, elixir-autogen, elixir-format
 msgid "Recordings are deleted within 30 days of inactivity."
 msgstr "Aufnahmen werden nach 30 Tagen Inaktivität gelöscht."
+
+#: lib/qrstorage_web/templates/qr_code/partials/_translation_hint.html.heex:9
+#, elixir-autogen, elixir-format, fuzzy
+msgid "Text was automatically translated by DeepL."
+msgstr "Der Text wurde automatisch übersetzt von DeepL."

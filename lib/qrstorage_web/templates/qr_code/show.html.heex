@@ -26,19 +26,14 @@
 <% end %>
 
 <%= if @qr_code.content_type == :audio do %>
+  <%= if QrCode.translation_changed_text(@qr_code) do %>
+    <%= render("partials/_translation_hint.html", conn: @conn, qr_code: @qr_code) %>
+  <% end %>
   <div class="row">
     <div class="col-md-12">
       <%= render("partials/_player.html", conn: @conn, qr_code: @qr_code) %>
     </div>
   </div>
-
-  <%= if QrCode.translation_changed_text(@qr_code) do %>
-    <div class="row my-2">
-      <div class="col-12">
-        <small class="text-muted"><%= gettext("Text was automatically translated.") %></small>
-      </div>
-    </div>
-  <% end %>
 <% end %>
 
 <div class="row mt-2">

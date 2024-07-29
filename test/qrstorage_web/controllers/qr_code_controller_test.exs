@@ -261,7 +261,7 @@ defmodule QrstorageWeb.QrCodeControllerTest do
       translated_audio_qr_code: translated_audio_qr_code
     } do
       conn = get(conn, Routes.qr_code_path(conn, :preview, translated_audio_qr_code.id))
-      assert html_response(conn, 200) =~ "Text was automatically translated."
+      assert html_response(conn, 200) =~ "Text was automatically translated"
     end
 
     test "that non-translated audio qr codes do not show a hint that they were translated", %{
@@ -269,7 +269,7 @@ defmodule QrstorageWeb.QrCodeControllerTest do
       audio_qr_code: audio_qr_code
     } do
       conn = get(conn, Routes.qr_code_path(conn, :preview, audio_qr_code.id))
-      assert !(html_response(conn, 200) =~ "Text was automatically translated.")
+      assert !(html_response(conn, 200) =~ "Text was automatically translated")
     end
 
     test "that text qr codes show a preview", %{conn: conn, text_qr_code: text_qr_code} do
