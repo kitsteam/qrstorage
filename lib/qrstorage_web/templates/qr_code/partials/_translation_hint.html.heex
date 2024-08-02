@@ -1,6 +1,6 @@
 <div class="row m-1">
   <div class="col-12 text-end">
-    <%= if beforeTranslationTransition(@qr_code) do %>
+    <%= if before_translation_transition(@qr_code) do %>
       <a href="http://translate.google.com/">
         <img src={Routes.static_path(@conn, "/images/greyscale-short@3x.svg")} />
       </a>

@@ -4,6 +4,21 @@ defmodule Qrstorage.Services.Translate.TranslateApiServiceImpl do
 
   @behaviour TranslateApiService
 
+  @deepl_language_atoms %{
+    :de => :DE,
+    :en => :EN,
+    :fr => :FR,
+    :es => :ES,
+    :tr => :TR,
+    :pl => :PL,
+    :ar => :AR,
+    :ru => :RU,
+    :it => :IT,
+    :pt => :PT,
+    :nl => :NL,
+    :uk => :UK
+  }
+
   @impl TranslateApiService
   def translate(text, target_language) do
     case DeeplEx.translate(text, :DETECT, map_target_language(target_language)) do
@@ -17,8 +32,14 @@ defmodule Qrstorage.Services.Translate.TranslateApiServiceImpl do
   end
 
   @spec map_target_language(atom()) :: atom()
-  def map_target_language(qr_target_language) do
-    deepl_target_language = String.to_atom(String.upcase(Atom.to_string(qr_target_language)))
-    deepl_target_language
+  def map_target_language(target_language) do
+    case @deepl_language_atoms[target_language] do
+      nil ->
+        Logger.warning("Language code not found for language: #{target_language}")
+        "de_de"
+
+      language ->
+        language
+    end
   end
 end

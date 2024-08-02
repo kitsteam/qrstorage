@@ -4,6 +4,10 @@ defmodule QrstorageWeb.QrCodeViewTest do
   import QrstorageWeb.QrCodeView
   alias Qrstorage.QrCodes.QrCode
 
+  setup_all do
+    Application.put_env(:qrstorage, :translation_transition_date, "2024-07-09 00:00:00")
+  end
+
   describe "deltas_json_from_changeset/1" do
     test "renders deltas as json string" do
       changeset = %{changes: %{deltas: %{ops: "test"}}}
@@ -60,6 +64,30 @@ defmodule QrstorageWeb.QrCodeViewTest do
     test "returns 2.5 MB for a max_upload_length of 3,3 MB" do
       Application.put_env(:qrstorage, :max_upload_length, "3333333")
       assert max_upload_length_message() =~ "2.5 MB"
+    end
+  end
+
+  describe("show_translation_origin_for_hidden_text/1") do
+    test "shows the translation text for old codes with hidden text, changed translation" do
+      qr_code = %QrCode{
+        hide_text: true,
+        translated_text: "a",
+        text: "b",
+        inserted_at: NaiveDateTime.from_iso8601!("2024-06-09 00:00:00")
+      }
+
+      assert show_translation_origin_for_hidden_text(qr_code)
+    end
+
+    test "does not show the translation text for old codes with hidden text, changed translation" do
+      qr_code = %QrCode{
+        hide_text: true,
+        translated_text: "a",
+        text: "b",
+        inserted_at: NaiveDateTime.from_iso8601!("2024-08-09 00:00:00")
+      }
+
+      assert !show_translation_origin_for_hidden_text(qr_code)
     end
   end
 end

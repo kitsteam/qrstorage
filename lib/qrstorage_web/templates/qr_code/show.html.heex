@@ -4,6 +4,9 @@
   <div class="text-box">
     <%= @qr_code.translated_text || @qr_code.text %>
   </div>
+  <%= if QrCode.translation_changed_text(@qr_code) && !@qr_code.hide_text do %>
+    <%= render("partials/_translation_hint.html", conn: @conn, qr_code: @qr_code) %>
+  <% end %>
 <% end %>
 <%= if (@qr_code.content_type == :recording)  do %>
   <div class="row">
@@ -26,9 +29,6 @@
 <% end %>
 
 <%= if @qr_code.content_type == :audio do %>
-  <%= if QrCode.translation_changed_text(@qr_code) do %>
-    <%= render("partials/_translation_hint.html", conn: @conn, qr_code: @qr_code) %>
-  <% end %>
   <div class="row">
     <div class="col-md-12">
       <%= render("partials/_player.html", conn: @conn, qr_code: @qr_code) %>
@@ -45,6 +45,12 @@
     <div class="col-6">
       <strong><%= gettext("Audio Language") %></strong> <br />
       <%= Gettext.dgettext(QrstorageWeb.Gettext, "languages", Atom.to_string(@qr_code.language)) %>
+      <%= if show_translation_origin_for_hidden_text(@qr_code) do %>
+        <br />
+        <a href="http://translate.google.com/">
+          <img src={Routes.static_path(@conn, "/images/greyscale-short@3x.svg")} />
+        </a>
+      <% end %>
     </div>
   <% end %>
 </div>

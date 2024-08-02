@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 
 #: lib/qrstorage_web/templates/qr_code/download.html.heex:59
-#: lib/qrstorage_web/templates/qr_code/show.html.heex:55
+#: lib/qrstorage_web/templates/qr_code/show.html.heex:61
 #, elixir-autogen, elixir-format
 msgid "Download"
 msgstr ""
