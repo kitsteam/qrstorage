@@ -1,12 +1,11 @@
 defmodule QrstorageWeb.VoiceHelpers do
-  # ::TODO:: - check with voices in which combination are supported:
   @voice_mapping [
     %{language: :de, voices: [:male, :female]},
     %{language: :en, voices: [:male, :female]},
     %{language: :fr, voices: [:male, :female]},
     %{language: :es, voices: [:male, :female]},
     %{language: :tr, voices: [:male, :female]},
-    %{language: :pl, voices: [:male, :female]},
+    %{language: :pl, voices: [:female]},
     %{language: :ar, voices: [:male, :female]},
     %{language: :ru, voices: [:male, :female]},
     %{language: :it, voices: [:male, :female]},

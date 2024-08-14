@@ -3,14 +3,32 @@ defmodule Qrstorage.Services.Tts.TextToSpeechMapping do
 
   @voices %{
     :de => %{"female" => "Klara-Premium", "male" => "Emil-premium"},
-    :en => %{"female" => "Alice-premium"},
-    :ar => %{"male" => "Amir"}
+    :en => %{"female" => "Alice-premium", "male" => "Hugh-DNN"},
+    :es => %{"female" => "Pilar-premium", "male" => "Manuel-DNN"},
+    :fr => %{"female" => "Roxane-premium", "male" => "Benoit-premium"},
+    :tr => %{"female" => "Seda-DNN", "male" => "Ozan-DNN"},
+    :pl => %{"female" => "Aneta-DNN"},
+    :ar => %{"female" => "Yasmin", "male" => "Amir"},
+    :ru => %{"female" => "Vera", "male" => "Aleksei"},
+    :it => %{"female" => "Gaia-premium", "male" => "Matteo-premium"},
+    :pt => %{"female" => "Carolina", "male" => "Tiago"},
+    :nl => %{"female" => "Ilse-e2e", "male" => "Sem-e2e"},
+    :uk => %{"female" => "Mila"}
   }
 
   @language_codes %{
     :de => "de_de",
     :en => "en_uk",
-    :ar => "ar_ar"
+    :es => "es_es",
+    :fr => "fr_fr",
+    :tr => "tr_tr",
+    :pl => "pl_pl",
+    :ar => "ar_ar",
+    :ru => "ru_ru",
+    :it => "it_it",
+    :pt => "pt_pt",
+    :nl => "nl_nl",
+    :uk => "uk_ua"
   }
 
   def voice(language, gender) when is_atom(language) do
