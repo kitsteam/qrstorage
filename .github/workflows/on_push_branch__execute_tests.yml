@@ -8,7 +8,7 @@ jobs:
     # Currently, this need to be synced manually with the Dockerfile. In the future, the workflow should be changed,
     # so that a development container is built from the Dockerfile, pushed, and then re-used in the following steps.
     # This would also remove the need to install cmake manually in each step:
-    container: hexpm/elixir:1.15.7-erlang-26.2.2-debian-bullseye-20240130-slim
+    container: hexpm/elixir:1.17.2-erlang-27.0.1-debian-bookworm-20240812-slim
 
     steps:
       # See https://github.com/actions/checkout
@@ -37,7 +37,7 @@ jobs:
     # Containers must run in Linux based operating systems
     runs-on: ubuntu-latest
     # Docker Hub image that `container-job` executes in
-    container: hexpm/elixir:1.15.7-erlang-26.2.2-debian-bullseye-20240130-slim
+    container: hexpm/elixir:1.17.2-erlang-27.0.1-debian-bookworm-20240812-slim
 
     needs: build_deps
 
@@ -75,8 +75,8 @@ jobs:
     steps:
       # Downloads a copy of the code in your repository before running CI tests
       - uses: actions/checkout@v4
-      # we need git so that mix can access our own repo:
-      - run: apt-get -y update && apt-get -y install git
+      # we need git so that mix can access our own repo and cmake for fast_sanitize:
+      - run: apt-get -y update && apt-get -y install git build-essential cmake
       - uses: actions/cache@v4
         with:
           path: |
@@ -88,8 +88,6 @@ jobs:
       # install hex:
       - run: mix local.hex --force && mix local.rebar --force
 
-      # we need cmake for fast_sanitize:
-      - run: apt-get -y update && apt-get -y install build-essential cmake
       - run: mix compile
       - run: mix ecto.create
       - run: mix ecto.migrate
@@ -97,7 +95,7 @@ jobs:
 
   check_mix_format:
     runs-on: ubuntu-latest
-    container: hexpm/elixir:1.15.7-erlang-26.2.2-debian-bullseye-20240130-slim
+    container: hexpm/elixir:1.17.2-erlang-27.0.1-debian-bookworm-20240812-slim
 
     needs: build_deps
 
@@ -123,7 +121,7 @@ jobs:
 
   check_mix_sobelow:
     runs-on: ubuntu-latest
-    container: hexpm/elixir:1.15.7-erlang-26.2.2-debian-bullseye-20240130-slim
+    container: hexpm/elixir:1.17.2-erlang-27.0.1-debian-bookworm-20240812-slim
 
     needs: build_deps
 
