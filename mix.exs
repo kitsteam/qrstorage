@@ -60,7 +60,7 @@ defmodule Qrstorage.MixProject do
       {:cloak, "1.1.4"},
       {:sobelow, "0.13.0", only: [:dev, :test], runtime: false},
       {:deepl_ex, git: "https://github.com/b310-digital/deepl_ex.git", branch: "60-allow-detection-of-source-language"},
-      {:tesla, "1.11.2"}
+      {:tesla, "1.12.1"}
     ]
   end
 
