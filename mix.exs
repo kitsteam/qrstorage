@@ -45,7 +45,7 @@ defmodule Qrstorage.MixProject do
       {:dart_sass, "0.7.0", runtime: Mix.env() == :dev},
       {:telemetry_metrics, "1.0.0"},
       {:telemetry_poller, "1.1.0"},
-      {:gettext, "0.24.0"},
+      {:gettext, "0.25.0"},
       {:timex, "3.7.11"},
       {:jason, "1.4.4"},
       {:plug_cowboy, "2.7.1"},
