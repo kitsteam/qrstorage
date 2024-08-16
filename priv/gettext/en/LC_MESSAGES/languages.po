@@ -49,3 +49,15 @@ msgstr "Dutch"
 
 msgid "uk"
 msgstr "Ukrainian"
+
+msgid "cs"
+msgstr "Czech"
+
+msgid "el"
+msgstr "Greek"
+
+msgid "fi"
+msgstr "Finnish"
+
+msgid "hu"
+msgstr "Hungarian"

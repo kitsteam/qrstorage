@@ -79,7 +79,7 @@ defmodule QrstorageWeb.QrCodeView do
   end
 
   def show_translation_origin_for_hidden_text(qr_code) do
-    # we show the translation origin whent the code has been created before the transition and the text box is not already shown
+    # we show the translation origin when the code has been created before the transition and the text box is not already shown
     QrCode.translation_changed_text(qr_code) && qr_code.hide_text && before_translation_transition(qr_code)
   end
 end

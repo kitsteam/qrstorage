@@ -8,7 +8,7 @@ defmodule Qrstorage.QrCodes.QrCode do
 
   require Logger
 
-  @languages ~w[de en fr es tr pl ar ru it pt nl uk]a
+  @languages ~w[de en fr es tr pl ar ru it pt nl uk cs el fi hu]a
   @block_list ~w[https http www]
 
   @voices ~w[male female]a

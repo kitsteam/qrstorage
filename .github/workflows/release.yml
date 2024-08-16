@@ -15,7 +15,6 @@ on:
   push:
     branches: 
       - main
-      - 296-feature-use-readspeaker-and-deepl
   release:
     types: [published]
   

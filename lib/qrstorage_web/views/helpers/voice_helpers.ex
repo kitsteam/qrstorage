@@ -1,23 +1,8 @@
 defmodule QrstorageWeb.VoiceHelpers do
-  @voice_mapping [
-    %{language: :de, voices: [:male, :female]},
-    %{language: :en, voices: [:male, :female]},
-    %{language: :fr, voices: [:male, :female]},
-    %{language: :es, voices: [:male, :female]},
-    %{language: :tr, voices: [:male, :female]},
-    %{language: :pl, voices: [:female]},
-    %{language: :ar, voices: [:male, :female]},
-    %{language: :ru, voices: [:male, :female]},
-    %{language: :it, voices: [:male, :female]},
-    %{language: :pt, voices: [:male, :female]},
-    %{language: :nl, voices: [:male, :female]},
-    %{language: :uk, voices: [:female]}
-  ]
-
   def languages_with_male_voice() do
-    @voice_mapping
-    |> Enum.filter(fn x -> Enum.member?(x.voices, :male) end)
-    |> Enum.map(fn x -> Atom.to_string(x.language) end)
+    Qrstorage.Services.Tts.TextToSpeechMapping.voices()
+    |> Enum.reject(fn {_, value} -> value["male"] == nil end)
+    |> Enum.map(fn {language, _} -> Atom.to_string(language) end)
     |> Jason.encode!()
   end
 end

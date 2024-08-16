@@ -36,3 +36,15 @@ msgstr ""
 
 msgid "uk"
 msgstr ""
+
+msgid "cs"
+msgstr ""
+
+msgid "el"
+msgstr ""
+
+msgid "fi"
+msgstr ""
+
+msgid "hu"
+msgstr ""

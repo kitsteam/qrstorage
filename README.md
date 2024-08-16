@@ -4,7 +4,7 @@ Qr Codes that link to your server with sound and text information.
 
 ### Development
 
-- **Important**: Before you start setting up the container, register an account with `Deepl` and `Readspeaker` to get the proper API keys for text to speech and translation features. Create a file called `docker-compose.override.yml`and create an override that mount these credentials into the container. Example:
+- **Important**: Before you start setting up the container, register an account with `DeepL` and `ReadSpeaker` to get the proper API keys for text to speech and translation features. Create a file called `docker-compose.override.yml`and create an override that mount these credentials into the container. Example:
 
 ```
 services:
