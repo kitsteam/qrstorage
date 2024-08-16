@@ -38,7 +38,7 @@ defmodule Qrstorage.Services.TtsServiceTest do
     setup [:create_audio_qr_code]
 
     test "text_to_audio/1 with an audio code returns :ok", %{qr_code: qr_code} do
-      Qrstorage.Services.Gcp.GoogleApiServiceMock
+      Qrstorage.Services.Tts.TextToSpeechApiServiceMock
       |> expect(:text_to_audio, fn _text, _language, _voice ->
         {:ok, "string"}
       end)
@@ -58,7 +58,7 @@ defmodule Qrstorage.Services.TtsServiceTest do
     end
 
     test "text_to_audio/1 with an audio code passes correct values", %{qr_code: qr_code} do
-      Qrstorage.Services.Gcp.GoogleApiServiceMock
+      Qrstorage.Services.Tts.TextToSpeechApiServiceMock
       |> expect(:text_to_audio, fn text, language, voice ->
         assert qr_code.text == text
         assert qr_code.language == language
@@ -73,7 +73,7 @@ defmodule Qrstorage.Services.TtsServiceTest do
     end
 
     test "text_to_audio/1 returns audio file from api", %{qr_code: qr_code} do
-      Qrstorage.Services.Gcp.GoogleApiServiceMock
+      Qrstorage.Services.Tts.TextToSpeechApiServiceMock
       |> expect(:text_to_audio, fn _text, _language, _voice ->
         {:ok, "string"}
       end)
@@ -93,7 +93,7 @@ defmodule Qrstorage.Services.TtsServiceTest do
         QrCode.changeset_with_translated_text(qr_code, translated_text)
         |> Repo.update!()
 
-      Qrstorage.Services.Gcp.GoogleApiServiceMock
+      Qrstorage.Services.Tts.TextToSpeechApiServiceMock
       |> expect(:text_to_audio, fn text, _language, _voice ->
         assert qr_code.text != text
         assert qr_code.translated_text == text
@@ -106,8 +106,8 @@ defmodule Qrstorage.Services.TtsServiceTest do
       assert audio_file_type == "audio/mp3"
     end
 
-    test "text_to_audio/1 with broken GoogleApiServiceMock returns :error", %{qr_code: qr_code} do
-      Qrstorage.Services.Gcp.GoogleApiServiceMock
+    test "text_to_audio/1 with broken TextToSpeechServiceMock returns :error", %{qr_code: qr_code} do
+      Qrstorage.Services.Tts.TextToSpeechApiServiceMock
       |> expect(:text_to_audio, fn _text, _language, _voice ->
         {:error}
       end)

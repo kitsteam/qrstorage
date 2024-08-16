@@ -23,9 +23,6 @@ config :qrstorage, QrstorageWeb.Endpoint,
 # Print only warnings and errors during test
 config :logger, level: :warning
 
-config :goth,
-  disabled: true
-
 # we configure ex_aws to localhost just to be sure that no test requests end up at aws:
 config(:ex_aws, :s3,
   scheme: "https",
@@ -37,3 +34,5 @@ config(:ex_aws, :s3,
 )
 
 config :qrstorage, Oban, repo: Qrstorage.Repo, testing: :inline
+
+config :tesla, adapter: Tesla.Mock

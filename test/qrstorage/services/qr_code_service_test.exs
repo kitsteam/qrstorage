@@ -1,6 +1,6 @@
 defmodule Qrstorage.Services.QrCodeServiceTest do
   use Qrstorage.DataCase
-  use Qrstorage.TtsCase
+  use Qrstorage.ApiCase
   use Qrstorage.StorageCase
 
   alias Qrstorage.Services.QrCodeService

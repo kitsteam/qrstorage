@@ -5,8 +5,8 @@ defmodule QrstorageWeb.VoiceHelpersTest do
 
   describe "languages_with_male_voice/0" do
     test "returns all languages with male voices as json" do
-      languages = "[\"de\",\"en\",\"fr\",\"es\",\"tr\",\"pl\",\"ar\",\"ru\",\"it\",\"pt\",\"nl\"]"
-      assert languages_with_male_voice() == languages
+      languages = ["es", "nl", "fr", "tr", "de", "en", "ar", "ru", "it", "pt", "fi", "hu"]
+      assert Enum.sort(Jason.decode!(languages_with_male_voice())) == Enum.sort(languages)
     end
 
     test "languages_with_male_voice/0 does not contain ukrainian" do

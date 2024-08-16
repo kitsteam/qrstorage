@@ -50,9 +50,6 @@ defmodule Qrstorage.MixProject do
       {:jason, "1.4.3"},
       {:plug_cowboy, "2.7.1"},
       {:cowboy, "2.12.0"},
-      {:google_api_text_to_speech, "0.16.0"},
-      {:google_api_translate, "0.18.0"},
-      {:goth, "1.4.3"},
       {:oban, "2.17.12"},
       {:fast_sanitize, "0.2.3"},
       {:fast_html, "2.3.0"},
@@ -61,7 +58,9 @@ defmodule Qrstorage.MixProject do
       {:ex_aws, "2.5.4"},
       {:ex_aws_s3, "2.5.3"},
       {:cloak, "1.1.4"},
-      {:sobelow, "0.13.0", only: [:dev, :test], runtime: false}
+      {:sobelow, "0.13.0", only: [:dev, :test], runtime: false},
+      {:deepl_ex, git: "https://github.com/b310-digital/deepl_ex.git", branch: "60-allow-detection-of-source-language"},
+      {:tesla, "1.11.2"}
     ]
   end
 

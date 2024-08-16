@@ -12,7 +12,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: lib/qrstorage_web/templates/qr_code/download.html.heex:59
-#: lib/qrstorage_web/templates/qr_code/show.html.heex:60
+#: lib/qrstorage_web/templates/qr_code/show.html.heex:61
 #, elixir-autogen, elixir-format
 msgid "Download"
 msgstr ""
@@ -27,18 +27,18 @@ msgstr ""
 
 #: lib/qrstorage_web/templates/qr_code/form_audio.html.heex:57
 #: lib/qrstorage_web/templates/qr_code/form_link.html.heex:47
-#: lib/qrstorage_web/templates/qr_code/form_recording.html.heex:42
+#: lib/qrstorage_web/templates/qr_code/form_recording.html.heex:45
 #: lib/qrstorage_web/templates/qr_code/form_text.html.heex:56
 #, elixir-autogen, elixir-format
 msgid "Save"
 msgstr ""
 
-#: lib/qrstorage_web/templates/qr_code/show.html.heex:46
+#: lib/qrstorage_web/templates/qr_code/show.html.heex:41
 #, elixir-autogen, elixir-format
 msgid "Deletion Date"
 msgstr "Deleted"
 
-#: lib/qrstorage_web/templates/qr_code/show.html.heex:51
+#: lib/qrstorage_web/templates/qr_code/show.html.heex:46
 #, elixir-autogen, elixir-format
 msgid "Audio Language"
 msgstr ""
@@ -55,8 +55,8 @@ msgstr ""
 
 #: lib/qrstorage_web/templates/qr_code/form_audio.html.heex:40
 #, elixir-autogen, elixir-format
-msgid "Audio Text to Speech via Google"
-msgstr "We use Google for text to speech and for translations. You'll remain invisible to Google, however you should not enter sensitive or personal information."
+msgid "Audio Text to Speech via 3rd party"
+msgstr "We use DeepL and ReadSpeaker for text to speech and for translations."
 
 #: lib/qrstorage_web/templates/qr_code/form_audio.html.heex:23
 #, elixir-autogen, elixir-format
@@ -194,11 +194,6 @@ msgstr ""
 msgid "Qr code translation failed."
 msgstr ""
 
-#: lib/qrstorage_web/templates/qr_code/show.html.heex:38
-#, elixir-autogen, elixir-format
-msgid "Text was automatically translated."
-msgstr ""
-
 #: lib/qrstorage_web/templates/qr_code/form_audio.html.heex:27
 #: lib/qrstorage_web/templates/qr_code/form_link.html.heex:25
 #: lib/qrstorage_web/templates/qr_code/form_recording.html.heex:20
@@ -222,13 +217,13 @@ msgstr ""
 msgid "Link images and videos!"
 msgstr ""
 
-#: lib/qrstorage/services/recording_service.ex:22
-#: lib/qrstorage/services/recording_service.ex:35
+#: lib/qrstorage/services/recording_service.ex:24
+#: lib/qrstorage/services/recording_service.ex:37
 #, elixir-autogen, elixir-format
 msgid "Error while extracting audio file from plug."
 msgstr ""
 
-#: lib/qrstorage/services/recording_service.ex:29
+#: lib/qrstorage/services/recording_service.ex:31
 #, elixir-autogen, elixir-format
 msgid "Error while extracting audio file from plug: Invalid content type"
 msgstr ""
@@ -244,7 +239,7 @@ msgstr ""
 msgid "Record start/stop"
 msgstr ""
 
-#: lib/qrstorage_web/templates/qr_code/form_recording.html.heex:47
+#: lib/qrstorage_web/templates/qr_code/form_recording.html.heex:50
 #, elixir-autogen, elixir-format
 msgid "Recording is disabled or not supported."
 msgstr ""
@@ -276,7 +271,12 @@ msgstr ""
 msgid "Create recordings!"
 msgstr ""
 
-#: lib/qrstorage_web/templates/qr_code/form_recording.html.heex:23
+#: lib/qrstorage_web/templates/qr_code/form_recording.html.heex:26
 #, elixir-autogen, elixir-format
 msgid "Recordings are deleted within 30 days of inactivity."
 msgstr ""
+
+#: lib/qrstorage_web/templates/qr_code/partials/_translation_hint.html.heex:9
+#, elixir-autogen, elixir-format, fuzzy
+msgid "Text was automatically translated by DeepL."
+msgstr "Text was automatically translated by DeepL."

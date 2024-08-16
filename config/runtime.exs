@@ -14,6 +14,7 @@ if config_env() == :prod do
            "secret_access_key",
            "access_key_id",
            "key",
+           "api_key",
            "token",
            "private_key",
            "private_key_id",
@@ -75,24 +76,6 @@ default_locale =
 config :gettext, :default_locale, default_locale
 config :timex, :default_locale, default_locale
 
-cond do
-  gcp_config = System.get_env("GCP_CONFIG_PATH") ->
-    Logger.info("Loading GCP Config file: #{gcp_config}")
-    config :qrstorage, gcp_credentials: gcp_config |> File.read!() |> Jason.decode!()
-
-  gcp_config = System.get_env("GCP_CONFIG_BASE64") ->
-    Logger.info("Loading GCP Config from Base64.")
-    config :qrstorage, gcp_credentials: gcp_config |> Base.decode64!() |> Jason.decode!()
-
-  true ->
-    config :goth, disabled: true
-
-    Logger.warning("""
-    Environment variables GCP_CONFIG_PATH or GCP_CONFIG_BASE64 are missing or empty.
-    Either set a path to a GCP Config file with GCP_CONFIG_PATH or base64 encode the credentials and put them in GCP_CONFIG_BASE64
-    """)
-end
-
 # Here some environment specific configurations
 if config_env() == :test do
   config :qrstorage, Qrstorage.Repo,
@@ -111,6 +94,21 @@ if config_env() == :prod || config_env() == :dev do
        ]}
     ],
     queues: [default: 1]
+end
+
+# configure tts and translation:
+if config_env() == :prod || config_env() == :dev do
+  config :deepl_ex,
+    api_key: System.get_env("DEEPL_API_KEY")
+
+  config :qrstorage,
+    readspeaker_api_key: System.get_env("READSPEAKER_API_KEY")
+else
+  config :deepl_ex,
+    api_key: "invalid"
+
+  config :qrstorage,
+    readspeaker_api_key: "invalid"
 end
 
 # check all object storage system envs at once:
@@ -132,6 +130,10 @@ config :qrstorage, Qrstorage.Services.Vault,
       {Cloak.Ciphers.AES.GCM,
        tag: "AES.GCM.V1", key: Base.decode64!(System.fetch_env!("VAULT_ENCRYPTION_KEY_BASE64")), iv_length: 12}
   ]
+
+# configure transition date from gcp to deepl:
+config :qrstorage,
+  translation_transition_date: System.get_env("QR_CODE_TRANSLATION_TRANSITION_DATE", "2024-07-09 00:00:00")
 
 # from mix phx.gen.release
 if System.get_env("PHX_SERVER") do

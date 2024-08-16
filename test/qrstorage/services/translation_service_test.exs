@@ -36,7 +36,7 @@ defmodule Qrstorage.Services.TranslationServiceTest do
     setup [:create_audio_qr_code]
 
     test "add_translation/1 with an audio code adds translated text", %{qr_code: qr_code} do
-      Qrstorage.Services.Gcp.GoogleApiServiceMock
+      Qrstorage.Services.Translate.TranslateApiServiceMock
       |> expect(:translate, fn _text, _language ->
         {:ok, "translated text"}
       end)
@@ -57,8 +57,8 @@ defmodule Qrstorage.Services.TranslationServiceTest do
       assert status == :error
     end
 
-    test "add_translation/1 with broken GoogleApiServiceMock returns :error", %{qr_code: qr_code} do
-      Qrstorage.Services.Gcp.GoogleApiServiceMock
+    test "add_translation/1 with broken TranslateApiServiceMock returns :error", %{qr_code: qr_code} do
+      Qrstorage.Services.Translate.TranslateApiServiceMock
       |> expect(:translate, fn _text, _language ->
         {:error}
       end)
