@@ -8,6 +8,8 @@ defmodule Qrstorage.QrCodes do
 
   alias Qrstorage.QrCodes.QrCode
 
+  require Logger
+
   @doc """
   Gets a single qr_code.
 
@@ -84,5 +86,22 @@ defmodule Qrstorage.QrCodes do
 
   def update_last_accessed_at(qr_code) do
     Repo.update!(QrCode.changeset_with_upated_last_accessed_at(qr_code))
+  end
+
+  def audio_character_count_in_last_hours(hours) do
+    # this query SUMs the length of the text of all audio codes within the last ^hour:
+    character_count_query =
+      from q in QrCode,
+        where: q.content_type == :audio and q.inserted_at > ago(^hours, "hour"),
+        select: sum(fragment("character_length(?)", q.text))
+
+    case Repo.one!(character_count_query) do
+      nil ->
+        Logger.warning("Character length for audio characters is nil!")
+        0
+
+      result ->
+        result
+    end
   end
 end

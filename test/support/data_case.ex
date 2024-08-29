@@ -75,6 +75,13 @@ defmodule Qrstorage.DataCase do
         Repo.update!(Ecto.Changeset.cast(qr_code, %{last_accessed_at: last_access_date}, [:last_accessed_at]))
         qr_code
       end
+
+      def qr_code_with_insertion_date(attrs \\ %{}, insertion_date) do
+        attrs = Map.merge(@valid_attrs, attrs)
+        qr_code = qr_code_fixture(attrs)
+        Repo.update!(Ecto.Changeset.cast(qr_code, %{inserted_at: insertion_date}, [:inserted_at]))
+        qr_code
+      end
     end
   end
 

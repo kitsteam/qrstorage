@@ -135,6 +135,10 @@ config :qrstorage, Qrstorage.Services.Vault,
 config :qrstorage,
   translation_transition_date: System.get_env("QR_CODE_TRANSLATION_TRANSITION_DATE", "2024-07-09 00:00:00")
 
+# configure rate limiting:
+config :qrstorage,
+  rate_limiting_character_limit: String.to_integer(System.get_env("QR_CODE_RATE_LIMITING_CHARACTER_LIMIT", "25000"))
+
 # from mix phx.gen.release
 if System.get_env("PHX_SERVER") do
   config :qrstorage, QrstorageWeb.Endpoint, server: true

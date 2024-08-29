@@ -3,6 +3,8 @@ defmodule Qrstorage.QrCodesTest do
 
   alias Qrstorage.QrCodes
 
+  import ExUnit.CaptureLog
+
   describe "qrcodes" do
     alias Qrstorage.QrCodes.QrCode
 
@@ -211,6 +213,33 @@ defmodule Qrstorage.QrCodesTest do
     test "create_qr_code/1 with text type and honeypot set returns error changeset" do
       invalid_text_attrs = %{@valid_attrs | hp: "set"}
       assert {:error, %Ecto.Changeset{}} = QrCodes.create_qr_code(invalid_text_attrs)
+    end
+  end
+
+  describe "audio_character_count_in_last_hours/1" do
+    test "audio_character_count_in_last_hours/1 without existing audio codes returns 0" do
+      {result, logs} = with_log(fn -> QrCodes.audio_character_count_in_last_hours(1) end)
+
+      assert result == 0
+      assert logs =~ "Character length for audio characters is nil"
+    end
+
+    test "audio_character_count_in_last_hours/1 with multiple codes return correct value" do
+      qr_code_with_insertion_date(@valid_audio_attrs, Timex.shift(Timex.now(), hours: -2))
+      qr_code_with_insertion_date(@valid_audio_attrs, Timex.shift(Timex.now(), hours: -1))
+      QrCodes.create_qr_code(@valid_audio_attrs)
+
+      assert QrCodes.audio_character_count_in_last_hours(3) == String.length(@valid_audio_attrs.text) * 3
+      assert QrCodes.audio_character_count_in_last_hours(2) == String.length(@valid_audio_attrs.text) * 2
+      assert QrCodes.audio_character_count_in_last_hours(1) == String.length(@valid_audio_attrs.text)
+    end
+
+    test "audio_character_count_in_last_hours/1 only counts audio codes" do
+      qr_code_with_insertion_date(@valid_audio_attrs, Timex.shift(Timex.now(), hours: -1))
+      qr_code_with_insertion_date(@valid_link_attrs, Timex.shift(Timex.now(), hours: -1))
+      qr_code_with_insertion_date(@valid_attrs, Timex.shift(Timex.now(), hours: -1))
+
+      assert QrCodes.audio_character_count_in_last_hours(2) == String.length(@valid_audio_attrs.text)
     end
   end
 end

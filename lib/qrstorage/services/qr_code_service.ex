@@ -5,6 +5,7 @@ defmodule Qrstorage.Services.QrCodeService do
   alias Qrstorage.Services.RecordingService
   alias Qrstorage.Services.StorageService
   alias Qrstorage.Services.TtsService
+  alias Qrstorage.Services.RateLimitingService
 
   import QrstorageWeb.Gettext
 
@@ -44,10 +45,14 @@ defmodule Qrstorage.Services.QrCodeService do
   end
 
   defp handle_audio_qr_code(%QrCode{} = qr_code) do
-    # always add translation and get audio:
-    case add_translation(qr_code) do
-      {:error, error_message} -> {:error, error_message}
-      {:ok, qr_code_with_translation} -> add_tts(qr_code_with_translation)
+    if RateLimitingService.allow?(qr_code) do
+      # always add translation and get audio:
+      case add_translation(qr_code) do
+        {:error, error_message} -> {:error, error_message}
+        {:ok, qr_code_with_translation} -> add_tts(qr_code_with_translation)
+      end
+    else
+      {:error, gettext("Rate limit reached.")}
     end
   end
 

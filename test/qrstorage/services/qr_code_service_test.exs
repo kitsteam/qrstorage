@@ -2,6 +2,7 @@ defmodule Qrstorage.Services.QrCodeServiceTest do
   use Qrstorage.DataCase
   use Qrstorage.ApiCase
   use Qrstorage.StorageCase
+  use Qrstorage.RateLimitingCase
 
   alias Qrstorage.Services.QrCodeService
 
@@ -153,11 +154,27 @@ defmodule Qrstorage.Services.QrCodeServiceTest do
       assert logs =~ "deleting qr code after creation"
       assert qr_code_count_start == qr_code_count_end
     end
+
+    test "create_qr_code/1 does not create code when rate limit has been reached" do
+      qr_code_count_start = qr_code_count()
+
+      {{status, _changeset, _message}, logs} =
+        with_log(fn ->
+          with_rate_limit_set_to(1, fn -> QrCodeService.create_qr_code(@tts_attrs) end)
+        end)
+
+      qr_code_count_end = qr_code_count()
+
+      assert status == :error
+      assert logs =~ "Rate Limit reached"
+      assert logs =~ "deleting qr code after creation"
+      assert qr_code_count_start == qr_code_count_end
+    end
   end
 
   describe "create_qr_code/1 for recording codes" do
     @tag :tmp_dir
-    test "create_qr_code/1 returns :ok for tts codes", %{tmp_dir: tmp_dir} do
+    test "create_qr_code/1 returns :ok for recording codes", %{tmp_dir: tmp_dir} do
       # create dummy file for test:
       file_path = writeTmpFile(tmp_dir)
 
