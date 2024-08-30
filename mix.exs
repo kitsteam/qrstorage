@@ -4,7 +4,7 @@ defmodule Qrstorage.MixProject do
   def project do
     [
       app: :qrstorage,
-      version: "0.2.1",
+      version: "0.3.0",
       elixir: "~> 1.11",
       elixirc_paths: elixirc_paths(Mix.env()),
       start_permanent: Mix.env() == :prod,
@@ -59,7 +59,7 @@ defmodule Qrstorage.MixProject do
       {:ex_aws_s3, "2.5.3"},
       {:cloak, "1.1.4"},
       {:sobelow, "0.13.0", only: [:dev, :test], runtime: false},
-      {:deepl_ex, git: "https://github.com/b310-digital/deepl_ex.git", branch: "60-allow-detection-of-source-language"},
+      {:deepl_ex, "0.4.0"},
       {:tesla, "1.12.1"}
     ]
   end
