@@ -60,7 +60,8 @@ defmodule Qrstorage.MixProject do
       {:cloak, "1.1.4"},
       {:sobelow, "0.13.0", only: [:dev, :test], runtime: false},
       {:deepl_ex, "0.4.0"},
-      {:tesla, "1.12.1"}
+      {:tesla, "1.12.1"},
+      {:tzdata, "1.1.2"}
     ]
   end
 
