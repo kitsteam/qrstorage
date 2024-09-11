@@ -2,7 +2,7 @@ defmodule Qrstorage.Services.TtsService do
   alias Qrstorage.QrCodes.QrCode
   alias Qrstorage.Services.Tts.TextToSpeechApiService
 
-  import QrstorageWeb.Gettext
+  use Gettext, backend: QrstorageWeb.Gettext
 
   require Logger
 

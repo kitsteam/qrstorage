@@ -7,7 +7,7 @@ defmodule Qrstorage.Services.QrCodeService do
   alias Qrstorage.Services.TtsService
   alias Qrstorage.Services.RateLimitingService
 
-  import QrstorageWeb.Gettext
+  use Gettext, backend: QrstorageWeb.Gettext
 
   require Logger
 
