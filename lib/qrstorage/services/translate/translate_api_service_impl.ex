@@ -20,7 +20,8 @@ defmodule Qrstorage.Services.Translate.TranslateApiServiceImpl do
     :cs => :CS,
     :el => :EL,
     :fi => :FI,
-    :hu => :HU
+    :hu => :HU,
+    :sk => :SK
   }
 
   @impl TranslateApiService

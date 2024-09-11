@@ -17,7 +17,8 @@ defmodule Qrstorage.Services.Tts.TextToSpeechMapping do
     :cs => %{"female" => "Katka"},
     :el => %{"female" => "Irini"},
     :fi => %{"female" => "Elina-DNN", "male" => "Benoit-premium"},
-    :hu => %{"female" => "Kinga", "male" => "Attila"}
+    :hu => %{"female" => "Kinga", "male" => "Attila"},
+    :sk => %{"female" => "Simona", "male" => "Jakub"}
   }
 
   @language_codes %{
@@ -36,7 +37,8 @@ defmodule Qrstorage.Services.Tts.TextToSpeechMapping do
     :cs => "cs_cz",
     :el => "el_gr",
     :fi => "fi_fi",
-    :hu => "hu_hu"
+    :hu => "hu_hu",
+    :sk => "sk_sk"
   }
 
   def voice(language, gender) when is_atom(language) do

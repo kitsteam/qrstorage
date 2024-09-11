@@ -48,3 +48,6 @@ msgstr ""
 
 msgid "hu"
 msgstr ""
+
+msgid "sk"
+msgstr ""
