@@ -22,7 +22,7 @@ defmodule QrstorageWeb do
       use Phoenix.Controller, namespace: QrstorageWeb
 
       import Plug.Conn
-      import QrstorageWeb.Gettext
+      use Gettext, backend: QrstorageWeb.Gettext
       alias QrstorageWeb.Router.Helpers, as: Routes
     end
   end
@@ -55,7 +55,7 @@ defmodule QrstorageWeb do
   def channel do
     quote do
       use Phoenix.Channel
-      import QrstorageWeb.Gettext
+      use Gettext, backend: QrstorageWeb.Gettext
     end
   end
 
@@ -72,7 +72,7 @@ defmodule QrstorageWeb do
       import QrstorageWeb.ErrorHelpers
       import QrstorageWeb.LanguageHelpers
       import QrstorageWeb.VoiceHelpers
-      import QrstorageWeb.Gettext
+      use Gettext, backend: QrstorageWeb.Gettext
       alias QrstorageWeb.Router.Helpers, as: Routes
     end
   end

@@ -1,7 +1,7 @@
 defmodule Qrstorage.Services.RecordingService do
   require Logger
 
-  import QrstorageWeb.Gettext
+  use Gettext, backend: QrstorageWeb.Gettext
 
   def extract_recording_from_params(params) do
     if Map.has_key?(params, "audio_file") do

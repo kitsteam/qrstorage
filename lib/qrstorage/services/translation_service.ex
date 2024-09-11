@@ -3,7 +3,7 @@ defmodule Qrstorage.Services.TranslationService do
   alias Qrstorage.QrCodes.QrCode
   alias Qrstorage.Repo
 
-  import QrstorageWeb.Gettext
+  use Gettext, backend: QrstorageWeb.Gettext
 
   require Logger
 
