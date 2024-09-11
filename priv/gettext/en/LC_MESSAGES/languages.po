@@ -61,3 +61,6 @@ msgstr "Finnish"
 
 msgid "hu"
 msgstr "Hungarian"
+
+msgid "sk"
+msgstr "Slovak"
