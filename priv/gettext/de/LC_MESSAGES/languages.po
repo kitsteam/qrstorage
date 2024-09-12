@@ -64,3 +64,6 @@ msgstr "Ungarisch"
 
 msgid "sk"
 msgstr "Slowakisch"
+
+msgid "ro"
+msgstr "Rumänisch"

@@ -51,3 +51,6 @@ msgstr ""
 
 msgid "sk"
 msgstr ""
+
+msgid "ro"
+msgstr ""
