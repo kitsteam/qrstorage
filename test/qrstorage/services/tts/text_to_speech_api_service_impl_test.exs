@@ -5,6 +5,20 @@ defmodule Qrstorage.Services.Tts.TextToSpeechApiServiceImplTest do
   alias Qrstorage.Services.Tts.TextToSpeechApiServiceImpl
 
   describe "text_to_audio/3" do
+    test "that text_to_audio/3 returns error with empty text" do
+      {result, log} = with_log(fn -> TextToSpeechApiServiceImpl.text_to_audio("", :de, "female") end)
+
+      assert result == {:error, "Error while creating text to speech transformation"}
+      assert log =~ "[error]"
+    end
+
+    test "that text_to_audio/3 returns error without text" do
+      {result, log} = with_log(fn -> TextToSpeechApiServiceImpl.text_to_audio(nil, :de, "female") end)
+
+      assert result == {:error, "Error while creating text to speech transformation"}
+      assert log =~ "[error]"
+    end
+
     test "that text_to_audio/3 returns file" do
       Tesla.Mock.mock(fn
         %{method: :post, url: "https://scapi-eu.readspeaker.com/a/speak"} ->
@@ -17,14 +31,12 @@ defmodule Qrstorage.Services.Tts.TextToSpeechApiServiceImplTest do
     test "that text_to_audio/3 logs error" do
       Tesla.Mock.mock(fn
         %{method: :post, url: "https://scapi-eu.readspeaker.com/a/speak"} ->
-          %Tesla.Env{status: 500, body: "Error while processig the request"}
+          %Tesla.Env{status: 500, body: "Error while processing the request"}
       end)
 
       {result, log} = with_log(fn -> TextToSpeechApiServiceImpl.text_to_audio("Hello World", :de, "female") end)
 
-      assert result ==
-               {:error, "Error while creating text to speech transformation"}
-
+      assert result == {:error, "Error while creating text to speech transformation"}
       assert log =~ "[error]"
     end
   end

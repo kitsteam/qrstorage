@@ -19,7 +19,10 @@ defmodule Qrstorage.Services.QrCodeService do
         case handle_types(qr_code, qr_code_params) do
           {:error, error_message} ->
             # delete qr code and show error
-            Logger.error("deleting qr code after creation, because the audio part could not be saved")
+            Logger.error(
+              "deleting qr code after creation, because the audio part could not be saved: #{error_message} #{qr_code.language} #{qr_code.voice}"
+            )
+
             Repo.delete(qr_code)
             {:error, QrCodes.change_qr_code(%QrCode{}), error_message}
 
