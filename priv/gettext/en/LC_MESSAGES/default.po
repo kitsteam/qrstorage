@@ -228,8 +228,8 @@ msgstr ""
 msgid "Error while extracting audio file from plug: Invalid content type"
 msgstr ""
 
-#: lib/qrstorage/services/qr_code_service.ex:85
-#: lib/qrstorage/services/qr_code_service.ex:89
+#: lib/qrstorage/services/qr_code_service.ex:88
+#: lib/qrstorage/services/qr_code_service.ex:92
 #, elixir-autogen, elixir-format
 msgid "Qr code recording not extracted"
 msgstr ""
@@ -260,8 +260,8 @@ msgstr ""
 msgid "QR-Code has been deleted?"
 msgstr ""
 
-#: lib/qrstorage/services/qr_code_service.ex:102
-#: lib/qrstorage/services/qr_code_service.ex:106
+#: lib/qrstorage/services/qr_code_service.ex:105
+#: lib/qrstorage/services/qr_code_service.ex:109
 #, elixir-autogen, elixir-format
 msgid "Qr code tts not stored"
 msgstr ""
@@ -281,7 +281,7 @@ msgstr ""
 msgid "Text was automatically translated by DeepL."
 msgstr "Text was automatically translated by DeepL."
 
-#: lib/qrstorage/services/qr_code_service.ex:55
+#: lib/qrstorage/services/qr_code_service.ex:58
 #, elixir-autogen, elixir-format
 msgid "Rate limit reached."
 msgstr ""
