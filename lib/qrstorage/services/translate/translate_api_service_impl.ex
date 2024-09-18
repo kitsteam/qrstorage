@@ -32,7 +32,7 @@ defmodule Qrstorage.Services.Translate.TranslateApiServiceImpl do
         {:ok, translation}
 
       {:error, message} ->
-        Logger.error("Error while translating text: #{:target_language} message: #{message}")
+        Logger.error("Error while translating text: #{target_language} message: #{message}")
         {:error}
     end
   end

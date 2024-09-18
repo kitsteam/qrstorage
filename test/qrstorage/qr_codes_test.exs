@@ -126,8 +126,8 @@ defmodule Qrstorage.QrCodesTest do
       assert {:error, %Ecto.Changeset{}} = QrCodes.create_qr_code(invalid_link_attrs)
     end
 
-    test "create_qr_code/1 with audio longer than 2000 returns error changeset" do
-      too_long = String.duplicate("a", 2001)
+    test "create_qr_code/1 with audio longer than 1000 returns error changeset" do
+      too_long = String.duplicate("a", 1001)
 
       invalid_audio_attrs = %{
         @valid_audio_attrs
@@ -137,8 +137,8 @@ defmodule Qrstorage.QrCodesTest do
       assert {:error, %Ecto.Changeset{}} = QrCodes.create_qr_code(invalid_audio_attrs)
     end
 
-    test "create_qr_code/1 with audio with length of 2000 returns ok" do
-      correct_length = String.duplicate("a", 2000)
+    test "create_qr_code/1 with audio with length of 1000 returns ok" do
+      correct_length = String.duplicate("a", 1000)
 
       valid_audio_attrs = %{
         @valid_audio_attrs
