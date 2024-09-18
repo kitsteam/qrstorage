@@ -1,4 +1,11 @@
+
 <div class="btn-group mb-3 w-100 d-flex justify-content-between" id="content-type-selector" role="group">
+  <%= radio_button(:qr_code, :content_type, "text",
+    class: "btn-check content-type",
+    autocomplete: "off",
+    checked: content_group_checked(@changeset, "text")
+  ) %>
+  <label class="btn btn-primary" for="qr_code_content_type_text">Text</label>
   <%= radio_button(:qr_code, :content_type, "audio",
     class: "btn-check content-type",
     autocomplete: "off",
@@ -11,12 +18,6 @@
     checked: content_group_checked(@changeset, "recording")
   ) %>
   <label class="btn btn-primary" for="qr_code_content_type_recording">Recording</label>
-  <%= radio_button(:qr_code, :content_type, "text",
-    class: "btn-check content-type",
-    autocomplete: "off",
-    checked: content_group_checked(@changeset, "text")
-  ) %>
-  <label class="btn btn-primary" for="qr_code_content_type_text">Text</label>
   <%= radio_button(:qr_code, :content_type, "link",
     class: "btn-check content-type",
     autocomplete: "off",
