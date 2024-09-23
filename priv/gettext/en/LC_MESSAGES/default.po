@@ -25,7 +25,7 @@ msgstr ""
 msgid "Oops, something went wrong! Please check the errors below."
 msgstr ""
 
-#: lib/qrstorage_web/templates/qr_code/form_audio.html.heex:57
+#: lib/qrstorage_web/templates/qr_code/form_audio.html.heex:59
 #: lib/qrstorage_web/templates/qr_code/form_link.html.heex:47
 #: lib/qrstorage_web/templates/qr_code/form_recording.html.heex:45
 #: lib/qrstorage_web/templates/qr_code/form_text.html.heex:56
@@ -38,22 +38,12 @@ msgstr ""
 msgid "Deletion Date"
 msgstr "Deleted"
 
-#: lib/qrstorage_web/templates/qr_code/show.html.heex:46
-#, elixir-autogen, elixir-format
-msgid "Audio Language"
-msgstr ""
-
-#: lib/qrstorage_web/templates/qr_code/form_audio.html.heex:37
-#, elixir-autogen, elixir-format
-msgid "audio language"
-msgstr ""
-
 #: lib/qrstorage_web/templates/qr_code/settings/_settings_delete_after.html.heex:3
 #, elixir-autogen, elixir-format
 msgid "delete after"
 msgstr ""
 
-#: lib/qrstorage_web/templates/qr_code/form_audio.html.heex:40
+#: lib/qrstorage_web/templates/qr_code/form_audio.html.heex:42
 #, elixir-autogen, elixir-format
 msgid "Audio Text to Speech via 3rd party"
 msgstr "We use DeepL and ReadSpeaker for text to speech and for translations."
@@ -228,8 +218,8 @@ msgstr ""
 msgid "Error while extracting audio file from plug: Invalid content type"
 msgstr ""
 
-#: lib/qrstorage/services/qr_code_service.ex:88
-#: lib/qrstorage/services/qr_code_service.ex:92
+#: lib/qrstorage/services/qr_code_service.ex:95
+#: lib/qrstorage/services/qr_code_service.ex:99
 #, elixir-autogen, elixir-format
 msgid "Qr code recording not extracted"
 msgstr ""
@@ -260,8 +250,8 @@ msgstr ""
 msgid "QR-Code has been deleted?"
 msgstr ""
 
-#: lib/qrstorage/services/qr_code_service.ex:105
-#: lib/qrstorage/services/qr_code_service.ex:109
+#: lib/qrstorage/services/qr_code_service.ex:112
+#: lib/qrstorage/services/qr_code_service.ex:116
 #, elixir-autogen, elixir-format
 msgid "Qr code tts not stored"
 msgstr ""
@@ -281,7 +271,22 @@ msgstr ""
 msgid "Text was automatically translated by DeepL."
 msgstr "Text was automatically translated by DeepL."
 
-#: lib/qrstorage/services/qr_code_service.ex:58
+#: lib/qrstorage/services/qr_code_service.ex:65
 #, elixir-autogen, elixir-format
 msgid "Rate limit reached."
+msgstr ""
+
+#: lib/qrstorage_web/templates/qr_code/show.html.heex:46
+#, elixir-autogen, elixir-format
+msgid "Language"
+msgstr ""
+
+#: lib/qrstorage_web/templates/qr_code/settings/_settings_tts.html.heex:2
+#, elixir-autogen, elixir-format
+msgid "TTS"
+msgstr ""
+
+#: lib/qrstorage_web/templates/qr_code/form_audio.html.heex:37
+#, elixir-autogen, elixir-format
+msgid "Target language"
 msgstr ""

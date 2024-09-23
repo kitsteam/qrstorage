@@ -16,4 +16,9 @@ SET delete_after_months =
       log: :info
     )
   end
+
+  @spec add_tts_to_existing_audio_codes(Ecto.Repo.t()) :: any()
+  def add_tts_to_existing_audio_codes(repo) do
+    repo.query!("UPDATE qrcodes SET tts = TRUE WHERE content_type = 'audio'", [], log: :info)
+  end
 end

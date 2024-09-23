@@ -1,4 +1,4 @@
-<%= if (@qr_code.content_type == :audio && !@qr_code.hide_text)  do %>
+<%= if (@qr_code.content_type == :audio && (!@qr_code.hide_text || !@qr_code.tts))  do %>
   <strong><%= gettext("Text") %></strong>
   <br />
   <div class="text-box">
@@ -28,7 +28,7 @@
   <p><%= @qr_code.text %></p>
 <% end %>
 
-<%= if @qr_code.content_type == :audio do %>
+<%= if @qr_code.content_type == :audio && @qr_code.tts do %>
   <div class="row">
     <div class="col-md-12">
       <%= render("partials/_player.html", conn: @conn, qr_code: @qr_code) %>
@@ -43,7 +43,7 @@
   </div>
   <%= if @qr_code.content_type == :audio do %>
     <div class="col-6">
-      <strong><%= gettext("Audio Language") %></strong> <br />
+      <strong><%= gettext("Language") %></strong> <br />
       <%= Gettext.dgettext(QrstorageWeb.Gettext, "languages", Atom.to_string(@qr_code.language)) %>
       <%= if show_translation_origin_for_hidden_text(@qr_code) do %>
         <br />

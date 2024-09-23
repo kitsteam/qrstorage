@@ -25,7 +25,7 @@ msgstr ""
 msgid "Oops, something went wrong! Please check the errors below."
 msgstr "Oops, da ist etwas schiefgelaufen. Bitte korrigiere die folgenden Fehler."
 
-#: lib/qrstorage_web/templates/qr_code/form_audio.html.heex:57
+#: lib/qrstorage_web/templates/qr_code/form_audio.html.heex:59
 #: lib/qrstorage_web/templates/qr_code/form_link.html.heex:47
 #: lib/qrstorage_web/templates/qr_code/form_recording.html.heex:45
 #: lib/qrstorage_web/templates/qr_code/form_text.html.heex:56
@@ -38,22 +38,12 @@ msgstr "Erstellen"
 msgid "Deletion Date"
 msgstr "Löschdatum"
 
-#: lib/qrstorage_web/templates/qr_code/show.html.heex:46
-#, elixir-autogen, elixir-format
-msgid "Audio Language"
-msgstr "Sprachausgabe"
-
-#: lib/qrstorage_web/templates/qr_code/form_audio.html.heex:37
-#, elixir-autogen, elixir-format
-msgid "audio language"
-msgstr "Sprachausgabe"
-
 #: lib/qrstorage_web/templates/qr_code/settings/_settings_delete_after.html.heex:3
 #, elixir-autogen, elixir-format
 msgid "delete after"
 msgstr "Löschung bei Inaktivität in Monaten"
 
-#: lib/qrstorage_web/templates/qr_code/form_audio.html.heex:40
+#: lib/qrstorage_web/templates/qr_code/form_audio.html.heex:42
 #, elixir-autogen, elixir-format
 msgid "Audio Text to Speech via 3rd party"
 msgstr "Für die Sprachausgabe und die Übersetzung kommunizieren wir mit DeepL und ReadSpeaker."
@@ -66,7 +56,7 @@ msgstr "Gib deinen Text hier ein!"
 #: lib/qrstorage_web/templates/qr_code/settings/_settings_hide_text.html.heex:3
 #, elixir-autogen, elixir-format
 msgid "hide text"
-msgstr "Text in Ausgabe verstecken"
+msgstr "Text bei Sprachausgabe ausblenden"
 
 #: lib/qrstorage_web/templates/qr_code/download.html.heex:67
 #, elixir-autogen, elixir-format
@@ -205,7 +195,7 @@ msgstr "Dieses Tool darf nur in Bildungskontexten genutzt werden. Die Eingabe se
 #: lib/qrstorage_web/templates/qr_code/new.html.heex:2
 #, elixir-autogen, elixir-format
 msgid "Create speaking QR-Codes!"
-msgstr "Erstelle sprechende QR-Codes!"
+msgstr "Übersetze deinen Text!"
 
 #: lib/qrstorage_web/templates/qr_code/new.html.heex:5
 #, elixir-autogen, elixir-format
@@ -228,8 +218,8 @@ msgstr "Fehler beim Upload der Audio-Datei."
 msgid "Error while extracting audio file from plug: Invalid content type"
 msgstr "Fehler beim Upload der Audio-Datei."
 
-#: lib/qrstorage/services/qr_code_service.ex:88
-#: lib/qrstorage/services/qr_code_service.ex:92
+#: lib/qrstorage/services/qr_code_service.ex:95
+#: lib/qrstorage/services/qr_code_service.ex:99
 #, elixir-autogen, elixir-format
 msgid "Qr code recording not extracted"
 msgstr "Fehler beim Upload der Audio-Datei."
@@ -260,8 +250,8 @@ msgstr "Die Seite konnte nicht gefunden werden."
 msgid "QR-Code has been deleted?"
 msgstr "QR-Codes werden nach Inaktivität und Ablauf der ausgewählten Speicherdauer gelöscht."
 
-#: lib/qrstorage/services/qr_code_service.ex:105
-#: lib/qrstorage/services/qr_code_service.ex:109
+#: lib/qrstorage/services/qr_code_service.ex:112
+#: lib/qrstorage/services/qr_code_service.ex:116
 #, elixir-autogen, elixir-format
 msgid "Qr code tts not stored"
 msgstr ""
@@ -281,7 +271,22 @@ msgstr "Aufnahmen werden nach 30 Tagen Inaktivität gelöscht."
 msgid "Text was automatically translated by DeepL."
 msgstr "Der Text wurde automatisch übersetzt von DeepL."
 
-#: lib/qrstorage/services/qr_code_service.ex:58
+#: lib/qrstorage/services/qr_code_service.ex:65
 #, elixir-autogen, elixir-format
 msgid "Rate limit reached."
 msgstr "Derzeit können keine QR-Codes erstellt werden. Bitte versuch es später erneut."
+
+#: lib/qrstorage_web/templates/qr_code/show.html.heex:46
+#, elixir-autogen, elixir-format
+msgid "Language"
+msgstr "Sprache"
+
+#: lib/qrstorage_web/templates/qr_code/settings/_settings_tts.html.heex:2
+#, elixir-autogen, elixir-format
+msgid "TTS"
+msgstr "Sprachausgabe aktivieren"
+
+#: lib/qrstorage_web/templates/qr_code/form_audio.html.heex:37
+#, elixir-autogen, elixir-format
+msgid "Target language"
+msgstr "Zielsprache"

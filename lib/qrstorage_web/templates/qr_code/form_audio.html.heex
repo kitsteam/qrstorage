@@ -34,8 +34,10 @@
     </div>
   </div>
   <div class="form-group">
-    <%= label(f, :language, gettext("audio language")) %>
+    <%= label(f, :language, gettext("Target language")) %>
     <%= select(f, :language, translated_languages_for_select(), class: "form-control") %>
+    <%= render("settings/_settings_tts.html", f: f) %>
+
     <%= error_tag(f, :language) %>
     <p class="form-text text-muted"><%= gettext("Audio Text to Speech via 3rd party") %></p>
   </div>

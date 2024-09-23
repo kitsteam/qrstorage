@@ -18,13 +18,24 @@ defmodule Qrstorage.Services.QrCodeServiceTest do
     "hp" => nil
   }
 
+  @translation_attrs %{
+    "text" => "some text",
+    "content_type" => "audio",
+    "voice" => "female",
+    "language" => "de",
+    "dots_type" => "dots",
+    "hp" => nil,
+    "tts" => "false"
+  }
+
   @tts_attrs %{
     "text" => "some text",
     "content_type" => "audio",
     "voice" => "female",
     "language" => "de",
     "dots_type" => "dots",
-    "hp" => nil
+    "hp" => nil,
+    "tts" => "true"
   }
 
   @recording_attrs %{
@@ -153,6 +164,13 @@ defmodule Qrstorage.Services.QrCodeServiceTest do
       assert status == :error
       assert logs =~ "deleting qr code after creation"
       assert qr_code_count_start == qr_code_count_end
+    end
+
+    test "create_qr_code/1 does not call tts when the tts value is false" do
+      mock_language_service_success()
+      {:ok, qr_code} = QrCodeService.create_qr_code(@translation_attrs)
+
+      assert qr_code.tts == false
     end
 
     test "create_qr_code/1 does not create code when rate limit has been reached" do

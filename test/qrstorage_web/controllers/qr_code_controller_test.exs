@@ -18,7 +18,8 @@ defmodule QrstorageWeb.QrCodeControllerTest do
     content_type: "text",
     dots_type: "dots",
     voice: nil,
-    hp: nil
+    hp: nil,
+    tts: nil
   }
 
   @invalid_attrs %{text: nil, language: nil, content_type: "text"}
@@ -28,7 +29,8 @@ defmodule QrstorageWeb.QrCodeControllerTest do
     content_type: "text",
     dots_type: "dots",
     voice: nil,
-    translated_text: nil
+    translated_text: nil,
+    tts: false
   }
 
   def fixture(attrs) do
@@ -101,7 +103,7 @@ defmodule QrstorageWeb.QrCodeControllerTest do
         {:ok, %{status_code: 200, body: mock_file_content}}
       end)
 
-      audio_attrs = %{@create_attrs | content_type: "audio", language: "de", voice: "male"}
+      audio_attrs = %{@create_attrs | content_type: "audio", language: "de", voice: "male", tts: "true"}
 
       conn = post(conn, Routes.qr_code_path(conn, :create), qr_code: audio_attrs)
       assert %{id: id} = redirected_params(conn)
@@ -131,7 +133,8 @@ defmodule QrstorageWeb.QrCodeControllerTest do
         @create_attrs
         | content_type: "audio",
           language: "de",
-          voice: "male"
+          voice: "male",
+          tts: "true"
       }
 
       conn = post(conn, Routes.qr_code_path(conn, :create), qr_code: audio_attrs)
@@ -167,7 +170,8 @@ defmodule QrstorageWeb.QrCodeControllerTest do
         @create_attrs
         | content_type: "audio",
           language: "de",
-          voice: "male"
+          voice: "male",
+          tts: "true"
       }
 
       conn = post(conn, Routes.qr_code_path(conn, :create), qr_code: audio_attrs)
@@ -438,7 +442,7 @@ defmodule QrstorageWeb.QrCodeControllerTest do
   end
 
   defp create_audio_qr_code(_) do
-    attrs = %{@fixture_attrs | content_type: "audio", language: "de", voice: "female"}
+    attrs = %{@fixture_attrs | content_type: "audio", language: "de", voice: "female", tts: true}
     audio_qr_code = fixture(attrs)
 
     # we set translated_text to text, since this is what happens when deepl detects no difference between source and target language
