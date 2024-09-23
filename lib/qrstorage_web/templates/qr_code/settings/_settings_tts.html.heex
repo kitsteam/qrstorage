@@ -1,8 +1,5 @@
 <br/>
-    <%= label(@f, :tts, gettext("TTS")) %>
-
-        <div class="form-check form-switch">
-          <%= checkbox(@f, :tts,
-            class: "form-control form-check-input"
-          ) %>
-        </div>
+<%= label(@f, :tts, gettext("TTS")) %>
+<div class="form-check form-switch">
+  <%= checkbox(@f, :tts, class: "form-control form-check-input") %>
+</div>

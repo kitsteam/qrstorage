@@ -5,7 +5,7 @@
     autocomplete: "off",
     checked: content_group_checked(@changeset, "audio")
   ) %>
-  <label class="btn btn-primary" for="qr_code_content_type_audio">Sprache</label>
+  <label class="btn btn-primary" for="qr_code_content_type_audio">Übersetzung</label>
   <%= radio_button(:qr_code, :content_type, "text",
     class: "btn-check content-type",
     autocomplete: "off",
@@ -17,7 +17,7 @@
     autocomplete: "off",
     checked: content_group_checked(@changeset, "recording")
   ) %>
-  <label class="btn btn-primary" for="qr_code_content_type_recording">Recording</label>
+  <label class="btn btn-primary" for="qr_code_content_type_recording">Aufnahme</label>
   <%= radio_button(:qr_code, :content_type, "link",
     class: "btn-check content-type",
     autocomplete: "off",

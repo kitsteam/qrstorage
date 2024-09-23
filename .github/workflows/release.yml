@@ -15,7 +15,6 @@ on:
   push:
     branches: 
       - main
-      - 346-feature-make-tts-optional
   release:
     types: [published]
   
