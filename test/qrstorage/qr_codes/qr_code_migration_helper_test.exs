@@ -37,6 +37,20 @@ defmodule Qrstorage.QrCodes.QrCodeMigrationHelperTest do
     end
   end
 
+  describe "add_tts_to_audio_codes/1" do
+    test "sets tts to correct value for exisitng audio codes" do
+      qr_code = audio_qr_code_fixture()
+      QrCodeMigrationHelper.add_tts_to_existing_audio_codes(Qrstorage.Repo)
+      assert QrCodes.get_qr_code!(qr_code.id).tts
+    end
+
+    test "sets tts to false for other type" do
+      qr_code = qr_code_fixture()
+      QrCodeMigrationHelper.add_tts_to_existing_audio_codes(Qrstorage.Repo)
+      assert !QrCodes.get_qr_code!(qr_code.id).tts
+    end
+  end
+
   defp updateDeleteAfterDate(qr_code, date) do
     qr_code
     |> cast(%{delete_after: date}, [:delete_after])

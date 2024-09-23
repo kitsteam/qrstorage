@@ -9,7 +9,7 @@ defmodule QrstorageWeb.QrCodeView do
     # Without changes, we default to show the content group of the type text:
     if changeset.changes == %{} do
       case content_group do
-        "text" -> true
+        "audio" -> true
         _ -> false
       end
     else

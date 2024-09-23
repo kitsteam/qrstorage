@@ -22,10 +22,7 @@ defmodule Qrstorage.ApiCase do
       {:ok, mock_file_content}
     end)
 
-    Qrstorage.Services.Translate.TranslateApiServiceMock
-    |> expect(:translate, fn _text, _language ->
-      {:ok, translated_text}
-    end)
+    mock_language_service_success(translated_text)
 
     mock_file_content
   end
@@ -46,6 +43,13 @@ defmodule Qrstorage.ApiCase do
     Qrstorage.Services.Translate.TranslateApiServiceMock
     |> expect(:translate, fn _text, _language ->
       {:error, "text not translated"}
+    end)
+  end
+
+  def mock_language_service_success(translated_text \\ "translated text") do
+    Qrstorage.Services.Translate.TranslateApiServiceMock
+    |> expect(:translate, fn _text, _language ->
+      {:ok, translated_text}
     end)
   end
 end

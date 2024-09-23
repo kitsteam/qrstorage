@@ -51,8 +51,15 @@ defmodule Qrstorage.Services.QrCodeService do
     if RateLimitingService.allow?(qr_code) do
       # always add translation and get audio:
       case add_translation(qr_code) do
-        {:error, error_message} -> {:error, error_message}
-        {:ok, qr_code_with_translation} -> add_tts(qr_code_with_translation)
+        {:error, error_message} ->
+          {:error, error_message}
+
+        {:ok, qr_code_with_translation} ->
+          if qr_code.tts do
+            add_tts(qr_code_with_translation)
+          else
+            {:ok, qr_code_with_translation}
+          end
       end
     else
       {:error, gettext("Rate limit reached.")}

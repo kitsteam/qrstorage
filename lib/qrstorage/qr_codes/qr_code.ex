@@ -42,6 +42,7 @@ defmodule Qrstorage.QrCodes.QrCode do
     field :voice, Ecto.Enum, values: @voices
     field :hp, :string, virtual: true
     field :last_accessed_at, :utc_datetime
+    field :tts, :boolean, default: false
 
     timestamps()
   end
@@ -59,7 +60,8 @@ defmodule Qrstorage.QrCodes.QrCode do
       :deltas,
       :dots_type,
       :voice,
-      :hp
+      :hp,
+      :tts
     ])
     |> validate_length(:hp, is: 0)
     |> scrub_text
