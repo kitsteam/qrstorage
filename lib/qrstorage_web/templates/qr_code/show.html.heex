@@ -55,7 +55,7 @@
   <% end %>
 </div>
 
-<%= if @qr_code.content_type == :audio do %>
+<%= if @qr_code.content_type == :audio && @qr_code.tts do %>
   <div class="row mt-3">
     <div class="col">
       <%= link(gettext("Download"),
