@@ -11,23 +11,22 @@ defmodule QrstorageWeb.QrCodeController do
   def audio_file(conn, %{"id" => id}) do
     qr_code = Repo.get!(QrCode, id)
 
-    case qr_code.content_type do
-      :recording ->
+    cond do
+      qr_code.content_type == :recording ->
         send_file(conn, qr_code)
 
-      :audio ->
-        if qr_code.audio_file != nil do
-          # old qr_codes will have the file stored in the database, so the field is populated. newer codes will need to access the object storage:
-          conn
-          |> put_resp_content_type(qr_code.audio_file_type, nil)
-          |> send_resp(200, qr_code.audio_file)
-        else
-          send_file(conn, qr_code)
-        end
-
-      _ ->
+      qr_code.content_type == :audio && qr_code.audio_file != nil ->
+        # old qr_codes will have the file stored in the database, so the field is populated. newer codes will need to access the object storage:
         conn
-        |> send_resp(404, "qr code type does not have a audio file")
+        |> put_resp_content_type(qr_code.audio_file_type, nil)
+        |> send_resp(200, qr_code.audio_file)
+
+      qr_code.content_type == :audio && qr_code.tts ->
+        send_file(conn, qr_code)
+
+      true ->
+        conn
+        |> send_resp(404, "qr code type does not have an audio file")
     end
   end
 
