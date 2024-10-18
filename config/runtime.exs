@@ -18,7 +18,8 @@ if config_env() == :prod do
            "token",
            "private_key",
            "private_key_id",
-           "service_account"
+           "service_account",
+           "authorization"
          ]}
       ],
       metadata: {:all_except, [:conn, :domain, :application]}
