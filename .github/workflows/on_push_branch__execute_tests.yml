@@ -8,7 +8,7 @@ jobs:
     # Currently, this need to be synced manually with the Dockerfile. In the future, the workflow should be changed,
     # so that a development container is built from the Dockerfile, pushed, and then re-used in the following steps.
     # This would also remove the need to install cmake manually in each step:
-    container: hexpm/elixir:1.17.2-erlang-27.0.1-debian-bookworm-20240812-slim
+    container: hexpm/elixir:1.17.3-erlang-27.1.2-debian-bookworm-20241111-slim
 
     steps:
       # See https://github.com/actions/checkout
@@ -37,7 +37,7 @@ jobs:
     # Containers must run in Linux based operating systems
     runs-on: ubuntu-latest
     # Docker Hub image that `container-job` executes in
-    container: hexpm/elixir:1.17.2-erlang-27.0.1-debian-bookworm-20240812-slim
+    container: hexpm/elixir:1.17.3-erlang-27.1.2-debian-bookworm-20241111-slim
 
     needs: build_deps
 
@@ -95,7 +95,7 @@ jobs:
 
   check_mix_format:
     runs-on: ubuntu-latest
-    container: hexpm/elixir:1.17.2-erlang-27.0.1-debian-bookworm-20240812-slim
+    container: hexpm/elixir:1.17.3-erlang-27.1.2-debian-bookworm-20241111-slim
 
     needs: build_deps
 
@@ -118,13 +118,16 @@ jobs:
 
   check_mix_sobelow:
     runs-on: ubuntu-latest
-    container: hexpm/elixir:1.17.2-erlang-27.0.1-debian-bookworm-20240812-slim
+    container: hexpm/elixir:1.17.3-erlang-27.1.2-debian-bookworm-20241111-slim
 
     needs: build_deps
 
     steps:
       - name: Check out repository code
         uses: actions/checkout@v4
+      
+        # we need cmake for fast_sanitize:
+      - run: apt-get -y update && apt-get -y install build-essential cmake
 
       # install hex:
       - run: mix local.hex --force && mix local.rebar --force
