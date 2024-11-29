@@ -52,7 +52,7 @@ defmodule Qrstorage.MixProject do
       {:cowboy, "2.12.0"},
       {:oban, "2.18.3"},
       {:fast_sanitize, "0.2.3"},
-      {:fast_html, "2.3.0"},
+      {:fast_html, "2.4.0"},
       {:mox, "1.2.0", only: :test},
       {:logger_json, "6.0.3"},
       {:ex_aws, "2.5.7"},
