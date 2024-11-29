@@ -9,6 +9,6 @@
     "extendable-media-recorder-wav-encoder": "^7.0.121",
     "lamejs": "github:zhuker/lamejs#582bbba6a12f981b984d8fb9e1874499fed85675",
     "quill": "^2.0.2",
-    "quill-image-compress": "^1.2.33"
+    "quill-image-compress": "^2.0.3"
   }
 }
