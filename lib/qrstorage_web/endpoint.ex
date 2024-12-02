@@ -9,7 +9,8 @@ defmodule QrstorageWeb.Endpoint do
     store: :cookie,
     secure: true,
     key: "_qrstorage_key",
-    signing_salt: "w4G2Qpx/"
+    signing_salt: "w4G2Qpx/",
+    same_site: "Strict"
   ]
 
   # Serve at "/" the static files from "priv/static" directory.
