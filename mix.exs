@@ -56,7 +56,7 @@ defmodule Qrstorage.MixProject do
       {:mox, "1.2.0", only: :test},
       {:logger_json, "6.2.1"},
       {:ex_aws, "2.5.7"},
-      {:ex_aws_s3, "2.5.5"},
+      {:ex_aws_s3, "2.5.6"},
       {:cloak, "1.1.4"},
       {:sobelow, "0.13.0", only: [:dev, :test], runtime: false},
       {:deepl_ex, "0.4.0"},
