@@ -103,7 +103,7 @@ msgstr ""
 msgid "Do you really want to delete this QR code? This action cannot be undone:"
 msgstr ""
 
-#: lib/qrstorage_web/controllers/qr_code_controller.ex:94
+#: lib/qrstorage_web/controllers/qr_code_controller.ex:93
 #, elixir-autogen, elixir-format
 msgid "Successfully deleted QR code."
 msgstr ""
