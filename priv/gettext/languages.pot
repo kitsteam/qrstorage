@@ -57,3 +57,6 @@ msgstr ""
 
 msgid "no"
 msgstr ""
+
+msgid "da"
+msgstr ""

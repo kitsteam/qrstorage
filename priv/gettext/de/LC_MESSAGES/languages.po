@@ -70,3 +70,6 @@ msgstr "Rumänisch"
 
 msgid "no"
 msgstr "Norwegisch"
+
+msgid "da"
+msgstr "Dänisch"
