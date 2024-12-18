@@ -73,3 +73,6 @@ msgstr "Norwegisch"
 
 msgid "da"
 msgstr "Dänisch"
+
+msgid "sv"
+msgstr "Schwedisch"
