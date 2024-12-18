@@ -60,3 +60,6 @@ msgstr ""
 
 msgid "da"
 msgstr ""
+
+msgid "sv"
+msgstr ""
