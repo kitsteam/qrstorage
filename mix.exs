@@ -40,7 +40,7 @@ defmodule Qrstorage.MixProject do
       {:phoenix_html_helpers, "1.0.1"},
       {:phoenix_view, "2.0.4"},
       {:phoenix_live_reload, "1.5.3", only: :dev},
-      {:phoenix_live_dashboard, "0.8.5"},
+      {:phoenix_live_dashboard, "0.8.6"},
       {:esbuild, "0.8.2", runtime: Mix.env() == :dev},
       {:dart_sass, "0.7.0", runtime: Mix.env() == :dev},
       {:telemetry_metrics, "1.0.0"},
