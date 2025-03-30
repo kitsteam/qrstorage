@@ -61,7 +61,7 @@ defmodule Qrstorage.MixProject do
       {:sobelow, "0.13.0", only: [:dev, :test], runtime: false},
       {:deepl_ex, "0.4.0"},
       {:tesla, "1.13.2"},
-      {:tzdata, "1.1.2"}
+      {:tzdata, "1.1.3"}
     ]
   end
 
