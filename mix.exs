@@ -49,7 +49,7 @@ defmodule Qrstorage.MixProject do
       {:timex, "3.7.11"},
       {:jason, "1.4.4"},
       {:plug_cowboy, "2.7.3"},
-      {:cowboy, "2.12.0"},
+      {:cowboy, "2.13.0"},
       {:oban, "2.19.4"},
       {:fast_sanitize, "0.2.3"},
       {:fast_html, "2.4.1"},
