@@ -1,5 +1,7 @@
 name: on_push_branch__execute_tests
-
+permissions:
+  contents: read
+  
 on: [push, pull_request]
 
 jobs:
