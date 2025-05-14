@@ -10,7 +10,11 @@
 # You can also reference a tag or branch, but the action may change without warning.
 
 name: Create and publish a Docker image
-
+permissions:
+  packages: write
+  contents: read
+  id-token: write
+  
 on:
   push:
     branches: 
