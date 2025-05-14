@@ -1,8 +1,11 @@
 name: on_push_branch__execute_tests
 permissions:
   contents: read
-  
+
 on: [push, pull_request]
+
+env:
+  CONTAINER_NAME: hexpm/elixir:1.18.3-erlang-27.3.4-debian-bookworm-20250428-slim
 
 jobs:
   build_deps:
@@ -10,7 +13,7 @@ jobs:
     # Currently, this need to be synced manually with the Dockerfile. In the future, the workflow should be changed,
     # so that a development container is built from the Dockerfile, pushed, and then re-used in the following steps.
     # This would also remove the need to install cmake manually in each step:
-    container: hexpm/elixir:1.17.3-erlang-27.1.2-debian-bookworm-20241111-slim
+    container: hexpm/elixir:1.18.3-erlang-27.3.4-debian-bookworm-20250428-slim
 
     steps:
       # See https://github.com/actions/checkout
@@ -39,7 +42,7 @@ jobs:
     # Containers must run in Linux based operating systems
     runs-on: ubuntu-latest
     # Docker Hub image that `container-job` executes in
-    container: hexpm/elixir:1.17.3-erlang-27.1.2-debian-bookworm-20241111-slim
+    container: hexpm/elixir:1.18.3-erlang-27.3.4-debian-bookworm-20250428-slim
 
     needs: build_deps
 
@@ -97,14 +100,14 @@ jobs:
 
   check_mix_format:
     runs-on: ubuntu-latest
-    container: hexpm/elixir:1.17.3-erlang-27.1.2-debian-bookworm-20241111-slim
+    container: hexpm/elixir:1.18.3-erlang-27.3.4-debian-bookworm-20250428-slim
 
     needs: build_deps
 
     steps:
       - name: Check out repository code
         uses: actions/checkout@v4
-      
+
       # install hex:
       - run: mix local.hex --force && mix local.rebar --force
 
@@ -120,14 +123,14 @@ jobs:
 
   check_mix_sobelow:
     runs-on: ubuntu-latest
-    container: hexpm/elixir:1.17.3-erlang-27.1.2-debian-bookworm-20241111-slim
+    container: hexpm/elixir:1.18.3-erlang-27.3.4-debian-bookworm-20250428-slim
 
     needs: build_deps
 
     steps:
       - name: Check out repository code
         uses: actions/checkout@v4
-      
+
         # we need cmake for fast_sanitize:
       - run: apt-get -y update && apt-get -y install build-essential cmake
 
