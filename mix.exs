@@ -58,7 +58,7 @@ defmodule Qrstorage.MixProject do
       {:ex_aws, "2.5.9"},
       {:ex_aws_s3, "2.5.7"},
       {:cloak, "1.1.4"},
-      {:sobelow, "0.13.0", only: [:dev, :test], runtime: false},
+      {:sobelow, "0.14.0", only: [:dev, :test], runtime: false},
       {:deepl_ex, "0.4.0"},
       {:tesla, "1.14.1"},
       {:tzdata, "1.1.3"}
