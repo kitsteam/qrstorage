@@ -16,7 +16,7 @@ defmodule Qrstorage.Services.Tts.TextToSpeechMapping do
     :uk => %{"female" => "Mila"},
     :cs => %{"female" => "Katka"},
     :el => %{"female" => "Irini"},
-    :fi => %{"female" => "Elina-DNN", "male" => "Benoit-premium"},
+    :fi => %{"female" => "Elina-DNN"},
     :hu => %{"female" => "Kinga", "male" => "Attila"},
     :sk => %{"female" => "Simona", "male" => "Jakub"},
     :ro => %{"female" => "Adina", "male" => "Teodor"},
