@@ -46,7 +46,7 @@ defmodule Qrstorage.MixProject do
       {:telemetry_metrics, "1.1.0"},
       {:telemetry_poller, "1.2.0"},
       {:gettext, "0.26.2"},
-      {:timex, "3.7.11"},
+      {:timex, "3.7.12"},
       {:jason, "1.4.4"},
       {:plug_cowboy, "2.7.3"},
       {:cowboy, "2.13.0"},
