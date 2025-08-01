@@ -4,8 +4,6 @@ defmodule Qrstorage.Services.Tts.TextToSpeechApiServiceImpl do
 
   @behaviour TextToSpeechApiService
 
-  use Tesla
-
   require Logger
 
   @impl TextToSpeechApiService
@@ -32,7 +30,7 @@ defmodule Qrstorage.Services.Tts.TextToSpeechApiServiceImpl do
       Tesla.Middleware.FormUrlencoded,
       # we need redirects, since the read speaker api redirects to the created .mp3 file
       {Tesla.Middleware.FollowRedirects, max_redirects: 1},
-      {Tesla.Middleware.Logger, debug: false, log_level: &custom_log_level/1}
+      {Tesla.Middleware.Logger, debug: false, level: &custom_log_level/1}
     ]
 
     Tesla.client(middleware)
@@ -53,7 +51,7 @@ defmodule Qrstorage.Services.Tts.TextToSpeechApiServiceImpl do
     end
   end
 
-  defp custom_log_level(env) do
+  defp custom_log_level({:ok, env}) do
     case env.status do
       302 -> :info
       _ -> :default
