@@ -23,7 +23,7 @@
     </p>
 
     <p class="form-text text-danger">
-      <%= gettext("Recordings are deleted within 30 days of inactivity.") %>
+      <%= gettext("Recordings are deleted within 30 days of inactivity by default.") %>
     </p>
 
     <div class="invalid-feedback">
@@ -35,6 +35,7 @@
 
   <div class="collapse mb-3" id="collapse-settings-recording">
     <div class="card card-body">
+      <%= render("settings/_settings_delete_after.html", f: f) %>
       <%= render("settings/_settings_dots_types.html", f: f) %>
       <%= render("settings/_settings_colorpicker.html", f: f) %>
     </div>

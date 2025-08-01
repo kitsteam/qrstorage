@@ -165,12 +165,9 @@ defmodule Qrstorage.QrCodes.QrCode do
   end
 
   def validate_delete_after_months_by_type(changeset, field) do
-    # We want to make sure that links and recordings are stored for 0 months and 1 month
+    # We want to make sure that links are stored for 0 months
     validate_change(changeset, field, fn field, value ->
       case get_field(changeset, :content_type) do
-        :recording ->
-          if value == 1, do: [], else: [{field, "Storage duration is invalid"}]
-
         :link ->
           if value == 0, do: [], else: [{field, "Storage duration is invalid"}]
 
