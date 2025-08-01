@@ -81,30 +81,25 @@ defmodule Qrstorage.Services.QrCodeServiceTest do
       assert qr_code.text == "https://kits.blog"
     end
 
-    test "create_qrcode/1 returns :error, when a recording code has a delete_after_months date set to something else than 1" do
-      invalid_attrs = %{@recording_attrs | "delete_after_months" => "2"}
+    for months <- ["1", "24", "48"] do
+      @tag :tmp_dir
+      test "create_qrcode/1 returns :ok, when a recording code has a delete_after_months date set to #{months}", %{
+        tmp_dir: tmp_dir
+      } do
+        # create dummy file for test:
+        file_path = writeTmpFile(tmp_dir)
 
-      {:error, changeset} = QrCodeService.create_qr_code(invalid_attrs)
-      assert "Storage duration is invalid" in errors_on(changeset).delete_after_months
-    end
+        params = %{
+          @recording_attrs
+          | "audio_file" => %Plug.Upload{path: file_path, content_type: "audio/mp3", filename: "recording.mp3"},
+            "delete_after_months" => unquote(months)
+        }
 
-    @tag :tmp_dir
-    test "create_qrcode/1 returns :ok, when a recording code has a delete_after_months date set to 0", %{
-      tmp_dir: tmp_dir
-    } do
-      # create dummy file for test:
-      file_path = writeTmpFile(tmp_dir)
+        mockStorageServicePutObjectSuccess()
 
-      params = %{
-        @recording_attrs
-        | "audio_file" => %Plug.Upload{path: file_path, content_type: "audio/mp3", filename: "recording.mp3"},
-          "delete_after_months" => "1"
-      }
-
-      mockStorageServicePutObjectSuccess()
-
-      {:ok, qr_code} = QrCodeService.create_qr_code(params)
-      assert qr_code.text == "a"
+        {:ok, qr_code} = QrCodeService.create_qr_code(params)
+        assert qr_code.text == "a"
+      end
     end
   end
 

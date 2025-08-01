@@ -27,7 +27,7 @@ msgstr ""
 
 #: lib/qrstorage_web/templates/qr_code/form_audio.html.heex:59
 #: lib/qrstorage_web/templates/qr_code/form_link.html.heex:47
-#: lib/qrstorage_web/templates/qr_code/form_recording.html.heex:45
+#: lib/qrstorage_web/templates/qr_code/form_recording.html.heex:46
 #: lib/qrstorage_web/templates/qr_code/form_text.html.heex:56
 #, elixir-autogen, elixir-format
 msgid "Save"
@@ -38,7 +38,7 @@ msgstr ""
 msgid "Deletion Date"
 msgstr "Deleted"
 
-#: lib/qrstorage_web/templates/qr_code/settings/_settings_delete_after.html.heex:3
+#: lib/qrstorage_web/templates/qr_code/settings/_settings_delete_after.html.heex:4
 #, elixir-autogen, elixir-format
 msgid "delete after"
 msgstr ""
@@ -229,7 +229,7 @@ msgstr ""
 msgid "Record start/stop"
 msgstr ""
 
-#: lib/qrstorage_web/templates/qr_code/form_recording.html.heex:50
+#: lib/qrstorage_web/templates/qr_code/form_recording.html.heex:51
 #, elixir-autogen, elixir-format
 msgid "Recording is disabled or not supported."
 msgstr ""
@@ -263,7 +263,7 @@ msgstr ""
 
 #: lib/qrstorage_web/templates/qr_code/form_recording.html.heex:26
 #, elixir-autogen, elixir-format
-msgid "Recordings are deleted within 30 days of inactivity."
+msgid "Recordings are deleted within 30 days of inactivity by default."
 msgstr ""
 
 #: lib/qrstorage_web/templates/qr_code/partials/_translation_hint.html.heex:9

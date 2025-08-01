@@ -27,7 +27,7 @@ msgstr "Oops, da ist etwas schiefgelaufen. Bitte korrigiere die folgenden Fehler
 
 #: lib/qrstorage_web/templates/qr_code/form_audio.html.heex:59
 #: lib/qrstorage_web/templates/qr_code/form_link.html.heex:47
-#: lib/qrstorage_web/templates/qr_code/form_recording.html.heex:45
+#: lib/qrstorage_web/templates/qr_code/form_recording.html.heex:46
 #: lib/qrstorage_web/templates/qr_code/form_text.html.heex:56
 #, elixir-autogen, elixir-format
 msgid "Save"
@@ -38,7 +38,7 @@ msgstr "Erstellen"
 msgid "Deletion Date"
 msgstr "Löschdatum"
 
-#: lib/qrstorage_web/templates/qr_code/settings/_settings_delete_after.html.heex:3
+#: lib/qrstorage_web/templates/qr_code/settings/_settings_delete_after.html.heex:4
 #, elixir-autogen, elixir-format
 msgid "delete after"
 msgstr "Löschung bei Inaktivität in Monaten"
@@ -229,7 +229,7 @@ msgstr "Fehler beim Upload der Audio-Datei."
 msgid "Record start/stop"
 msgstr "Aufnahme starten/stoppen"
 
-#: lib/qrstorage_web/templates/qr_code/form_recording.html.heex:50
+#: lib/qrstorage_web/templates/qr_code/form_recording.html.heex:51
 #, elixir-autogen, elixir-format
 msgid "Recording is disabled or not supported."
 msgstr "Die Aufnahmefunktion des Browsers ist deaktiviert oder wird nicht unterstützt."
@@ -263,8 +263,8 @@ msgstr "Nimm Sprache auf!"
 
 #: lib/qrstorage_web/templates/qr_code/form_recording.html.heex:26
 #, elixir-autogen, elixir-format
-msgid "Recordings are deleted within 30 days of inactivity."
-msgstr "Aufnahmen werden nach 30 Tagen Inaktivität gelöscht."
+msgid "Recordings are deleted within 30 days of inactivity by default."
+msgstr "Aufnahmen werden standardmäßig nach 30 Tagen Inaktivität gelöscht."
 
 #: lib/qrstorage_web/templates/qr_code/partials/_translation_hint.html.heex:9
 #, elixir-autogen, elixir-format, fuzzy
