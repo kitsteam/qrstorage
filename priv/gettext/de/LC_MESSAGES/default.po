@@ -264,7 +264,7 @@ msgstr "Nimm Sprache auf!"
 #: lib/qrstorage_web/templates/qr_code/form_recording.html.heex:26
 #, elixir-autogen, elixir-format
 msgid "Recordings are deleted within 30 days of inactivity by default."
-msgstr "Aufnahmen werden standardmäßig nach 30 Tagen Inaktivität gelöscht."
+msgstr "Ändere die Speicherdauer von einem Monat in den Einstellungen."
 
 #: lib/qrstorage_web/templates/qr_code/partials/_translation_hint.html.heex:9
 #, elixir-autogen, elixir-format, fuzzy
