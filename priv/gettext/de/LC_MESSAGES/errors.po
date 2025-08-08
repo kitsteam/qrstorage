@@ -88,7 +88,7 @@ msgstr ""
 
 # Custom field from qr code.ex:
 msgid "Link is invalid"
-msgstr "Der Link hat ein ungültiges Format. Beispiel: https://kits.blog oder https://www.kits.blog"
+msgstr "Der Link hat ein ungültiges Format. Beispiel: https://kits.blog, https://www.kits.blog oder mailto:moin@kits.blog"
 
 # Custom field from qr code.ex:
 msgid "Audio type requires language"

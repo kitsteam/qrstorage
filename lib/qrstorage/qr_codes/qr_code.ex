@@ -206,26 +206,13 @@ defmodule Qrstorage.QrCodes.QrCode do
   end
 
   defp valid_url?(url) when is_binary(url) do
-    # links should have a host and a scheme - this is not covered by uri_new:
-    uri_parse =
-      case URI.parse(url) do
-        %URI{host: nil} ->
-          false
+    case URL.new(url) do
+      {:ok, %URL{scheme: scheme}} ->
+        scheme in ["mailto", "https", "http"]
 
-        %URI{scheme: nil} ->
-          false
-
-        %URI{} ->
-          true
-      end
-
-    uri_new =
-      case URI.new(url) do
-        {:ok, _} -> true
-        {:error, _} -> false
-      end
-
-    uri_parse && uri_new
+      _ ->
+        false
+    end
   end
 
   defp valid_url?(_), do: false
