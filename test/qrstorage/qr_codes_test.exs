@@ -68,22 +68,26 @@ defmodule Qrstorage.QrCodesTest do
       assert {:error, %Ecto.Changeset{}} = QrCodes.create_qr_code(@invalid_attrs)
     end
 
-    test "create_qr_code/1 with type link and invalid url returns error changeset" do
-      invalid_link_attrs = %{@valid_link_attrs | text: "invalid"}
+    for invalid_url <- [
+          "invalid",
+          "https://kits.blog\n\r",
+          "https://kits.blog/ abc",
+          "mailto:example.com",
+          "mailto:example@example.com?body=abc;invalid",
+          "https://example.com/\"",
+          ~s(http://example.com/")
+        ] do
+      test "create_qr_code/1 with type link and invalid url #{invalid_url} returns error changeset" do
+        invalid_link_attrs = %{@valid_link_attrs | text: unquote(invalid_url)}
 
-      assert {:error, %Ecto.Changeset{}} = QrCodes.create_qr_code(invalid_link_attrs)
+        assert {:error, %Ecto.Changeset{}} = QrCodes.create_qr_code(invalid_link_attrs)
+      end
     end
 
-    test "create_qr_code/1 with type link and invalid url with line break returns error changeset" do
-      invalid_link_attrs = %{@valid_link_attrs | text: "https://kits.blog\n\r"}
+    test "create_qr_code/1 with type link and valid mailto adress returns ok" do
+      valid_link_attrs = %{@valid_link_attrs | text: "mailto:example@example.com&body=test&subject=test"}
 
-      assert {:error, %Ecto.Changeset{}} = QrCodes.create_qr_code(invalid_link_attrs)
-    end
-
-    test "create_qr_code/1 with type link and invalid url with white spaces returns error changeset" do
-      invalid_link_attrs = %{@valid_link_attrs | text: "https://kits.blog/ abc"}
-
-      assert {:error, %Ecto.Changeset{}} = QrCodes.create_qr_code(invalid_link_attrs)
+      assert {:ok, %QrCode{} = _qr_code} = QrCodes.create_qr_code(valid_link_attrs)
     end
 
     test "create_qr_code/1 with type link and valid url returns ok" do
