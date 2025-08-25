@@ -50,7 +50,7 @@ defmodule Qrstorage.MixProject do
       {:jason, "1.4.4"},
       {:plug_cowboy, "2.7.4"},
       {:cowboy, "2.13.0"},
-      {:oban, "2.19.4"},
+      {:oban, "2.20.1"},
       {:fast_sanitize, "0.2.3"},
       {:fast_html, "2.4.1"},
       {:mox, "1.2.0", only: :test},
