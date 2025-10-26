@@ -36,7 +36,7 @@ defmodule Qrstorage.MixProject do
       {:phoenix_ecto, "4.6.5"},
       {:ecto_sql, "3.13.2"},
       {:postgrex, "0.21.1"},
-      {:phoenix_html, "4.2.1"},
+      {:phoenix_html, "4.3.0"},
       {:phoenix_html_helpers, "1.0.1"},
       {:phoenix_view, "2.0.4"},
       {:phoenix_live_reload, "1.6.1", only: :dev},
