@@ -62,7 +62,7 @@ defmodule Qrstorage.MixProject do
       {:deepl_ex, "0.4.0"},
       {:tesla, "1.15.3"},
       {:tzdata, "1.1.3"},
-      {:ex_url, "2.0.1"}
+      {:ex_url, "2.0.2"}
     ]
   end
 
