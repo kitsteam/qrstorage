@@ -30,7 +30,8 @@ defmodule QrstorageWeb.QrCodeControllerTest do
     dots_type: "dots",
     voice: nil,
     translated_text: nil,
-    tts: false
+    tts: false,
+    audio_file_type: nil
   }
 
   def fixture(attrs) do
@@ -417,7 +418,7 @@ defmodule QrstorageWeb.QrCodeControllerTest do
       conn = get(conn, Routes.qr_code_path(conn, :audio_file, recording_qr_code.id))
 
       assert conn.resp_body == file
-      assert conn.resp_headers |> get_content_type == "audio/mp3"
+      assert conn.resp_headers |> get_content_type == "audio/webm"
     end
   end
 
@@ -435,7 +436,7 @@ defmodule QrstorageWeb.QrCodeControllerTest do
   end
 
   defp create_recording_qr_code(_) do
-    attrs = %{@fixture_attrs | content_type: "recording", text: "a"}
+    attrs = %{@fixture_attrs | content_type: "recording", text: "a", audio_file_type: "audio/webm"}
     recording_qr_code = fixture(attrs)
 
     %{recording_qr_code: recording_qr_code}

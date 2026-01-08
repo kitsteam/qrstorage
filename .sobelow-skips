@@ -1,9 +1,6 @@
 
-6299080F193BA5CD21E8B020C7DA3267
-6B4715EE71A5139F2F048B0135841315
-76C7CB9B90E933C9501B18B9124BD05D
-A9D5553F8331410859AF88EF58EA9AE9
-C15BCE8CAF49A8448E904E375BA0C396
-E9EC6059DDCABE1D610279F283E82FB1
-11E74AEC6C2EA228E03C98EC061EA62B
-FD9446AAA8E9DE3E789E3601040E6D52
+XSS.Raw: XSS,lib/qrstorage_web/templates/qr_code/show.html.heex:22,1D7B97C
+Config.HTTPS: HTTPS Not Enabled,config/prod.exs:0,2B5C077
+XSS.ContentType: XSS in `put_resp_content_type`,lib/qrstorage_web/controllers/qr_code_controller.ex:107,40610A3
+XSS.SendResp: XSS in `send_resp`,lib/qrstorage_web/controllers/qr_code_controller.ex:108,50D0DB8
+Config.CSP: Missing Content-Security-Policy,lib/qrstorage_web/router.ex:10,734746D

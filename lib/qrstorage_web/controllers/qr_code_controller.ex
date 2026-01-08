@@ -18,7 +18,7 @@ defmodule QrstorageWeb.QrCodeController do
       qr_code.content_type == :audio && qr_code.audio_file != nil ->
         # old qr_codes will have the file stored in the database, so the field is populated. newer codes will need to access the object storage:
         conn
-        |> put_resp_content_type(qr_code.audio_file_type, nil)
+        |> put_resp_content_type("audio/mp3", nil)
         |> send_resp(200, qr_code.audio_file)
 
       qr_code.content_type == :audio && qr_code.tts ->
@@ -95,12 +95,16 @@ defmodule QrstorageWeb.QrCodeController do
   end
 
   defp send_file(conn, qr_code) do
-    case StorageService.get_file_by_type(qr_code.id, qr_code.content_type) do
+    case StorageService.get_file_by_type(qr_code.id, qr_code.audio_file_type, qr_code.content_type) do
       {:ok, audio_file} ->
-        # For now, this is always audio/mp3. If we decide to add more file formats for recordings, we can change this in the future.
-        # However, we don't want this to be user configurable at the moment:
+        audio_file_type =
+          case qr_code.audio_file_type do
+            "audio/webm" -> "audio/webm"
+            _ -> "audio/mp3"
+          end
+
         conn
-        |> put_resp_content_type("audio/mp3", nil)
+        |> put_resp_content_type(audio_file_type, nil)
         |> send_resp(200, audio_file)
 
       {:error, error_message} ->

@@ -63,5 +63,3 @@ The qrstorage [logo](https://thenounproject.com/icon/860830/) in this repo – c
 <img src="https://kits.blog/wp-content/uploads/2021/03/kits_logo.svg" width=100px align="left" style="margin-right:20px">
 
 [kits](https://kits.blog/) is a project platform hosted by a public institution for quality development in schools (Lower Saxony, Germany) and focusses on digital tools and media in language teaching.
-
-This project uses [LAME](https://lame.sourceforge.net) and [lamejs](https://github.com/zhuker/lamejs/) to convert audio recordings in the browser to mp3.

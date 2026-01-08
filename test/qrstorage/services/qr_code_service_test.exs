@@ -44,7 +44,8 @@ defmodule Qrstorage.Services.QrCodeServiceTest do
     "dots_type" => "dots",
     "hp" => nil,
     "audio_file" => nil,
-    "delete_after_months" => "1"
+    "delete_after_months" => "1",
+    "audio_file_type" => "audio/webm"
   }
 
   @link_attrs %{
@@ -91,7 +92,7 @@ defmodule Qrstorage.Services.QrCodeServiceTest do
 
         params = %{
           @recording_attrs
-          | "audio_file" => %Plug.Upload{path: file_path, content_type: "audio/mp3", filename: "recording.mp3"},
+          | "audio_file" => %Plug.Upload{path: file_path, content_type: "audio/webm", filename: "recording.webm"},
             "delete_after_months" => unquote(months)
         }
 
@@ -99,6 +100,7 @@ defmodule Qrstorage.Services.QrCodeServiceTest do
 
         {:ok, qr_code} = QrCodeService.create_qr_code(params)
         assert qr_code.text == "a"
+        assert qr_code.audio_file_type == "audio/webm"
       end
     end
   end
@@ -193,7 +195,7 @@ defmodule Qrstorage.Services.QrCodeServiceTest do
 
       params = %{
         @recording_attrs
-        | "audio_file" => %Plug.Upload{path: file_path, content_type: "audio/mp3", filename: "recording.mp3"}
+        | "audio_file" => %Plug.Upload{path: file_path, content_type: "audio/webm", filename: "recording.webm"}
       }
 
       mockStorageServicePutObjectSuccess()
@@ -226,7 +228,7 @@ defmodule Qrstorage.Services.QrCodeServiceTest do
 
       params = %{
         @recording_attrs
-        | "audio_file" => %Plug.Upload{path: file_path, content_type: "audio/mp3", filename: "recording.mp3"}
+        | "audio_file" => %Plug.Upload{path: file_path, content_type: "audio/webm", filename: "recording.webm"}
       }
 
       qr_code_count_start = qr_code_count()
