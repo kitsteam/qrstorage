@@ -37,7 +37,7 @@ defmodule Qrstorage.StorageCase do
     Qrstorage.Services.ObjectStorage.ObjectStorageServiceMock
     |> expect(:delete_all_objects, fn _bucket_name, objects_to_delete ->
       if assert_objects_to_delete do
-        assert objects_to_delete == assert_objects_to_delete
+        assert Enum.sort(objects_to_delete) == Enum.sort(assert_objects_to_delete)
       end
 
       {:ok, [%{body: qr_codes_to_delete}]}
