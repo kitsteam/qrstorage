@@ -16,6 +16,8 @@ defmodule Qrstorage.QrCodes.QrCode do
   @colors ~w[black gold darkgreen darkslateblue midnightblue crimson]a
   @content_types ~w[link audio text recording]a
 
+  @valid_audio_file_types ["", "audio/webm", "audio/mp3"]
+
   @dots_types ~w[dots square]a
 
   @text_length_limits %{link: 1500, audio: 1000, text: 4000, recording: 1}
@@ -61,7 +63,8 @@ defmodule Qrstorage.QrCodes.QrCode do
       :dots_type,
       :voice,
       :hp,
-      :tts
+      :tts,
+      :audio_file_type
     ])
     |> validate_length(:hp, is: 0)
     |> scrub_text
@@ -72,6 +75,7 @@ defmodule Qrstorage.QrCodes.QrCode do
     |> validate_inclusion(:content_type, @content_types)
     |> validate_inclusion(:dots_type, @dots_types)
     |> validate_audio_type(:content_type)
+    |> validate_inclusion(:audio_file_type, @valid_audio_file_types)
     |> validate_link(:text)
     |> validate_required([:text, :delete_after_months, :content_type, :dots_type])
   end

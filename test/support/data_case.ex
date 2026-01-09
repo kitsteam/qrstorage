@@ -38,7 +38,8 @@ defmodule Qrstorage.DataCase do
         language: nil,
         hp: nil,
         deltas: %{"id" => "test"},
-        dots_type: "dots"
+        dots_type: "dots",
+        audio_file_type: nil
       }
 
       @valid_audio_attrs %{

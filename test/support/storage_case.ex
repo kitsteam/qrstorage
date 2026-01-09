@@ -33,14 +33,14 @@ defmodule Qrstorage.StorageCase do
     end)
   end
 
-  def mockStorageServiceDeleteAllSuccess(ids_to_delete, assert_objects_to_delete \\ nil) do
+  def mockStorageServiceDeleteAllSuccess(qr_codes_to_delete, assert_objects_to_delete \\ nil) do
     Qrstorage.Services.ObjectStorage.ObjectStorageServiceMock
     |> expect(:delete_all_objects, fn _bucket_name, objects_to_delete ->
       if assert_objects_to_delete do
         assert objects_to_delete == assert_objects_to_delete
       end
 
-      {:ok, [%{body: ids_to_delete}]}
+      {:ok, [%{body: qr_codes_to_delete}]}
     end)
   end
 

@@ -1,8 +1,5 @@
 import Amplitude from 'amplitudejs/dist/amplitude';
 import ProgressCircle from './progress_circle';
-import { MediaRecorder, register } from 'extendable-media-recorder';
-import { connect } from 'extendable-media-recorder-wav-encoder';
-import { encodeWavAsMp3 } from './audio/mp3';
 
 const recorder = document.querySelector("#recorder");
 
@@ -47,13 +44,6 @@ if (recorder) {
   }
 
   const setupMediaDevice = async () => {
-    // this connects the wav extension:
-    const port = await connect();
-    await register(port);
-
-    // force stereo:
-    const constraints = {audio: {channelCount: 2}}
-
     let onSuccess = function (stream) {
       setupMediaRecorder(stream);
     };
@@ -63,7 +53,7 @@ if (recorder) {
       disableRecordingForm();
     };
 
-    navigator.mediaDevices.getUserMedia(constraints).then(onSuccess, onError);
+    navigator.mediaDevices.getUserMedia({audio: true}).then(onSuccess, onError);
   }
 
   const setupMediaRecorder = (stream) => {
@@ -89,20 +79,13 @@ if (recorder) {
 
     mediaRecorder.onstop = function (e) {
       const blob = new Blob(chunks, { type: mediaRecorder.mimeType });
-      console.debug("File size: " + blob.size / 1024);
 
       chunks = [];
 
-      blob.arrayBuffer().then((buffer) => {
-        const mp3Blob = encodeWavAsMp3(buffer);
-
-        uploadMp3(mediaRecorder, mp3Blob);
-        enablePlayback(mp3Blob);
-        // don't enable form submit until encoding is done:
-        formSubmitButton.disabled = false;
-      })
-
-
+      uploadWebm(mediaRecorder, blob);
+      enablePlayback(blob);
+      
+      formSubmitButton.disabled = false;
 
       deleteButton.onclick = function (e) {
         deleteRecording();
@@ -124,9 +107,9 @@ if (recorder) {
   }
 
   const selectMimeType = () => {
-    const wav = 'audio/wav';
-    if (MediaRecorder.isTypeSupported(wav)) {
-      return wav;
+    const webm = 'audio/webm';
+    if (MediaRecorder.isTypeSupported(webm)) {
+      return webm;
     }
     else {
       console.error('Audio format is not supported on this browser!');
@@ -198,7 +181,7 @@ if (recorder) {
     });
   };
 
-  const enablePlayback = (mp3Blob) => {
+  const enablePlayback = (audioBlob) => {
     const updateProgressCircleFromPlayback = () => {
       let percentage = Amplitude.getSongPlayedPercentage();
 
@@ -213,7 +196,7 @@ if (recorder) {
     deleteButton.classList.remove('d-none');
     recordStartStopButton.classList.add('d-none');
 
-    const audioUrl = URL.createObjectURL(mp3Blob);
+    const audioUrl = URL.createObjectURL(audioBlob);
     // start amplitude player:
     Amplitude.init({
       "callbacks": {
@@ -238,12 +221,12 @@ if (recorder) {
     return analyser;
   }
 
-  const uploadMp3 = (mediaRecorder, mp3Blob) => {
-    let file = new File([mp3Blob], "recording", { type: "audio/mp3", lastModified: new Date().getTime() });
+  const uploadWebm = (mediaRecorder, webmBlob) => {
+    let file = new File([webmBlob], "recording", { type: "audio/webm", lastModified: new Date().getTime() });
     let container = new DataTransfer();
     container.items.add(file);
     audioFileInput.files = container.files;
-    audioFileTypeInput.value = mediaRecorder.mimeType;
+    audioFileTypeInput.value = "audio/webm";
   }
 
   const disableRecordingForm = () => {

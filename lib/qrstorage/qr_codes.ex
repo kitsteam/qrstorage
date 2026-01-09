@@ -76,7 +76,7 @@ defmodule Qrstorage.QrCodes do
     Repo.delete_all(
       from q in QrCode,
         where: fragment("NOW() > ? + INTERVAL '1 month' * ?", q.last_accessed_at, q.delete_after_months),
-        select: [:id, :content_type]
+        select: [:id, :content_type, :audio_file_type]
     )
   end
 
