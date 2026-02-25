@@ -1,4 +1,4 @@
-import QRCodeStyling from "./libs/qr-code-styling/qr-code-styling";
+import QRCodeStyling from "qr-code-styling";
 
 const qrCodeOptions = (color, url, dots_type, width, height) => (
      {
