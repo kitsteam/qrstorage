@@ -14,9 +14,9 @@ services:
       OBJECT_STORAGE_SCHEME: http
       OBJECT_STORAGE_PORT: 9000
       OBJECT_STORAGE_REGION: eu01
-      OBJECT_STORAGE_USER: ${MINIO_USER:-minio-user}
-      OBJECT_STORAGE_PASSWORD: ${MINIO_USER_PASSWORD:-minio-user-password}
-      OBJECT_STORAGE_HOST: ${MINIO_HOST:-minio}
+      OBJECT_STORAGE_USER: ${OBJECT_STORAGE_USER:-rustfsadmin}
+      OBJECT_STORAGE_PASSWORD: ${OBJECT_STORAGE_PASSWORD:-rustfsadmin}
+      OBJECT_STORAGE_HOST: ${OBJECT_STORAGE_HOST:-rustfs}
       OBJECT_STORAGE_BUCKET: qrstorage-dev
       QR_CODE_DEFAULT_LOCALE: "de"
       QR_CODE_TRANSLATION_TRANSITION_DATE: "2024-07-09 00:00:00"
@@ -37,7 +37,7 @@ services:
       - "4000:4000"
     depends_on:
       - postgres
-      - minio
+      - rustfs
     # Mount the lib and test folder to increase development speed (do not use for prod setups!)
     volumes:
       # You can override this in `docker-compose.override.yml`
@@ -60,18 +60,18 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data/pgdata
 
-  minio:
-    image: minio/minio:RELEASE.2024-02-17T01-15-57Z
-    command: server /data --console-address ":9001"
+  rustfs:
+    image: rustfs/rustfs:latest
     environment:
-      - MINIO_ROOT_USER=${MINIO_USER:-minio-user}
-      - MINIO_ROOT_PASSWORD=${MINIO_USER_PASSWORD:-minio-user-password}
-    volumes:
-      - minio_data:/data
+      - RUSTFS_CONSOLE_USERNAME=rustfsadmin
+      - RUSTFS_CONSOLE_PASSWORD=rustfsadmin
+      - RUSTFS_REGION=eu01
     ports:
-      # this is for the admin console:
+      - 9000:9000
       - 9001:9001
+    volumes:
+      - rustfs_data:/data
 
 volumes:
-  minio_data:
+  rustfs_data:
   postgres_data:
