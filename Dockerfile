@@ -23,7 +23,7 @@ ARG BUILDER_IMAGE="hexpm/elixir:${ELIXIR_VERSION}-erlang-${OTP_VERSION}-debian-$
 ARG RUNNER_IMAGE="debian:${DEBIAN_VERSION}"
 
 # This is our base image for development as well as building the production image:
-FROM ${BUILDER_IMAGE} as base
+FROM ${BUILDER_IMAGE} AS base
 
 # Install node
 ENV NODE_MAJOR=20
@@ -52,7 +52,7 @@ RUN mix local.hex --force && \
   mix local.rebar --force
 
 # This is the image we use during development:
-FROM base as development
+FROM base AS development
 
 # Install mix dependencies
 COPY mix.exs mix.lock ./
@@ -63,7 +63,7 @@ COPY assets/package.json assets/package-lock.json ./assets/
 RUN npm install --prefix assets
 
 # This is the image we use to build the production image:
-FROM base as production_builder
+FROM base AS production_builder
 
 # set build ENV
 ENV MIX_ENV="prod"
@@ -105,17 +105,17 @@ RUN mix release
 
 # start a new build stage so that the final image will only contain
 # the compiled release and other runtime necessities
-FROM ${RUNNER_IMAGE} as production
+FROM ${RUNNER_IMAGE} AS production
 
-RUN apt-get update -y && apt-get install -y ca-certificates postgresql-client libstdc++6 openssl libncurses5 locales \
+RUN apt-get update -y && apt-get install -y ca-certificates postgresql-client libstdc++6 libncurses6 openssl locales \
   && apt-get clean && rm -f /var/lib/apt/lists/*_*
 
 # Set the locale
 RUN sed -i '/en_US.UTF-8/s/^# //g' /etc/locale.gen && locale-gen
 
-ENV LANG en_US.UTF-8
-ENV LANGUAGE en_US:en
-ENV LC_ALL en_US.UTF-8
+ENV LANG=en_US.UTF-8
+ENV LANGUAGE=en_US:en
+ENV LC_ALL=en_US.UTF-8
 
 WORKDIR "/app"
 RUN chown nobody /app
