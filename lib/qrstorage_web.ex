@@ -19,7 +19,7 @@ defmodule QrstorageWeb do
 
   def controller do
     quote do
-      use Phoenix.Controller, namespace: QrstorageWeb
+      use Phoenix.Controller, formats: [html: "View"]
 
       import Plug.Conn
       use Gettext, backend: QrstorageWeb.Gettext

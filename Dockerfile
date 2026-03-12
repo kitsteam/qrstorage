@@ -26,7 +26,7 @@ ARG RUNNER_IMAGE="debian:${DEBIAN_VERSION}"
 FROM ${BUILDER_IMAGE} AS base
 
 # Install node
-ENV NODE_MAJOR=20
+ENV NODE_MAJOR=24
 
 RUN apt-get update && apt-get install -y ca-certificates curl gnupg
 RUN mkdir -p /etc/apt/keyrings  
@@ -40,9 +40,17 @@ RUN apt-get update && apt-get install -y nodejs \
   inotify-tools \ 
   postgresql-client \
   git \
+  locales \
   cmake && \
   apt-get clean && \ 
   rm -f /var/lib/apt/lists/*_*
+
+# Set the locale
+RUN sed -i '/en_US.UTF-8/s/^# //g' /etc/locale.gen && locale-gen
+
+ENV LANG=en_US.UTF-8
+ENV LANGUAGE=en_US:en
+ENV LC_ALL=en_US.UTF-8
 
 # prepare build dir
 WORKDIR /app
