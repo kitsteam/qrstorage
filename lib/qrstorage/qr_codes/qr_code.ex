@@ -236,8 +236,15 @@ defmodule Qrstorage.QrCodes.QrCode do
   defp check_block_list(changeset) do
     text = get_field(changeset, :text)
 
-    if String.contains?(text, @block_list),
-      do: [{:text, "Text contains content that is not allowed"}],
-      else: []
+    cond do
+      !text ->
+        [{:text, "Text is required"}]
+
+      String.contains?(text, @block_list) ->
+        [{:text, "Text contains content that is not allowed"}]
+
+      true ->
+        []
+    end
   end
 end
