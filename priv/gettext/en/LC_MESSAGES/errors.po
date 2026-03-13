@@ -108,3 +108,11 @@ msgstr ""
 # Custom field from qr code.ex:
 msgid "Text is too long"
 msgstr ""
+
+# Custom field from qr code.ex:
+msgid "Text is required"
+msgstr ""
+
+# Custom field from qr code.ex:
+msgid "Text contains content that is not allowed"
+msgstr ""

@@ -97,3 +97,11 @@ msgstr "Für Audio QR Codes muss eine Sprache ausgewählt werden."
 # Custom field from qr code.ex:
 msgid "Text is too long"
 msgstr "Text ist zu lang."
+
+# Custom field from qr code.ex:
+msgid "Text is required"
+msgstr "Text ist erforderlich."
+
+# Custom field from qr code.ex:
+msgid "Text contains content that is not allowed"
+msgstr "Text enthält nicht erlaubte Inhalte."

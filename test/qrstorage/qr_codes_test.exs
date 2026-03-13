@@ -174,6 +174,12 @@ defmodule Qrstorage.QrCodesTest do
       assert {:error, %Ecto.Changeset{}} = QrCodes.create_qr_code(invalid_audio_attrs)
     end
 
+    test "create_qr_code/1 with audio that has nil text returns error" do
+      invalid_audio_attrs = %{@valid_audio_attrs | text: nil}
+      {:error, changeset} = QrCodes.create_qr_code(invalid_audio_attrs)
+      assert Enum.any?(changeset.errors, fn {field, _} -> field == :text end)
+    end
+
     test "qrcodes have an admin url id after creation" do
       assert {:ok, %QrCode{} = qr_code} = QrCodes.create_qr_code(@valid_attrs)
       assert qr_code.admin_url_id != nil
