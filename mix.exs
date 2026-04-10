@@ -44,7 +44,7 @@ defmodule Qrstorage.MixProject do
       {:phoenix_live_reload, "1.6.2", only: :dev},
       {:phoenix_live_dashboard, "0.8.7"},
       {:phoenix_live_view, "1.1.27"},
-      {:lazy_html, "0.1.10", only: :test},
+      {:lazy_html, "0.1.11", only: :test},
       {:esbuild, "0.10.0", runtime: Mix.env() == :dev},
       {:dart_sass, "0.7.0", runtime: Mix.env() == :dev},
       {:telemetry_metrics, "1.1.0"},
