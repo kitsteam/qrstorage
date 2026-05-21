@@ -52,7 +52,7 @@ defmodule Qrstorage.MixProject do
       {:gettext, "0.26.2"},
       {:timex, "3.7.13"},
       {:jason, "1.4.5"},
-      {:plug_cowboy, "2.8.0"},
+      {:plug_cowboy, "2.8.1"},
       {:cowboy, "2.14.2"},
       {:oban, "2.22.1"},
       {:fast_sanitize, "0.2.3"},
