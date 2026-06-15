@@ -1,4 +1,9 @@
 
+<%= if Phoenix.Flash.get(@flash, :error) do %>
+  <div class="alert alert-danger">
+    <p><%= Phoenix.Flash.get(@flash, :error) %></p>
+  </div>
+<% end %>
 <div class="btn-group mb-3 w-100 d-flex justify-content-between" id="content-type-selector" role="group">
   <%= radio_button(:qr_code, :content_type, "audio",
     class: "btn-check content-type",
