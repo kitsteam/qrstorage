@@ -50,7 +50,7 @@ defmodule Qrstorage.Services.StorageService do
           200 ->
             case Vault.decrypt(response.body) do
               {:ok, decrypted_file} -> {:ok, decrypted_file}
-              {:error, error_message} -> {:error, "Issue while decrypting file: #{inspect(error_message)}"}
+              {:error, _error_message} -> {:error, "Issue while decrypting file"}
             end
 
           _ ->
@@ -73,7 +73,7 @@ defmodule Qrstorage.Services.StorageService do
   defp store_file(filename, file, qr_code_content_type, content_type) do
     case Vault.encrypt(file) do
       {:ok, encrypted_file} -> store_encrypted_file(filename, encrypted_file, qr_code_content_type, content_type)
-      {:error, error_message} -> {:error, "Issue while encrypting file: #{inspect(error_message)}"}
+      {:error, _error_message} -> {:error, "Issue while encrypting file"}
     end
   end
 

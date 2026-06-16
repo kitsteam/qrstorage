@@ -1,6 +1,7 @@
 defmodule QrstorageWeb.QrCodeControllerTest do
   use QrstorageWeb.ConnCase
   use Qrstorage.StorageCase
+  use Qrstorage.RateLimitingCase
 
   alias Qrstorage.QrCodes
   alias Qrstorage.QrCodes.QrCode
@@ -70,6 +71,21 @@ defmodule QrstorageWeb.QrCodeControllerTest do
 
       qr_code = QrCode |> Repo.get!(id)
       assert qr_code.delete_after_months == 0
+    end
+
+    test "renders rate limit error when rate limit is reached", %{conn: conn} do
+      audio_attrs = %{@create_attrs | content_type: "audio", language: "de", voice: "female", tts: "true"}
+
+      with_rate_limit_set_to(0, fn ->
+        {conn, _logs} =
+          with_log(fn ->
+            post(conn, Routes.qr_code_path(conn, :create), qr_code: audio_attrs)
+          end)
+
+        # The flash message should be set
+        assert Phoenix.Flash.get(conn.assigns.flash, :error) == "Rate limit reached."
+        assert html_response(conn, 200) =~ "Rate limit reached"
+      end)
     end
   end
 
