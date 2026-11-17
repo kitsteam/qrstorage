@@ -40,7 +40,7 @@ config :phoenix, :json_library, Jason
 
 # Configure esbuild (the version is required)
 config :esbuild,
-  version: "0.27.3",
+  version: "0.28.2",
   default: [
     args: ~w(js/app.js --bundle --target=es2020 --outdir=../priv/static/assets),
     cd: Path.expand("../assets", __DIR__),
@@ -48,7 +48,7 @@ config :esbuild,
   ]
 
 config :dart_sass,
-  version: "1.69.7",
+  version: "1.108.2",
   default: [
     args: ~w(css/app.scss ../priv/static/assets/app.css),
     cd: Path.expand("../assets", __DIR__)
