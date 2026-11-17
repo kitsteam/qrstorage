@@ -39,6 +39,12 @@ You can extract new strings to translate by running:
 
 mix gettext.extract --merge
 
+### Audio Recording Feature
+
+To get the audio recording feature to work in local dev mode, a rustfs bucket needs to be set up locally. 
+The admin ui is available at http://localhost:9001/ and the login data is set in docker-compose.yml. The default bucket name that needs to be created is qrstorage-dev. You can override that in docker-compose.yml as well.
+
+
 ### Content Security Policy
 
 You can use a content security policy to restrict which resources are being loaded. The app is completely self contained, so you can use quite strict policies. For nginx, this would look like this:
