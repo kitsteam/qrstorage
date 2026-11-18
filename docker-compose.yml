@@ -61,7 +61,7 @@ services:
       - postgres_data:/var/lib/postgresql/data/pgdata
 
   rustfs:
-    image: rustfs/rustfs:latest
+    image: rustfs/rustfs:1.0.6
     environment:
       - RUSTFS_CONSOLE_USERNAME=rustfsadmin
       - RUSTFS_CONSOLE_PASSWORD=rustfsadmin

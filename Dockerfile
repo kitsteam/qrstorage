@@ -15,9 +15,9 @@
 #   - https://pkgs.org/ - resource for finding needed packages
 #   - Ex: hexpm/elixir:1.13.3-erlang-24.3.4.2-debian-bullseye-20210902-slim
 # 
-ARG ELIXIR_VERSION=1.19.6
-ARG OTP_VERSION=28.5.0.8
-ARG DEBIAN_VERSION=trixie-20261020-slim
+ARG ELIXIR_VERSION=1.20.5
+ARG OTP_VERSION=29.1.2
+ARG DEBIAN_VERSION=trixie-20261104-slim
 
 ARG BUILDER_IMAGE="hexpm/elixir:${ELIXIR_VERSION}-erlang-${OTP_VERSION}-debian-${DEBIAN_VERSION}"
 ARG RUNNER_IMAGE="debian:${DEBIAN_VERSION}"
@@ -26,7 +26,7 @@ ARG RUNNER_IMAGE="debian:${DEBIAN_VERSION}"
 FROM ${BUILDER_IMAGE} AS base
 
 # Install node
-ENV NODE_MAJOR=24
+ENV NODE_MAJOR=26
 
 RUN apt-get update && apt-get install -y ca-certificates curl gnupg
 RUN mkdir -p /etc/apt/keyrings  

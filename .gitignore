@@ -40,6 +40,7 @@ npm-debug.log
 # Ignore docker override files:
 docker-compose.override.yml
 docker-compose-kits.override.yml
+Dockerfile.dev
 
 # Just to be sure - ignore gcp file in case anyone puts this in the same folder (DONT!)
 .gcp-config.json
