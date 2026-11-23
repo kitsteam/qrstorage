@@ -60,7 +60,7 @@
     <div class="col">
       <%= link(gettext("Download"),
         class: "btn btn-primary",
-        to: Routes.qr_code_path(@conn, :audio_file, @qr_code.id),
+        to: Routes.qr_code_path(@conn, :audio_file, @qr_code.id, t: QrstorageWeb.AudioToken.sign(@conn, @qr_code.id)),
         download: true
       ) %>
     </div>

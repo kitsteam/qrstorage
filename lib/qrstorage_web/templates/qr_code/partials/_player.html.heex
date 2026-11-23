@@ -1,4 +1,4 @@
-<div id="player" class="row m-3" data-url={Routes.qr_code_path(@conn, :audio_file, @qr_code.id)}>
+<div id="player" class="row m-3" data-url={Routes.qr_code_path(@conn, :audio_file, @qr_code.id, t: QrstorageWeb.AudioToken.sign(@conn, @qr_code.id))}>
   <div id="play-button-wrapper" class="col">
     <div class="position-relative mb-4">
       <div class="position-absolute top-0 start-0"></div>

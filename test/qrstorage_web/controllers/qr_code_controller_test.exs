@@ -378,6 +378,93 @@ defmodule QrstorageWeb.QrCodeControllerTest do
     end
   end
 
+  defp audio_path(conn, qr_code, token \\ nil) do
+    token = token || QrstorageWeb.AudioToken.sign(@endpoint, qr_code.id)
+    Routes.qr_code_path(conn, :audio_file, qr_code.id, t: token)
+  end
+
+  describe "audio_file access control" do
+    setup [:create_audio_qr_code]
+
+    test "403 without a token", %{conn: conn, audio_qr_code: qr} do
+      conn = get(conn, Routes.qr_code_path(conn, :audio_file, qr.id))
+      assert conn.status == 403
+    end
+
+    test "403 with an invalid token", %{conn: conn, audio_qr_code: qr} do
+      conn = get(conn, audio_path(conn, qr, "garbage"))
+      assert conn.status == 403
+    end
+
+    test "403 with a token for a different qr code", %{conn: conn, audio_qr_code: qr} do
+      token = QrstorageWeb.AudioToken.sign(@endpoint, Ecto.UUID.generate())
+      conn = get(conn, audio_path(conn, qr, token))
+      assert conn.status == 403
+    end
+
+    test "403 with an expired token", %{conn: conn, audio_qr_code: qr} do
+      token =
+        Phoenix.Token.sign(@endpoint, "audio_file", qr.id, signed_at: System.system_time(:second) - 7200)
+
+      conn = get(conn, audio_path(conn, qr, token))
+      assert conn.status == 403
+    end
+
+    test "403 when sec-fetch-dest is not allowed", %{conn: conn, audio_qr_code: qr} do
+      conn = conn |> put_req_header("sec-fetch-dest", "iframe") |> get(audio_path(conn, qr))
+      assert conn.status == 403
+    end
+
+    test "403 when sec-fetch-site is cross-site", %{conn: conn, audio_qr_code: qr} do
+      conn = conn |> put_req_header("sec-fetch-site", "cross-site") |> get(audio_path(conn, qr))
+      assert conn.status == 403
+    end
+
+    test "allows audio, empty and document destinations with a valid token", %{conn: conn, audio_qr_code: qr} do
+      for dest <- ["audio", "empty", "document"] do
+        mockStorageServiceGetFileSuccess("file content")
+
+        result =
+          conn
+          |> put_req_header("sec-fetch-dest", dest)
+          |> put_req_header("sec-fetch-site", "same-origin")
+          |> get(audio_path(conn, qr))
+
+        assert result.status == 200
+      end
+    end
+
+    test "rendered show page contains tokenized audio urls", %{conn: conn, audio_qr_code: qr} do
+      conn = get(conn, Routes.qr_code_path(conn, :show, qr.id))
+      body = html_response(conn, 200)
+      assert body =~ "/audio_file/#{qr.id}?t="
+    end
+
+    test "the audio url rendered in the player and the download link can be fetched", %{
+      conn: conn,
+      audio_qr_code: qr
+    } do
+      page = conn |> get(Routes.qr_code_path(conn, :show, qr.id)) |> html_response(200)
+
+      [player_url] = Regex.run(~r/data-url="([^"]+)"/, page, capture: :all_but_first)
+      [download_tag] = Regex.run(~r/<a[^>]*\sdownload[^>]*>/, page)
+      [download_url] = Regex.run(~r/href="([^"]+)"/, download_tag, capture: :all_but_first)
+
+      for url <- [player_url, download_url] do
+        mockStorageServiceGetFileSuccess("file content")
+
+        result =
+          conn
+          |> put_req_header("sec-fetch-dest", "audio")
+          |> put_req_header("sec-fetch-site", "same-origin")
+          |> get(url)
+
+        assert result.status == 200
+        assert result.resp_body == "file content"
+      end
+    end
+  end
+
   describe "audio_file with audio code" do
     setup [:create_audio_qr_code]
 
@@ -385,7 +472,7 @@ defmodule QrstorageWeb.QrCodeControllerTest do
       file = "file content"
       mockStorageServiceGetFileSuccess(file)
 
-      conn = get(conn, Routes.qr_code_path(conn, :audio_file, audio_qr_code.id))
+      conn = get(conn, audio_path(conn, audio_qr_code))
 
       assert conn.resp_body == file
       assert conn.resp_headers |> get_content_type == "audio/mp3"
@@ -400,7 +487,7 @@ defmodule QrstorageWeb.QrCodeControllerTest do
         |> QrCode.store_audio_file(%{audio_file: "file from database", audio_file_type: "audio/mp3"})
         |> Repo.update!()
 
-      conn = get(conn, Routes.qr_code_path(conn, :audio_file, audio_qr_code.id))
+      conn = get(conn, audio_path(conn, audio_qr_code))
 
       assert conn.resp_body == "file from database"
       assert conn.resp_headers |> get_content_type == "audio/mp3"
@@ -414,7 +501,7 @@ defmodule QrstorageWeb.QrCodeControllerTest do
 
       {result, _logs} =
         with_log(fn ->
-          get(conn, Routes.qr_code_path(conn, :audio_file, audio_qr_code.id))
+          get(conn, audio_path(conn, audio_qr_code))
         end)
 
       assert result.status == 404
@@ -431,7 +518,7 @@ defmodule QrstorageWeb.QrCodeControllerTest do
       file = "file content"
       mockStorageServiceGetFileSuccess(file)
 
-      conn = get(conn, Routes.qr_code_path(conn, :audio_file, recording_qr_code.id))
+      conn = get(conn, audio_path(conn, recording_qr_code))
 
       assert conn.resp_body == file
       assert conn.resp_headers |> get_content_type == "audio/webm"
@@ -445,7 +532,7 @@ defmodule QrstorageWeb.QrCodeControllerTest do
       conn: conn,
       text_qr_code: text_qr_code
     } do
-      conn = get(conn, Routes.qr_code_path(conn, :audio_file, text_qr_code.id))
+      conn = get(conn, audio_path(conn, text_qr_code))
 
       assert conn.status == 404
     end
