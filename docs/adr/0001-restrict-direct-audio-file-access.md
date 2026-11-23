@@ -1,6 +1,6 @@
 # ADR 0001: Restrict direct access to audio files
 
-- Status: Proposed
+- Status: Implemented
 - Date: 2026-11-23
 
 ## Context
