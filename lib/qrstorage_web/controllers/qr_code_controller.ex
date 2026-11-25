@@ -5,10 +5,34 @@ defmodule QrstorageWeb.QrCodeController do
   alias Qrstorage.QrCodes.QrCode
   alias Qrstorage.Repo
   alias Qrstorage.Services.StorageService
+  alias QrstorageWeb.AudioToken
 
   require Logger
 
-  def audio_file(conn, %{"id" => id}) do
+  def audio_file(conn, %{"id" => id} = params) do
+    if audio_access_allowed?(conn, id, params["t"]) do
+      serve_audio_file(conn, id)
+    else
+      send_resp(conn, 403, "forbidden")
+    end
+  end
+
+  # the signed token is the real protection; the Sec-Fetch-* headers additionally block casual direct navigation.
+  # missing headers (older browsers, non-browser clients) fall back to token-only.
+  defp audio_access_allowed?(conn, id, token) do
+    AudioToken.verify(conn, token, id) == :ok &&
+      header_allowed?(conn, "sec-fetch-dest", ["audio", "empty", "document"]) &&
+      header_allowed?(conn, "sec-fetch-site", ["same-origin"])
+  end
+
+  defp header_allowed?(conn, header, allowed) do
+    case get_req_header(conn, header) do
+      [] -> true
+      [value | _] -> value in allowed
+    end
+  end
+
+  defp serve_audio_file(conn, id) do
     qr_code = Repo.get!(QrCode, id)
 
     cond do
