@@ -43,6 +43,13 @@ defmodule Qrstorage.Services.StorageService do
     delete_audio_files(qr_codes, "tts")
   end
 
+  @doc """
+  Lists all objects below the audio prefix (recordings and tts files).
+  """
+  def list_audio_objects do
+    ObjectStorageService.list_objects(bucket_name(), "audio/")
+  end
+
   defp get_file(filename, type) do
     case ObjectStorageService.get_object(bucket_name(), bucket_path(filename, type)) do
       {:ok, response} ->

@@ -91,10 +91,12 @@ if config_env() == :prod || config_env() == :dev do
     plugins: [
       {Oban.Plugins.Cron,
        crontab: [
-         {schedule, Qrstorage.Worker.RemoveCodesWorker}
+         {schedule, Qrstorage.Worker.RemoveCodesWorker},
+         # weekly, thursday 12:00 UTC
+         {"0 12 * * 4", Qrstorage.Worker.AuditAudioStorageWorker}
        ]}
     ],
-    queues: [default: 1]
+    queues: [default: 1, audit: 1]
 end
 
 # configure tts and translation:

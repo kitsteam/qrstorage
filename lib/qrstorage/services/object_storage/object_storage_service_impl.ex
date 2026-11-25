@@ -23,4 +23,25 @@ defmodule Qrstorage.Services.ObjectStorage.ObjectStorageServiceImpl do
   def delete_all_objects(bucket_name, files_to_delete) do
     S3.delete_all_objects(bucket_name, files_to_delete) |> ExAws.request()
   end
+
+  @impl ObjectStorageService
+  def list_objects(bucket_name, prefix) do
+    objects =
+      S3.list_objects_v2(bucket_name, prefix: prefix)
+      |> ExAws.stream!()
+      |> Enum.map(fn object -> %{key: object.key, last_modified: parse_datetime(object[:last_modified])} end)
+
+    {:ok, objects}
+  rescue
+    error -> {:error, error}
+  end
+
+  defp parse_datetime(value) when is_binary(value) do
+    case DateTime.from_iso8601(value) do
+      {:ok, datetime, _offset} -> datetime
+      _ -> nil
+    end
+  end
+
+  defp parse_datetime(_), do: nil
 end

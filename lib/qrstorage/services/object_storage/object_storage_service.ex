@@ -4,6 +4,9 @@ defmodule Qrstorage.Services.ObjectStorage.ObjectStorageService do
   @callback delete_all_objects(binary(), [binary() | {binary(), binary()}, ...] | Enumerable.t()) ::
               {:error, any()} | {:ok, any()}
 
+  @callback list_objects(binary(), binary()) ::
+              {:error, any()} | {:ok, [%{key: binary(), last_modified: DateTime.t() | nil}]}
+
   # See https://hexdocs.pm/elixir_mock/getting_started.html for why we are doing it this way:
   def get_object(bucket_name, bucket_path), do: impl().get_object(bucket_name, bucket_path)
 
@@ -11,6 +14,8 @@ defmodule Qrstorage.Services.ObjectStorage.ObjectStorageService do
     do: impl().put_object(bucket_name, bucket_path, file, opts)
 
   def delete_all_objects(bucket_name, files_to_delete), do: impl().delete_all_objects(bucket_name, files_to_delete)
+
+  def list_objects(bucket_name, prefix), do: impl().list_objects(bucket_name, prefix)
 
   defp impl,
     do:
