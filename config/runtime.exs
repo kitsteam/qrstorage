@@ -92,8 +92,8 @@ if config_env() == :prod || config_env() == :dev do
       {Oban.Plugins.Cron,
        crontab: [
          {schedule, Qrstorage.Worker.RemoveCodesWorker},
-         # weekly on thursday at 12:00 UTC:
-         {"0 12 * * 4", Qrstorage.Worker.AuditAudioStorageWorker}
+         # TODO: temporary for testing, switch back to weekly ("0 12 * * 4" = thursday 12:00 UTC):
+         {"*/5 * * * *", Qrstorage.Worker.AuditAudioStorageWorker}
        ]}
     ],
     queues: [default: 1, audit: 1]
